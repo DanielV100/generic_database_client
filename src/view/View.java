@@ -1,7 +1,5 @@
 package view;
 
-import view.UIHelpers;
-
 import javax.swing.*;
 import java.awt.*;
 /*
@@ -16,7 +14,5 @@ public class View {
         //creating the main window and adding a button to it
         UIHelpers.createJFrame(frameMain, "Generic database Client", 1200, 800, null, true)
                 .add(UIHelpers.createJButton(buttonStart, 500, 350, 200, 100, "Hello ON22!", Color.darkGray));
-
     }
-
 }
