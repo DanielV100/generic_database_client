@@ -1,22 +1,18 @@
 import javax.swing.*;
-
+import java.awt.*;
+/*
+This class builds the UI of the application's main frame - here shouldn't be any business logic.
+Therefor Swing and AWT are used. Components such as frames, buttons and labels are created by calling methods from UIHelpers class.
+ */
 public class View {
-    JFrame f = new JFrame();
+    UIHelpers uiHelpers = new UIHelpers();
+    private JFrame frameMain = new JFrame();
+    private JButton buttonStart = new JButton();
     View(){
-        createMainWindow(f);
+        //creating the main window and adding a button to it
+        UIHelpers.createJFrame(frameMain, "Generic database Client", 1200, 800, null, true)
+                .add(UIHelpers.createJButton(buttonStart, 500, 350, 200, 100, "Hello ON22!"));
+
     }
-    private JFrame createMainWindow(JFrame mainWindow){
-        mainWindow = new JFrame();
-        JButton buttonStart = new JButton();
-        mainWindow.add(createJButton(buttonStart, 130, 100, 100, 40, "Hello ON22!"));
-        mainWindow.setSize(400, 500);
-        mainWindow.setLayout(null);
-        mainWindow.setVisible(true);
-        return mainWindow;
-    }
-    private JButton createJButton(JButton button, int buttonX, int buttonY, int buttonWidth, int buttonHeight, String buttonLabel){
-        button = new JButton(buttonLabel);
-        button.setBounds(buttonX, buttonY, buttonWidth, buttonHeight);
-        return button;
-    }
+
 }
