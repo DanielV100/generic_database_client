@@ -20,7 +20,7 @@ public class View {
     private JButton buttonStart = new JButton();
     private JLabel labelGreeting = new JLabel();
 
-    //creating the main window with it's components
+    //creating the main window with its components
     public View() throws IOException {
         //initializing components which later will be on the panel
         buttonStart = UIHelpers.createJButton(buttonStart, sizes.getButton_view_buttonStart_buttonX(), sizes.getButton_view_buttonStart_buttonY(), sizes.getButton_view_buttonStart_buttonWidth(), sizes.getButton_view_buttonStart_buttonHeight(), controller.getAppPropertiesWithKey("button.view.buttonStart"), Color.darkGray);
