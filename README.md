@@ -1,6 +1,6 @@
 # Generic database client
 
-This application makes your daily working with databases much easier.
+This application makes your daily work with databases much easier.
 
 ## Contributing
 
