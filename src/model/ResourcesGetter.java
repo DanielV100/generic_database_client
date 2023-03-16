@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 
+//Properties of generic_database_client_text.properties will be parsed here
 public class ResourcesGetter {
     String pathToResourceFile = Thread.currentThread().getContextClassLoader().getResource("").getPath() + "resources/generic_database_client_text.properties";
     Properties appProperties = new Properties();
