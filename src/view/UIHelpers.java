@@ -22,4 +22,17 @@ public class UIHelpers {
         button.setBackground(buttonColor);
         return button;
     }
+    //Labels can be created by calling this method
+    protected static JLabel createJLabel(JLabel label, String labelText, int labelX, int labelY, int labelWidth, int labelHeight){
+        label = new JLabel(labelText);
+        label.setBounds(labelX, labelY, labelWidth, labelHeight);
+        return label;
+    }
+    //JPanels can be created by calling this method - Panels should strictly be used as a container of components!
+    protected static JPanel createJPanel(JPanel panel, int panelX, int panelY, int panelWidth, int panelHeight, LayoutManager panelLayout){
+        panel = new JPanel();
+        panel.setBounds(panelX, panelY, panelWidth, panelHeight);
+        panel.setLayout(panelLayout);
+        return panel;
+    }
 }
