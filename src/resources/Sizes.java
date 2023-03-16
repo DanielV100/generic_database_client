@@ -12,10 +12,15 @@ public class Sizes {
     int panel_view_panelMain_panelY = 0;
 
     //Buttons
-    int button_view_buttonStart_buttonWidth = 800;
+    int button_view_buttonStart_buttonWidth = 350;
     int button_view_buttonStart_buttonHeight = 100;
     int button_view_buttonStart_buttonX = 500;
     int button_view_buttonStart_buttonY= 300;
+
+    int button_view_buttonTest_buttonWidth = 100;
+    int button_view_buttonTest_buttonHeight = 150;
+    int button_view_buttonTest_buttonX = 400;
+    int button_view_buttonTest_buttonY= 150;
 
     //Labels
     int label_view_labelGreeting_labelWidth = 300;
@@ -78,5 +83,21 @@ public class Sizes {
 
     public int getLabel_view_labelGreeting_labelY() {
         return label_view_labelGreeting_labelY;
+    }
+
+    public int getButton_view_buttonTest_buttonWidth() {
+        return button_view_buttonTest_buttonWidth;
+    }
+
+    public int getButton_view_buttonTest_buttonHeight() {
+        return button_view_buttonTest_buttonHeight;
+    }
+
+    public int getButton_view_buttonTest_buttonX() {
+        return button_view_buttonTest_buttonX;
+    }
+
+    public int getButton_view_buttonTest_buttonY() {
+        return button_view_buttonTest_buttonY;
     }
 }
