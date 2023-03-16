@@ -12,7 +12,7 @@ public class Sizes {
     int panel_view_panelMain_panelY = 0;
 
     //Buttons
-    int button_view_buttonStart_buttonWidth = 800;
+    int button_view_buttonStart_buttonWidth = 400;
     int button_view_buttonStart_buttonHeight = 100;
     int button_view_buttonStart_buttonX = 500;
     int button_view_buttonStart_buttonY= 300;
