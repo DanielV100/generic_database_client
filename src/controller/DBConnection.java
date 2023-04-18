@@ -14,6 +14,7 @@ public class DBConnection {
     String username;
     String password;
 
+    //gets parameters and writes it into local variables + start building connection
     public void initDBConnection(String hostname, String port, String databaseName, String username, String password) throws SQLException {
         this.hostname = hostname;
         this.port = validatePort(port);
@@ -22,6 +23,7 @@ public class DBConnection {
         this.password = password;
         connect();
     }
+    //should be validated --> numbers no chars
     private String validatePort(String port) {
         return port;
     }

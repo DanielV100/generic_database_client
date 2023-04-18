@@ -12,20 +12,11 @@ public class Sizes {
     int panel_view_panelDatabaseConnection_panelY = 0;
 
     //Buttons
-    int button_view_buttonStart_buttonWidth = 400;
-    int button_view_buttonStart_buttonHeight = 100;
-    int button_view_buttonStart_buttonX = 500;
-    int button_view_buttonStart_buttonY= 300;
+        //Connection button
     int button_panelDatabaseConnection_buttonConnect_buttonWidth = 200;
     int button_panelDatabaseConnection_buttonConnect_buttonHeight = 40;
     int button_panelDatabaseConnection_buttonConnect_buttonX = 200;
     int button_panelDatabaseConnection_buttonConnect_buttonY= 450;
-
-    //Labels
-    int label_view_labelGreeting_labelWidth = 300;
-    int label_view_labelGreeting_labelHeight = 150;
-    int label_view_labelGreeting_labelX = 50;
-    int label_view_labelGreeting_labelY = 100;
 
     //----Text Fields----
         //Hostname
@@ -176,37 +167,5 @@ public class Sizes {
 
     public int getPanel_view_panelDatabaseConnection_panelY() {
         return panel_view_panelDatabaseConnection_panelY;
-    }
-
-    public int getButton_view_buttonStart_buttonWidth() {
-        return button_view_buttonStart_buttonWidth;
-    }
-
-    public int getButton_view_buttonStart_buttonHeight() {
-        return button_view_buttonStart_buttonHeight;
-    }
-
-    public int getButton_view_buttonStart_buttonX() {
-        return button_view_buttonStart_buttonX;
-    }
-
-    public int getButton_view_buttonStart_buttonY() {
-        return button_view_buttonStart_buttonY;
-    }
-
-    public int getLabel_view_labelGreeting_labelWidth() {
-        return label_view_labelGreeting_labelWidth;
-    }
-
-    public int getLabel_view_labelGreeting_labelHeight() {
-        return label_view_labelGreeting_labelHeight;
-    }
-
-    public int getLabel_view_labelGreeting_labelX() {
-        return label_view_labelGreeting_labelX;
-    }
-
-    public int getLabel_view_labelGreeting_labelY() {
-        return label_view_labelGreeting_labelY;
     }
 }
