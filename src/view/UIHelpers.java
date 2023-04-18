@@ -35,4 +35,10 @@ public class UIHelpers {
         panel.setLayout(panelLayout);
         return panel;
     }
+    //Text fields can be created by calling this method
+    protected static JTextField createJTextField(JTextField textField, String textFieldText, int textFieldX, int textFieldY, int textFieldWidth, int textFieldHeight) {
+        textField = new JTextField(textFieldText);
+        textField.setBounds(textFieldX, textFieldY, textFieldWidth, textFieldHeight);
+        return textField;
+    }
 }
