@@ -3,6 +3,8 @@ package controller;
 import model.ResourcesGetter;
 
 import java.io.IOException;
+import java.sql.SQLException;
+import java.sql.SQLOutput;
 
 public class Controller {
     ResourcesGetter resourcesGetter = new ResourcesGetter();
