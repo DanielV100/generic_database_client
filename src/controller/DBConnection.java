@@ -30,7 +30,6 @@ public class DBConnection {
         return "jdbc:mysql://" + hostname + ":" + port + "/" + databaseName;
     }
 
-
     public void connect() throws SQLException {
         model.connectToDB(createConnectionString(hostname, port, databaseName), username, password);
     }
