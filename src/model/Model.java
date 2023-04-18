@@ -20,7 +20,6 @@ public class Model {
         while (resultSet.next()) {
             allTables.add(resultSet.getString(1));
         }
-        System.out.println(allTables.get(1));
         return allTables;
     }
 }
