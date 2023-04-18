@@ -22,10 +22,12 @@ public class DBConnection {
     private String getDatabaseName() {
         return "panelDatabaseConnection.getTextFieldDatabaseName().getText()";
     }
+    private void initDBConnection(String hostname, String port, String databaseName) {
 
+    }
     public void connect() throws SQLException {
         try {
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test_database", "root", "4a22w0rt!");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test_database");
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
 

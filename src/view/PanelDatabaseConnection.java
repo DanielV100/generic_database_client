@@ -20,13 +20,17 @@ public class PanelDatabaseConnection {
     private JTextField textFieldHostname = new JTextField();
     private JTextField textFieldPort = new JTextField();
     private JTextField textFieldDatabaseName = new JTextField();
+    private JTextField textFieldUsername = new JTextField();
+    private JTextField textFieldPassword = new JTextField();
     private JButton buttonConnect = new JButton();
 
     public JPanel PanelDatabaseConnection() throws IOException {
-        //creating text fields for (1) hostname (2) port (3) Database name
+        //creating text fields for (1) hostname (2) port (3) Database name (4) username (5) password
         textFieldHostname = uiHelpers.createJTextField(textFieldHostname, controller.getAppPropertiesWithKey("textField.panelDatabaseConnection.textFieldHostname"), sizes.getTextField_panelDatabaseConnection_textFieldHostname_textFieldX(), sizes.getTextField_panelDatabaseConnection_textFieldHostname_textFieldY(), sizes.getTextField_panelDatabaseConnection_textFieldHostname_textFieldWidth(), sizes.getTextField_panelDatabaseConnection_textFieldHostname_textFieldHeight());
         textFieldPort = uiHelpers.createJTextField(textFieldPort, controller.getAppPropertiesWithKey("textField.panelDatabaseConnection.textFieldPort"), sizes.getTextField_panelDatabaseConnection_textFieldPort_textFieldX(), sizes.getTextField_panelDatabaseConnection_textFieldPort_textFieldY(), sizes.getTextField_panelDatabaseConnection_textFieldPort_textFieldWidth(), sizes.getTextField_panelDatabaseConnection_textFieldPort_textFieldHeight());
         textFieldDatabaseName = uiHelpers.createJTextField(textFieldDatabaseName, controller.getAppPropertiesWithKey("textField.panelDatabaseConnection.textFieldDatabaseName"), sizes.getTextField_panelDatabaseConnection_textFieldDatabaseName_textFieldX(), sizes.getTextField_panelDatabaseConnection_textFieldDatabaseName_textFieldY(), sizes.getTextField_panelDatabaseConnection_textFieldDatabaseName_textFieldWidth(), sizes.getTextField_panelDatabaseConnection_textFieldDatabaseName_textFieldHeight());
+        textFieldUsername = uiHelpers.createJTextField(textFieldHostname, controller.getAppPropertiesWithKey("textField.panelDatabaseConnection.textFieldUsername"), sizes.getTextField_panelDatabaseConnection_textFieldUsername_textFieldX(), sizes.getTextField_panelDatabaseConnection_textFieldUsername_textFieldY(), sizes.getTextField_panelDatabaseConnection_textFieldUsername_textFieldWidth(), sizes.getTextField_panelDatabaseConnection_textFieldUsername_textFieldHeight());
+        textFieldPassword = uiHelpers.createJTextField(textFieldPassword, controller.getAppPropertiesWithKey("textField.panelDatabaseConnection.textFieldPassword"), sizes.getTextField_panelDatabaseConnection_textFieldPassword_textFieldX(), sizes.getTextField_panelDatabaseConnection_textFieldUsername_textFieldY(), sizes.getTextField_panelDatabaseConnection_textFieldUsername_textFieldWidth(), sizes.getTextField_panelDatabaseConnection_textFieldUsername_textFieldHeight());
         //creating button for building the connection
         buttonConnect = uiHelpers.createJButton(buttonConnect, sizes.getButton_panelDatabaseConnection_buttonConnect_buttonX(), sizes.getButton_panelDatabaseConnection_buttonConnect_buttonY(), sizes.getButton_panelDatabaseConnection_buttonConnect_buttonWidth(), sizes.getButton_panelDatabaseConnection_buttonConnect_buttonHeight(), controller.getAppPropertiesWithKey("button.panelDatabaseConnection.buttonConnect"), Color.GREEN);
         buttonConnect.addActionListener(new ActionListener() {
@@ -44,23 +48,9 @@ public class PanelDatabaseConnection {
         panelDatabaseConnection.add(textFieldHostname);
         panelDatabaseConnection.add(textFieldPort);
         panelDatabaseConnection.add(textFieldDatabaseName);
+        panelDatabaseConnection.add(textFieldUsername);
         panelDatabaseConnection.add(buttonConnect);
         return panelDatabaseConnection;
     }
 
-    public JTextField getTextFieldHostname() {
-        return textFieldHostname;
-    }
-
-    public JTextField getTextFieldPort() {
-        return textFieldPort;
-    }
-
-    public JTextField getTextFieldDatabaseName() {
-        return textFieldDatabaseName;
-    }
-
-    public JButton getButtonConnect() {
-        return buttonConnect;
-    }
 }

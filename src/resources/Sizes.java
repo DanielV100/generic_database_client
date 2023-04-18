@@ -19,7 +19,7 @@ public class Sizes {
     int button_panelDatabaseConnection_buttonConnect_buttonWidth = 200;
     int button_panelDatabaseConnection_buttonConnect_buttonHeight = 40;
     int button_panelDatabaseConnection_buttonConnect_buttonX = 200;
-    int button_panelDatabaseConnection_buttonConnect_buttonY= 350;
+    int button_panelDatabaseConnection_buttonConnect_buttonY= 450;
 
     //Labels
     int label_view_labelGreeting_labelWidth = 300;
@@ -27,24 +27,69 @@ public class Sizes {
     int label_view_labelGreeting_labelX = 50;
     int label_view_labelGreeting_labelY = 100;
 
-    //Text Fields
+    //----Text Fields----
+        //Hostname
     int textField_panelDatabaseConnection_textFieldHostname_textFieldWidth = 200;
     int textField_panelDatabaseConnection_textFieldHostname_textFieldHeight = 50;
     int textField_panelDatabaseConnection_textFieldHostname_textFieldX = 200;
     int textField_panelDatabaseConnection_textFieldHostname_textFieldY = 200;
+        //Port
     int textField_panelDatabaseConnection_textFieldPort_textFieldWidth = 200;
     int textField_panelDatabaseConnection_textFieldPort_textFieldHeight = 50;
     int textField_panelDatabaseConnection_textFieldPort_textFieldX = 200;
     int textField_panelDatabaseConnection_textFieldPort_textFieldY = 250;
+     //Database name
     int textField_panelDatabaseConnection_textFieldDatabaseName_textFieldWidth = 200;
     int textField_panelDatabaseConnection_textFieldDatabaseName_textFieldHeight = 50;
     int textField_panelDatabaseConnection_textFieldDatabaseName_textFieldX = 200;
     int textField_panelDatabaseConnection_textFieldDatabaseName_textFieldY = 300;
+     //Username
+    int textField_panelDatabaseConnection_textFieldUsername_textFieldWidth = 200;
+    int textField_panelDatabaseConnection_textFieldUsername_textFieldHeight = 50;
+    int textField_panelDatabaseConnection_textFieldUsername_textFieldX = 200;
+    int textField_panelDatabaseConnection_textFieldUsername_textFieldY = 350;
+        //Password
+    int textField_panelDatabaseConnection_textFieldPassword_textFieldWidth = 200;
+    int textField_panelDatabaseConnection_textFieldPassword_textFieldHeight = 50;
+    int textField_panelDatabaseConnection_textFieldPassword_textFieldX = 200;
+    int textField_panelDatabaseConnection_textFieldPassword_textFieldY = 400;
 
 
 
 
     //Getter
+
+    public int getTextField_panelDatabaseConnection_textFieldPassword_textFieldWidth() {
+        return textField_panelDatabaseConnection_textFieldPassword_textFieldWidth;
+    }
+
+    public int getTextField_panelDatabaseConnection_textFieldPassword_textFieldHeight() {
+        return textField_panelDatabaseConnection_textFieldPassword_textFieldHeight;
+    }
+
+    public int getTextField_panelDatabaseConnection_textFieldPassword_textFieldX() {
+        return textField_panelDatabaseConnection_textFieldPassword_textFieldX;
+    }
+
+    public int getTextField_panelDatabaseConnection_textFieldPassword_textFieldY() {
+        return textField_panelDatabaseConnection_textFieldPassword_textFieldY;
+    }
+
+    public int getTextField_panelDatabaseConnection_textFieldUsername_textFieldWidth() {
+        return textField_panelDatabaseConnection_textFieldUsername_textFieldWidth;
+    }
+
+    public int getTextField_panelDatabaseConnection_textFieldUsername_textFieldHeight() {
+        return textField_panelDatabaseConnection_textFieldUsername_textFieldHeight;
+    }
+
+    public int getTextField_panelDatabaseConnection_textFieldUsername_textFieldX() {
+        return textField_panelDatabaseConnection_textFieldUsername_textFieldX;
+    }
+
+    public int getTextField_panelDatabaseConnection_textFieldUsername_textFieldY() {
+        return textField_panelDatabaseConnection_textFieldUsername_textFieldY;
+    }
 
     public int getTextField_panelDatabaseConnection_textFieldDatabaseName_textFieldWidth() {
         return textField_panelDatabaseConnection_textFieldDatabaseName_textFieldWidth;
