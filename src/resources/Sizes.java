@@ -6,10 +6,10 @@ public class Sizes {
     int frame_view_mainFrame_frameHeight = 800;
 
     //Panels
-    int panel_view_panelMain_panelWidth = 1200;
-    int panel_view_panelMain_panelHeight = 800;
-    int panel_view_panelMain_panelX = 0;
-    int panel_view_panelMain_panelY = 0;
+    int panel_view_panelDatabaseConnection_panelWidth = 1200;
+    int panel_view_panelDatabaseConnection_panelHeight = 800;
+    int panel_view_panelDatabaseConnection_panelX = 0;
+    int panel_view_panelDatabaseConnection_panelY = 0;
 
     //Buttons
     int button_view_buttonStart_buttonWidth = 400;
@@ -32,20 +32,20 @@ public class Sizes {
         return frame_view_mainFrame_frameWidth;
     }
 
-    public int getPanel_view_panelMain_panelWidth() {
-        return panel_view_panelMain_panelWidth;
+    public int getPanel_view_panelDatabaseConnection_panelWidth() {
+        return panel_view_panelDatabaseConnection_panelWidth;
     }
 
-    public int getPanel_view_panelMain_panelHeight() {
-        return panel_view_panelMain_panelHeight;
+    public int getPanel_view_panelDatabaseConnection_panelHeight() {
+        return panel_view_panelDatabaseConnection_panelHeight;
     }
 
-    public int getPanel_view_panelMain_panelX() {
-        return panel_view_panelMain_panelX;
+    public int getPanel_view_panelDatabaseConnection_panelX() {
+        return panel_view_panelDatabaseConnection_panelX;
     }
 
-    public int getPanel_view_panelMain_panelY() {
-        return panel_view_panelMain_panelY;
+    public int getPanel_view_panelDatabaseConnection_panelY() {
+        return panel_view_panelDatabaseConnection_panelY;
     }
 
     public int getButton_view_buttonStart_buttonWidth() {
