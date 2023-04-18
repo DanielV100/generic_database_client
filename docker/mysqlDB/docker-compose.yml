@@ -1,0 +1,16 @@
+# mysql-Datenbank - docker-compose.yml
+services:
+    mysql:
+        image: mysql:latest
+        environment:
+            MYSQL_ROOT_PASSWORD: geheim
+        restart: always
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin:latest
+        ports:
+            - "8080:80"
+        environment:
+            - PMA_HOST=mysql
+        restart: always
+        depends_on:
+            - mysql

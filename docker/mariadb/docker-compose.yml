@@ -1,0 +1,16 @@
+# MariaDB Datenbank mit eigenem Volume - docker-compose.yml
+services:
+    mariadb:
+        image: mariadb:latest
+        environment:
+            MYSQL_ROOT_PASSWORD: geheim
+        restart: always
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin:latest
+        ports:
+            - "8081:80"
+        environment:
+            - PMA_HOST=mariadb
+        restart: always
+        depends_on:
+            - mariadb
