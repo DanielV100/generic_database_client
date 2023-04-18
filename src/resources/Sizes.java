@@ -23,7 +23,52 @@ public class Sizes {
     int label_view_labelGreeting_labelX = 50;
     int label_view_labelGreeting_labelY = 100;
 
+    //Text Fields
+    int textField_panelDatabaseConnection_textFieldHostname_textFieldWidth = 200;
+    int textField_panelDatabaseConnection_textFieldHostname_textFieldHeight = 50;
+    int textField_panelDatabaseConnection_textFieldHostname_textFieldX = 200;
+    int textField_panelDatabaseConnection_textFieldHostname_textFieldY = 200;
+    int textField_panelDatabaseConnection_textFieldPort_textFieldWidth = 200;
+    int textField_panelDatabaseConnection_textFieldPort_textFieldHeight = 50;
+    int textField_panelDatabaseConnection_textFieldPort_textFieldX = 200;
+    int textField_panelDatabaseConnection_textFieldPort_textFieldY = 500;
+
+
+
+
     //Getter
+
+    public int getTextField_panelDatabaseConnection_textFieldPort_textFieldWidth() {
+        return textField_panelDatabaseConnection_textFieldPort_textFieldWidth;
+    }
+
+    public int getTextField_panelDatabaseConnection_textFieldPort_textFieldHeight() {
+        return textField_panelDatabaseConnection_textFieldPort_textFieldHeight;
+    }
+
+    public int getTextField_panelDatabaseConnection_textFieldPort_textFieldX() {
+        return textField_panelDatabaseConnection_textFieldPort_textFieldX;
+    }
+
+    public int getTextField_panelDatabaseConnection_textFieldPort_textFieldY() {
+        return textField_panelDatabaseConnection_textFieldPort_textFieldY;
+    }
+
+    public int getTextField_panelDatabaseConnection_textFieldHostname_textFieldWidth() {
+        return textField_panelDatabaseConnection_textFieldHostname_textFieldWidth;
+    }
+
+    public int getTextField_panelDatabaseConnection_textFieldHostname_textFieldHeight() {
+        return textField_panelDatabaseConnection_textFieldHostname_textFieldHeight;
+    }
+
+    public int getTextField_panelDatabaseConnection_textFieldHostname_textFieldX() {
+        return textField_panelDatabaseConnection_textFieldHostname_textFieldX;
+    }
+
+    public int getTextField_panelDatabaseConnection_textFieldHostname_textFieldY() {
+        return textField_panelDatabaseConnection_textFieldHostname_textFieldY;
+    }
     public int getFrame_view_mainFrame_frameHeight() {
         return frame_view_mainFrame_frameHeight;
     }
