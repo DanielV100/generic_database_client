@@ -1,16 +1,17 @@
 package controller;
 
+import model.Model;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.sql.*;
 
 public class DBConnection {
+    Model model = new Model();
     String hostname;
     String databaseName;
     String port;
     String username;
     String password;
+    Connection dbConnection;
 
     //gets parameters and writes it into local variables + start building connection
     public void initDBConnection(String hostname, String port, String databaseName, String username, String password) throws SQLException {
@@ -31,13 +32,7 @@ public class DBConnection {
 
 
     public void connect() throws SQLException {
-        try {
-            Connection conn = DriverManager.getConnection(createConnectionString(hostname, port, databaseName), username, password);
-        } catch (SQLException ex) {
-            throw new RuntimeException(ex);
-
-        }
-
+        model.connectToDB(createConnectionString(hostname, port, databaseName), username, password);
     }
 }
 
