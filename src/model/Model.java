@@ -12,7 +12,7 @@ public class Model {
         dbConnection = DriverManager.getConnection(connectionString, username, password);
         getAllTablesFromDB();
     }
-    //getting sll tables in db and return it as a list
+    //getting all tables in db and return it as a list
     public List<String> getAllTablesFromDB() throws SQLException {
         List<String> allTables = new ArrayList<>();
         Statement databaseStatement = dbConnection.createStatement();
