@@ -11,7 +11,8 @@ public class Model {
     public void connectToDB(String connectionString, String username, String password) throws SQLException {
         dbConnection = DriverManager.getConnection(connectionString, username, password);
         //getAllTablesFromDB();
-        getColumnsFromTable("myTable");
+        getRowsFromTable(getColumnsFromTable("myTable"), "myTable");
+
     }
     //getting all tables in db and return it as a list
     public List<String> getAllTablesFromDB() throws SQLException {
@@ -36,5 +37,16 @@ public class Model {
             allColumns.add(resultSet.getString(1));
         }
         return allColumns;
+    }
+    public void getRowsFromTable(List<String> columns, String table) throws SQLException {
+        Statement databaseStatement = dbConnection.createStatement();
+        ResultSet resultSet = databaseStatement.executeQuery(
+                "SELECT * from " + table
+        );
+        while (resultSet.next()) {
+            for(int i = 1; i <= columns.size(); i++) {
+                System.out.println(resultSet.getString(i));
+            }
+        }
     }
 }
