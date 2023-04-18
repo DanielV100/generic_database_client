@@ -3,9 +3,7 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class DBConnection {
     String hostname;
@@ -34,9 +32,7 @@ public class DBConnection {
 
     public void connect() throws SQLException {
         try {
-            System.out.println(createConnectionString(hostname, port, databaseName));
             Connection conn = DriverManager.getConnection(createConnectionString(hostname, port, databaseName), username, password);
-            System.out.println("Connection succeded!");
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
 
