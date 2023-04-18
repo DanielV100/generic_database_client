@@ -8,26 +8,33 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DBConnection {
-    //getting hostname from text field
-    private String getHostname() {
-        return "panelDatabaseConnection.getTextFieldHostname().getText()";
+    String hostname;
+    String databaseName;
+    String port;
+    String username;
+    String password;
+
+    public void initDBConnection(String hostname, String port, String databaseName, String username, String password) throws SQLException {
+        this.hostname = hostname;
+        this.port = validatePort(port);
+        this.databaseName = databaseName;
+        this.username = username;
+        this.password = password;
+        connect();
+    }
+    private String validatePort(String port) {
+        return port;
+    }
+    private String createConnectionString(String hostname, String port, String databaseName) {
+        return "jdbc:mysql://" + hostname + ":" + port + "/" + databaseName;
     }
 
-    //getting port from text field
-    private String getPort() {
-        return "panelDatabaseConnection.getTextFieldPort().getText()";
-    }
 
-    //getting database name from text field
-    private String getDatabaseName() {
-        return "panelDatabaseConnection.getTextFieldDatabaseName().getText()";
-    }
-    private void initDBConnection(String hostname, String port, String databaseName) {
-
-    }
     public void connect() throws SQLException {
         try {
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test_database");
+            System.out.println(createConnectionString(hostname, port, databaseName));
+            Connection conn = DriverManager.getConnection(createConnectionString(hostname, port, databaseName), username, password);
+            System.out.println("Connection succeded!");
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
 
