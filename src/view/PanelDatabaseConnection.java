@@ -38,7 +38,9 @@ public class PanelDatabaseConnection {
             public void actionPerformed(ActionEvent e) {
                 try {
                     dbConnection.initDBConnection(textFieldHostname.getText(), textFieldPort.getText(), textFieldDatabaseName.getText(), textFieldUsername.getText(), textFieldPassword.getText());
+                    //Erfolgsmeldung
                 } catch (SQLException ex) {
+                    //Fehlermeldung
                     throw new RuntimeException(ex);
                 }
             }
