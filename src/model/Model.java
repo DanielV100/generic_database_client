@@ -1,5 +1,7 @@
 package model;
 
+import controller.DBConnection;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,16 +10,13 @@ public class Model {
     Connection dbConnection;
 
     //create connection to db
-    public void connectToDB(String connectionString, String username, String password) throws SQLException {
-        dbConnection = DriverManager.getConnection(connectionString, username, password);
-        //getAllTablesFromDB();
-        getRowsFromTable(getColumnsFromTable("myTable"), "myTable");
-
+    public Connection connectToDB(String connectionString, String username, String password) throws SQLException {
+        return DriverManager.getConnection(connectionString, username, password);
     }
     //getting all tables in db and return it as a list
-    public List<String> getAllTablesFromDB() throws SQLException {
+    public List<String> getAllTablesFromDB(Connection connection) throws SQLException {
         List<String> allTables = new ArrayList<>();
-        Statement databaseStatement = dbConnection.createStatement();
+        Statement databaseStatement = connection.createStatement();
         ResultSet resultSet = databaseStatement.executeQuery("Show tables");
         while (resultSet.next()) {
             allTables.add(resultSet.getString(1));

@@ -9,6 +9,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.sql.Connection;
 import java.sql.SQLException;
 
 public class PanelDatabaseConnection {
@@ -16,6 +17,7 @@ public class PanelDatabaseConnection {
     Controller controller = new Controller();
     Sizes sizes = new Sizes();
     UIHelpers uiHelpers = new UIHelpers();
+
     private JPanel panelDatabaseConnection = new JPanel();
     private JTextField textFieldHostname = new JTextField();
     private JTextField textFieldPort = new JTextField();
@@ -23,8 +25,13 @@ public class PanelDatabaseConnection {
     private JTextField textFieldUsername = new JTextField();
     private JTextField textFieldPassword = new JTextField();
     private JButton buttonConnect = new JButton();
-
+    JFrame test = new JFrame();
+    PanelTableSelection panelTableSelection = new PanelTableSelection();
     public JPanel PanelDatabaseConnection() throws IOException {
+        test.setLayout(null);
+        test.setBounds(0, 0, 1200, 800);
+        test.setVisible(false);
+
         //creating text fields for (1) hostname (2) port (3) Database name (4) username (5) password
         textFieldHostname = uiHelpers.createJTextField(textFieldHostname, controller.getAppPropertiesWithKey("textField.panelDatabaseConnection.textFieldHostname"), sizes.getTextField_panelDatabaseConnection_textFieldHostname_textFieldX(), sizes.getTextField_panelDatabaseConnection_textFieldHostname_textFieldY(), sizes.getTextField_panelDatabaseConnection_textFieldHostname_textFieldWidth(), sizes.getTextField_panelDatabaseConnection_textFieldHostname_textFieldHeight());
         textFieldPort = uiHelpers.createJTextField(textFieldPort, controller.getAppPropertiesWithKey("textField.panelDatabaseConnection.textFieldPort"), sizes.getTextField_panelDatabaseConnection_textFieldPort_textFieldX(), sizes.getTextField_panelDatabaseConnection_textFieldPort_textFieldY(), sizes.getTextField_panelDatabaseConnection_textFieldPort_textFieldWidth(), sizes.getTextField_panelDatabaseConnection_textFieldPort_textFieldHeight());
@@ -37,8 +44,10 @@ public class PanelDatabaseConnection {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    dbConnection.initDBConnection(textFieldHostname.getText(), textFieldPort.getText(), textFieldDatabaseName.getText(), textFieldUsername.getText(), textFieldPassword.getText());
+                    Connection conn = dbConnection.initDBConnection(textFieldHostname.getText(), textFieldPort.getText(), textFieldDatabaseName.getText(), textFieldUsername.getText(), textFieldPassword.getText());
                     //Erfolgsmeldung
+                    test.add(panelTableSelection.PanelTableSelection(conn));
+                    test.setVisible(true);
                 } catch (SQLException ex) {
                     //Fehlermeldung
                     throw new RuntimeException(ex);
