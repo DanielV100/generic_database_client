@@ -48,4 +48,10 @@ public class UIHelpers {
         jlist.setBounds(listX, listY, listWidth, listHeight);
         return jlist;
     }
+
+    protected static JTable createJTable(JTable table, String[] columns, String[][] data, int tableX, int tableY, int tableWidth, int tableHeight) {
+        table = new JTable(data, columns);
+        table.setBounds(tableX, tableY, tableWidth, tableHeight);
+        return table;
+    }
 }
