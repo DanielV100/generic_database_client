@@ -44,9 +44,9 @@ public class PanelDatabaseConnection {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    Connection conn = dbConnection.initDBConnection(textFieldHostname.getText(), textFieldPort.getText(), textFieldDatabaseName.getText(), textFieldUsername.getText(), textFieldPassword.getText());
+                    Connection connection = dbConnection.initDBConnection(textFieldHostname.getText(), textFieldPort.getText(), textFieldDatabaseName.getText(), textFieldUsername.getText(), textFieldPassword.getText());
                     //Erfolgsmeldung
-                    test.add(panelTableSelection.PanelTableSelection(conn));
+                    test.add(panelTableSelection.PanelTableSelection(connection));
                     test.setVisible(true);
                 } catch (SQLException ex) {
                     //Fehlermeldung
