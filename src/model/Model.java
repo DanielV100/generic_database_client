@@ -38,15 +38,17 @@ public class Model {
         }
         return allColumns;
     }
-    public void getRowsFromTable(List<String> columns, String table) throws SQLException {
+    public List<String> getRowsFromTable(List<String> columns, String table) throws SQLException {
+        List<String> allRows = new ArrayList<>();
         Statement databaseStatement = dbConnection.createStatement();
         ResultSet resultSet = databaseStatement.executeQuery(
                 "SELECT * from " + table
         );
         while (resultSet.next()) {
             for(int i = 1; i <= columns.size(); i++) {
-                System.out.println(resultSet.getString(i));
+                allRows.add(resultSet.getString(i));
             }
         }
+        return allRows;
     }
 }

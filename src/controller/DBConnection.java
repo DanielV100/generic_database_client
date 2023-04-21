@@ -34,4 +34,4 @@ public class DBConnection {
         model.connectToDB(createConnectionString(hostname, port, databaseName), username, password);
     }
 }
-
+//https://www.youtube.com/watch?v=1xF_PFJLs4g
