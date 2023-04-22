@@ -2,6 +2,7 @@ package view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 
 public class UIHelpers {
     public UIHelpers() {
@@ -40,5 +41,17 @@ public class UIHelpers {
         textField = new JTextField(textFieldText);
         textField.setBounds(textFieldX, textFieldY, textFieldWidth, textFieldHeight);
         return textField;
+    }
+
+    protected static JList createJList(JList jlist, String[] dataToDisplay, int listX, int listY, int listWidth, int listHeight) {
+        jlist = new JList(dataToDisplay);
+        jlist.setBounds(listX, listY, listWidth, listHeight);
+        return jlist;
+    }
+
+    protected static JTable createJTable(JTable table, String[] columns, String[][] data, int tableX, int tableY, int tableWidth, int tableHeight) {
+        table = new JTable(data, columns);
+        table.setBounds(tableX, tableY, tableWidth, tableHeight);
+        return table;
     }
 }

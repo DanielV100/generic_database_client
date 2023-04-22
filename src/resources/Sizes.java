@@ -5,11 +5,23 @@ public class Sizes {
     int frame_view_mainFrame_frameWidth = 1200;
     int frame_view_mainFrame_frameHeight = 800;
 
-    //Panels
+    //----Panels----
+        //panel for the database connection (start screen)
     int panel_view_panelDatabaseConnection_panelWidth = 1200;
     int panel_view_panelDatabaseConnection_panelHeight = 800;
     int panel_view_panelDatabaseConnection_panelX = 0;
     int panel_view_panelDatabaseConnection_panelY = 0;
+        //panel which got the list with the tables on it
+    int panel_panelTableSelection_panelWidth = 1200;
+    int panel_panelTableSelection_panelHeight = 800;
+    int panel_panelTableSelection_panelX = 0;
+    int panel_panelTableSelection_panelY = 0;
+        //panel which got the table from the db on it
+    int panel_panelTableView_panelWidth = 800;
+    int panel_panelTableView_panelHeight = 800;
+    int panel_panelTableView_panelX = 400;
+    int panel_panelTableView_panelY = 0;
+
 
     //Buttons
         //Connection button
@@ -45,10 +57,85 @@ public class Sizes {
     int textField_panelDatabaseConnection_textFieldPassword_textFieldX = 200;
     int textField_panelDatabaseConnection_textFieldPassword_textFieldY = 400;
 
+    //----JLists----
+        //list with all tables in it
+    int jlist_panelTableSelection_jlistTableSelection_jlistWidth = 400;
+    int jlist_panelTableSelection_jlistTableSelection_jlistHeight = 800;
+    int jlist_panelTableSelection_jlistTableSelection_jlistX= 0;
+    int jlist_panelTableSelection_jlistTableSelection_jlisty = 0;
 
-
+    //----Tables----
+        //Table with detailed view from DB
+    int table_panelTableView_tableFromDB_tableWidth = 800;
+    int table_panelTableView_tableFromDB_tableHeight = 800;
+    int table_panelTableView_tableFromDB_tableX = 0;
+    int table_panelTableView_tableFromDB_tableY = 0;
 
     //Getter
+
+    public int getPanel_panelTableView_panelWidth() {
+        return panel_panelTableView_panelWidth;
+    }
+
+    public int getPanel_panelTableView_panelHeight() {
+        return panel_panelTableView_panelHeight;
+    }
+
+    public int getPanel_panelTableView_panelX() {
+        return panel_panelTableView_panelX;
+    }
+
+    public int getPanel_panelTableView_panelY() {
+        return panel_panelTableView_panelY;
+    }
+
+    public int getTable_panelTableView_tableFromDB_tableWidth() {
+        return table_panelTableView_tableFromDB_tableWidth;
+    }
+
+    public int getTable_panelTableView_tableFromDB_tableHeight() {
+        return table_panelTableView_tableFromDB_tableHeight;
+    }
+
+    public int getTable_panelTableView_tableFromDB_tableX() {
+        return table_panelTableView_tableFromDB_tableX;
+    }
+
+    public int getTable_panelTableView_tableFromDB_tableY() {
+        return table_panelTableView_tableFromDB_tableY;
+    }
+
+    public int getPanel_panelTableSelection_panelWidth() {
+        return panel_panelTableSelection_panelWidth;
+    }
+
+    public int getPanel_panelTableSelection_panelHeight() {
+        return panel_panelTableSelection_panelHeight;
+    }
+
+    public int getPanel_panelTableSelection_panelX() {
+        return panel_panelTableSelection_panelX;
+    }
+
+    public int getPanel_panelTableSelection_panelY() {
+        return panel_panelTableSelection_panelY;
+    }
+
+    public int getJlist_panelTableSelection_jlistTableSelection_jlistWidth() {
+        return jlist_panelTableSelection_jlistTableSelection_jlistWidth;
+    }
+
+    public int getJlist_panelTableSelection_jlistTableSelection_jlistHeight() {
+        return jlist_panelTableSelection_jlistTableSelection_jlistHeight;
+    }
+
+    public int getJlist_panelTableSelection_jlistTableSelection_jlistX() {
+        return jlist_panelTableSelection_jlistTableSelection_jlistX;
+    }
+
+    public int getJlist_panelTableSelection_jlistTableSelection_jlisty() {
+        return jlist_panelTableSelection_jlistTableSelection_jlisty;
+    }
 
     public int getTextField_panelDatabaseConnection_textFieldPassword_textFieldWidth() {
         return textField_panelDatabaseConnection_textFieldPassword_textFieldWidth;
