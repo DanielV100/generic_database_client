@@ -12,7 +12,7 @@ public class Sizes {
     int panel_view_panelDatabaseConnection_panelX = 0;
     int panel_view_panelDatabaseConnection_panelY = 0;
         //panel which got the list with the tables on it
-    int panel_panelTableSelection_panelWidth = 400;
+    int panel_panelTableSelection_panelWidth = 1200;
     int panel_panelTableSelection_panelHeight = 800;
     int panel_panelTableSelection_panelX = 0;
     int panel_panelTableSelection_panelY = 0;
@@ -68,7 +68,7 @@ public class Sizes {
         //Table with detailed view from DB
     int table_panelTableView_tableFromDB_tableWidth = 800;
     int table_panelTableView_tableFromDB_tableHeight = 800;
-    int table_panelTableView_tableFromDB_tableX = 400;
+    int table_panelTableView_tableFromDB_tableX = 0;
     int table_panelTableView_tableFromDB_tableY = 0;
 
     //Getter
