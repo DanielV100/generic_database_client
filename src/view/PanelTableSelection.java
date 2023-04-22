@@ -26,7 +26,12 @@ public class PanelTableSelection {
             @Override
             public void mouseClicked(MouseEvent e) {
                 try {
-                    System.out.println(jlistTableSelection.getSelectedIndex());
+                    try {
+                        panelTableSelection.remove(1);
+                        panelTableSelection.repaint();
+                    } catch (ArrayIndexOutOfBoundsException arrayIndexOutOfBoundsException) {
+
+                    }
                     JScrollPane scrollPaneWithTable = panelTableView.PanelTableView(connection, jlistTableSelection.getSelectedIndex());
                     panelTableSelection.add(scrollPaneWithTable);
                 } catch (SQLException ex) {
