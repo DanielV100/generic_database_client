@@ -22,10 +22,6 @@ public class PanelTableView {
     JTable tableFromDB = new JTable();
     JScrollPane scrollPane = new JScrollPane();
 
-    //Popupmenu
-    final JPopupMenu popupmenu = new JPopupMenu("Edit");
-    JMenuItem menuItemDelete = new JMenuItem("Delete");
-
     public JScrollPane PanelTableView(Connection connection, int index) throws SQLException {
         String[] columns = dbConnection.getColumnsFromTable(connection, index);
         tableFromDB = uiHelpers.createJTable(tableFromDB, columns, dbConnection.getRowsFromTable(connection, columns, index), sizes.getTable_panelTableView_tableFromDB_tableX(), sizes.getTable_panelTableView_tableFromDB_tableY(), sizes.getTable_panelTableView_tableFromDB_tableWidth(), sizes.getTable_panelTableView_tableFromDB_tableHeight());
@@ -37,18 +33,6 @@ public class PanelTableView {
 
             @Override
             public void mousePressed(MouseEvent e) {
-                System.out.println(e.getButton());
-                //on double click popupmenu is shown
-                /*if(e.getClickCount() == 2 && e.getButton() == MouseEvent.BUTTON1) {
-                    menuItemDelete.addActionListener(new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-
-                        }
-                    });
-                    popupmenu.add(menuItemDelete);
-                    popupmenu.show(scrollPane, e.getX(), e.getY());
-                }*/
                 if(e.getClickCount() == 2 && e.getButton() == MouseEvent.BUTTON1) {
                     List<String> columns = new ArrayList<>();
                     List<String> rows = new ArrayList<>();
@@ -93,6 +77,38 @@ public class PanelTableView {
         });
         scrollPane = new JScrollPane(tableFromDB);
         scrollPane.setBounds( sizes.getPanel_panelTableView_panelX(),sizes.getPanel_panelTableView_panelY() , sizes.getPanel_panelTableView_panelWidth(), sizes.getPanel_panelTableView_panelHeight());
+        scrollPane.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if(e.getClickCount() == 2 && e.getButton() == MouseEvent.BUTTON1) {
+                    try {
+                        dbConnection.addRow(connection, dbConnection.getAllTablesFromDB(connection)[index]);
+                    } catch (SQLException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
         return scrollPane;
     }
 }

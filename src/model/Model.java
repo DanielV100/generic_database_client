@@ -28,13 +28,11 @@ public class Model {
         List<String> allColumns = new ArrayList<>();
         Statement databaseStatement = connection.createStatement();
         ResultSet resultSet = databaseStatement.executeQuery(
-                "SELECT COLUMN_NAME\n" +
-                "FROM INFORMATION_SCHEMA.COLUMNS\n" +
-                "WHERE TABLE_NAME ='" + table + "'\n" +
-                "ORDER BY ORDINAL_POSITION"
+                "Select * from " + table
         );
-        while (resultSet.next()) {
-            allColumns.add(resultSet.getString(1));
+        ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
+        for(int i = 1; i <= resultSetMetaData.getColumnCount(); i++) {
+            allColumns.add(resultSetMetaData.getColumnName(i));
         }
         return allColumns;
     }
@@ -79,5 +77,63 @@ public class Model {
         }
         st.executeUpdate();
         JOptionPane.showMessageDialog(null, "Row deleted!");
+    }
+    public void addRow(Connection connection, String table) throws SQLException {
+        String addQuery = "INSERT INTO " + table + "(";
+        List<String> columns = getAllWriteableColumns(connection, table);
+        String[] input = getInputDialogForCreatingNewRow(columns);
+        if(input != null) {
+            for(int i = 0; i < columns.size(); i++) {
+                if(i == columns.size() - 1) {
+                    addQuery += columns.get(i) + ") VALUES(";
+                } else {
+                    addQuery += columns.get(i) + ", ";
+                }
+            }
+            for(int x = 0; x < columns.size(); x++) {
+                if(x == columns.size() - 1) {
+                    addQuery += "?" + ");";
+                } else {
+                    addQuery += "?" + ", ";
+                }
+            }
+            PreparedStatement preparedStatement = connection.prepareStatement(addQuery);
+            for(int y = 1; y <= input.length; y++) {
+                preparedStatement.setString(y, input[y-1]);
+            }
+            preparedStatement.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Added row!");
+        }
+
+    }
+    //needed for adding row
+    private List<String> getAllWriteableColumns(Connection connection, String table) throws SQLException {
+        List<String> columnsWriteable = new ArrayList<>();
+        Statement databaseStatement = connection.createStatement();
+        ResultSet resultSet = databaseStatement.executeQuery("SELECT * FROM " + table);
+        ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
+        for (int i = 1; i <= resultSetMetaData.getColumnCount(); i++) {
+            if(!(resultSetMetaData.isReadOnly(i))) {
+                columnsWriteable.add(resultSetMetaData.getColumnName(i));
+            }
+        }
+        return columnsWriteable;
+    }
+    //needed for adding row
+    private String[] getInputDialogForCreatingNewRow(List<String> columns) {
+        JTextField[] inputFields = new JTextField[columns.size()];
+        String input[] = new String[columns.size()];
+        for(int i = 0; i < columns.size(); i++) {
+            inputFields[i] = new JTextField(columns.get(i));
+        }
+        int option = JOptionPane.showConfirmDialog(null, inputFields, "Add rows", JOptionPane.OK_CANCEL_OPTION);
+        if(option == JOptionPane.OK_OPTION) {
+            for(int x = 0; x < columns.size(); x++) {
+                input[x] = inputFields[x].getText();
+            }
+        } else {
+            input = null;
+        }
+        return input;
     }
 }

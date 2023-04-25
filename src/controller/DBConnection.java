@@ -54,5 +54,7 @@ public class DBConnection {
     public void deleteRow(Connection connection, String table, List<String> columns, List<String> rows) throws SQLException {
         model.deleteRows(connection, table, columns, rows);
     }
+    public void addRow(Connection connection, String table) throws SQLException {
+        model.addRow(connection, table);
+    }
 }
-//https://www.youtube.com/watch?v=1xF_PFJLs4g
