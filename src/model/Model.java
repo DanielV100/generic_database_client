@@ -60,4 +60,22 @@ public class Model {
         }
         return test;
     }
+
+    public void deleteRows(Connection connection, String table, List<String> columns, List<String> rows) throws SQLException {
+        String deleteQuery = "DELETE FROM " + table + " WHERE ";
+        for(int i = 0; i < columns.size(); i++){
+            if(i == columns.size() - 1 ){
+                deleteQuery += columns.get(i) + " = ?" + ";";
+            } else {
+                deleteQuery += columns.get(i) + " = ?" + " AND ";
+            }
+
+        }
+        System.out.println(deleteQuery);
+        PreparedStatement st = connection.prepareStatement(deleteQuery);
+        for (int x = 1; x <= rows.size(); x++){
+            st.setString(x, rows.get(x-1));
+        }
+        st.executeUpdate();
+    }
 }
