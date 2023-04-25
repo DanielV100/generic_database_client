@@ -1,0 +1,5 @@
+docker exec -it mysqldb-mysql-1 mysql -uroot -p
+
+update mysql.user set host = '%' where user='root';
+
+docker restart mysqldb-mysql-1

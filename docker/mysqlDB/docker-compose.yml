@@ -4,6 +4,8 @@ services:
         image: mysql:latest
         environment:
             MYSQL_ROOT_PASSWORD: geheim
+        ports:
+            - "3306:3306"
         restart: always
     phpmyadmin:
         image: phpmyadmin/phpmyadmin:latest
