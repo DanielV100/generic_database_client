@@ -2,6 +2,7 @@ package model;
 
 import controller.DBConnection;
 
+import javax.swing.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -77,5 +78,6 @@ public class Model {
             st.setString(x, rows.get(x-1));
         }
         st.executeUpdate();
+        JOptionPane.showMessageDialog(null, "Row deleted!");
     }
 }

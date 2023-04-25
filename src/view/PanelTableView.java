@@ -55,20 +55,22 @@ public class PanelTableView {
                     int rowNumber = target.getSelectedRow();
                     for(int i = 0; i < target.getColumnCount(); i++) {
                         System.out.println(target.getColumnName(i));
-                        columns.add(target.getColumnName(i));
                         try {
-                            rows.add(target.getValueAt(rowNumber, i).toString());
+                            if(target.getValueAt(rowNumber, i).toString() != null) {
+                                columns.add(target.getColumnName(i));
+                                rows.add(target.getValueAt(rowNumber, i).toString());
+                            }
+                        } catch (NullPointerException nullPointerException) {
+
                         }
-                        catch (NullPointerException nullPointerException) {
-                            rows.add("");
-                        }
+
 
                         System.out.println(target.getValueAt(rowNumber, i));
                     }
                     try {
                         dbConnection.deleteRow(connection, dbConnection.getAllTablesFromDB(connection)[index], columns, rows);
                     } catch (SQLException ex) {
-                        throw new RuntimeException(ex);
+                        JOptionPane.showMessageDialog(null, "Something went wrong.");
                     }
                 }
             }
