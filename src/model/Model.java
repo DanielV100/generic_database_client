@@ -28,13 +28,11 @@ public class Model {
         List<String> allColumns = new ArrayList<>();
         Statement databaseStatement = connection.createStatement();
         ResultSet resultSet = databaseStatement.executeQuery(
-                "SELECT COLUMN_NAME\n" +
-                "FROM INFORMATION_SCHEMA.COLUMNS\n" +
-                "WHERE TABLE_NAME ='" + table + "'\n" +
-                "ORDER BY ORDINAL_POSITION"
+                "Select * from " + table
         );
-        while (resultSet.next()) {
-            allColumns.add(resultSet.getString(1));
+        ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
+        for(int i = 1; i <= resultSetMetaData.getColumnCount(); i++) {
+            allColumns.add(resultSetMetaData.getColumnName(i));
         }
         return allColumns;
     }
@@ -108,6 +106,7 @@ public class Model {
         }
 
     }
+    //needed for adding row
     private List<String> getAllWriteableColumns(Connection connection, String table) throws SQLException {
         List<String> columnsWriteable = new ArrayList<>();
         Statement databaseStatement = connection.createStatement();
@@ -120,6 +119,7 @@ public class Model {
         }
         return columnsWriteable;
     }
+    //needed for adding row
     private String[] getInputDialogForCreatingNewRow(List<String> columns) {
         JTextField[] inputFields = new JTextField[columns.size()];
         String input[] = new String[columns.size()];

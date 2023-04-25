@@ -58,4 +58,3 @@ public class DBConnection {
         model.addRow(connection, table);
     }
 }
-//https://www.youtube.com/watch?v=1xF_PFJLs4g
