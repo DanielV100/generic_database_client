@@ -46,10 +46,12 @@ public class PanelDatabaseConnection {
                 try {
                     Connection connection = dbConnection.initDBConnection(textFieldHostname.getText(), textFieldPort.getText(), textFieldDatabaseName.getText(), textFieldUsername.getText(), textFieldPassword.getText());
                     //Erfolgsmeldung
+                    JOptionPane.showMessageDialog(null, "Verbindung erfolgreich");
                     test.add(panelTableSelection.PanelTableSelection(connection));
                     test.setVisible(true);
                 } catch (SQLException ex) {
                     //Fehlermeldung
+                    JOptionPane.showMessageDialog(null, "Verbindung nicht möglich");
                     throw new RuntimeException(ex);
                 }
             }
