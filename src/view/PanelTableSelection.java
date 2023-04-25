@@ -25,6 +25,11 @@ public class PanelTableSelection {
         jlistTableSelection.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
                 try {
                     try {
                         panelTableSelection.remove(1);
@@ -37,11 +42,6 @@ public class PanelTableSelection {
                 } catch (SQLException ex) {
                     throw new RuntimeException(ex);
                 }
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-
             }
 
             @Override

@@ -39,6 +39,8 @@ public class DBConnection {
     }
 
 
+
+
     //getting all tables in the db and parsing the list to a string array, which is than be shown in a JList
     public String[] getAllTablesFromDB(Connection connection) throws SQLException {
         return model.getAllTablesFromDB(connection).toArray(new String[0]);
@@ -48,6 +50,9 @@ public class DBConnection {
     }
     public String[][] getRowsFromTable(Connection connection, String[] columns, int tableIndex) throws SQLException {
         return model.getRowsFromTable(connection, columns, model.getAllTablesFromDB(connection).get(tableIndex));
+    }
+    public void deleteRow(Connection connection, String table, List<String> columns, List<String> rows) throws SQLException {
+        model.deleteRows(connection, table, columns, rows);
     }
 }
 //https://www.youtube.com/watch?v=1xF_PFJLs4g
