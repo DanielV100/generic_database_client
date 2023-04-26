@@ -28,6 +28,7 @@ public class View {
         //frameMain = UIHelpers.createJFrame(frameMain, controller.getAppPropertiesWithKey("title.view.frameMain"),sizes.getPanel_panelTableView_panelWidth(),sizes.getPanel_panelTableView_panelHeight(),null, true);/backImgPanel.setLayout(null);
         //backImgPanel.setOpaque(false);
         backImgPanel.setLayout(null);
+
         frameMain.add(backImgPanel);
         frameMain.setBackground(Color.BLACK);
         frameMain.add(panelDatabaseConnection.PanelDatabaseConnection());
