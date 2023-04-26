@@ -5,6 +5,7 @@ import resources.Sizes;
 
 import javax.swing.*;
 
+import java.awt.*;
 import java.io.IOException;
 
 
@@ -18,15 +19,24 @@ public class View {
     PanelDatabaseConnection panelDatabaseConnection = new PanelDatabaseConnection();
     public JFrame frameMain = new JFrame("Fullscreen");
 
+    JLabel backImgPanel = new JLabel(new ImageIcon("/Users/lorenz.lederer/Downloads/5g-networking-technology-background-with-blue-digital-line"));
+
 
 
     //creating the main window with its panels on it
     public View() throws IOException {
         //initializing main frame
         //frameMain = UIHelpers.createJFrame(frameMain, controller.getAppPropertiesWithKey("title.view.frameMain"),sizes.getPanel_panelTableView_panelWidth(),sizes.getPanel_panelTableView_panelHeight(),null, true);
+        backImgPanel.setLayout(null);
+        backImgPanel.setOpaque(false);
+
+        frameMain.add(backImgPanel);
         frameMain.add(panelDatabaseConnection.PanelDatabaseConnection());
         frameMain.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frameMain.setUndecorated(false);
         frameMain.setVisible(true);
+
+        //frameMain.setBackground(Color.ORANGE);
+
     }
 }
