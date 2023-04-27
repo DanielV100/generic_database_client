@@ -22,13 +22,7 @@ public class View {
     public View() throws IOException {
         //initializing main frame
         frameMain = UIHelpers.createJFrame(frameMain, controller.getAppPropertiesWithKey("title.view.frameMain"), sizes.getFrame_view_mainFrame_frameWidth(), sizes.getFrame_view_mainFrame_frameHeight(), null, true);
-
-        ImageIcon backgroundIcon = new ImageIcon("resources/test.png");
-        JLabel backgroundLabel = new JLabel(backgroundIcon);
-        backgroundLabel.setBounds(0, 0, frameMain.getWidth(), frameMain.getHeight());
-        frameMain.getContentPane().add(backgroundLabel);
         // add JLabel to JFrame content pane
-
         frameMain.add(panelDatabaseConnection.PanelDatabaseConnection());
 
     }
