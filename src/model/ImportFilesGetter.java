@@ -14,18 +14,8 @@ public class ImportFilesGetter {
     BufferedReader bufferedReader = null;
     String firstLine = "";
 
-    public List<String> getColumnsFromCSV() throws IOException {
-        List<String> columnsFromCSV = new ArrayList<>();
-        bufferedReader = new BufferedReader(new FileReader(csvFile));
-        firstLine = bufferedReader.readLine(); // read the first line
-        // parse the line using a StringTokenizer
-        StringTokenizer st = new StringTokenizer(firstLine, ";");
-        while (st.hasMoreTokens()) {
-            columnsFromCSV.add(st.nextToken());
-        }
-        return columnsFromCSV;
-    }
-    public List<List<String>> getRowsFromCSV() throws IOException {
+
+    public List<List<String>> getColumnsAndRowsFromCSV() throws IOException {
         List<List<String>> rowsFromCSV = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
             String line;
@@ -34,7 +24,6 @@ public class ImportFilesGetter {
                 rowsFromCSV.add(Arrays.asList(values));
             }
         }
-            System.out.println(rowsFromCSV.size());
         return rowsFromCSV;
     }
 }
