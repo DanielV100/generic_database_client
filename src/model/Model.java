@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Model {
-    Connection dbConnection;
-
     //create connection to db
     public Connection connectToDB(String connectionString, String username, String password) throws SQLException {
         return DriverManager.getConnection(connectionString, username, password);
