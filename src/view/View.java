@@ -5,6 +5,8 @@ import resources.Sizes;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 
 /*
@@ -22,6 +24,7 @@ public class View {
     public View() throws IOException {
         //initializing main frame
         frameMain = UIHelpers.createJFrame(frameMain, controller.getAppPropertiesWithKey("title.view.frameMain"), sizes.getFrame_view_mainFrame_frameWidth(), sizes.getFrame_view_mainFrame_frameHeight(), null, true);
+        frameMain.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frameMain.add(panelDatabaseConnection.PanelDatabaseConnection());
 
     }

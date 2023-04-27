@@ -57,6 +57,7 @@ public class PanelDatabaseConnection {
                         @Override
                         public void windowClosing(WindowEvent e) {
                             try {
+                                System.out.println("DB connection closed");
                                 connection.close();
                             } catch (SQLException ex) {
                                 throw new RuntimeException(ex);
