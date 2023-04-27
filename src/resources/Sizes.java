@@ -1,14 +1,27 @@
 package resources;
+
+import java.awt.*;
+
 //Here you can define all sizes and coordinates for all kind of components
 public class Sizes {
+    private Dimension size;
+    private Toolkit tool;
+    int screenHeight;
+    int screenWidth;
+    public void init() {
+        size = tool.getDefaultToolkit().getScreenSize();
+        screenHeight = (int) size.getHeight();
+        screenWidth = (int) size.getWidth();
+    }
     //Frames
     int frame_view_mainFrame_frameWidth = 1200;
     int frame_view_mainFrame_frameHeight = 800;
 
     //----Panels----
         //panel for the database connection (start screen)
-    int panel_view_panelDatabaseConnection_panelWidth = 1200;
-    int panel_view_panelDatabaseConnection_panelHeight = 800;
+
+    int panel_view_panelDatabaseConnection_panelWidth = 200;
+    int panel_view_panelDatabaseConnection_panelHeight = 200;
     int panel_view_panelDatabaseConnection_panelX = 0;
     int panel_view_panelDatabaseConnection_panelY = 0;
         //panel which got the list with the tables on it
@@ -25,7 +38,7 @@ public class Sizes {
 
     //Buttons
         //Connection button
-    int button_panelDatabaseConnection_buttonConnect_buttonWidth = 200;
+    int button_panelDatabaseConnection_buttonConnect_buttonWidth = 1000;
     int button_panelDatabaseConnection_buttonConnect_buttonHeight = 40;
     int button_panelDatabaseConnection_buttonConnect_buttonX = 200;
     int button_panelDatabaseConnection_buttonConnect_buttonY= 450;
@@ -254,5 +267,17 @@ public class Sizes {
 
     public int getPanel_view_panelDatabaseConnection_panelY() {
         return panel_view_panelDatabaseConnection_panelY;
+    }
+
+    public int getScreenHeight() {
+        return screenHeight;
+    }
+
+    public int getScreenWidth() {
+        return screenWidth;
+    }
+
+    public Dimension getSize() {
+        return size;
     }
 }

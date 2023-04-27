@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -29,9 +30,11 @@ public class PanelDatabaseConnection {
     private JButton buttonConnect = new JButton();
     JFrame test = new JFrame();
 
-
     PanelTableSelection panelTableSelection = new PanelTableSelection();
+
+    //"/Users/lorenz.lederer/Downloads/5g-networking-technology-background-with-blue-digital-line/rm373batch2-08.jpg"));
     public JPanel PanelDatabaseConnection() throws IOException {
+        sizes.init();
         test.setLayout(null);
         test.setBounds(0, 0, 1200, 800);
         test.setVisible(false);
@@ -98,13 +101,29 @@ public class PanelDatabaseConnection {
             }
         });
         //initializing panel with the text fields and the button which later will be on the main frame
-        panelDatabaseConnection = UIHelpers.createJPanel(panelDatabaseConnection, sizes.getPanel_view_panelDatabaseConnection_panelX(), sizes.getPanel_view_panelDatabaseConnection_panelY(), sizes.getPanel_view_panelDatabaseConnection_panelWidth(), sizes.getPanel_view_panelDatabaseConnection_panelHeight(), null);
-        panelDatabaseConnection.add(textFieldHostname);
-        panelDatabaseConnection.add(textFieldPort);
+        panelDatabaseConnection = UIHelpers.createJPanel(panelDatabaseConnection, sizes.getPanel_view_panelDatabaseConnection_panelX(), sizes.getPanel_view_panelDatabaseConnection_panelY(), sizes.getScreenWidth(),  sizes.getScreenHeight(), null);
+
+
+        panelDatabaseConnection.setPreferredSize(sizes.getSize());
+        panelDatabaseConnection.add(textFieldHostname,Component.CENTER_ALIGNMENT);
+        panelDatabaseConnection.add(textFieldPort,BorderLayout.CENTER);
         panelDatabaseConnection.add(textFieldDatabaseName);
         panelDatabaseConnection.add(textFieldUsername);
         panelDatabaseConnection.add(textFieldPassword);
         panelDatabaseConnection.add(buttonConnect);
+
+        File file = new File(getClass().getClassLoader().getResource("resources/test.jpg").getFile());
+        String filePath = file.getAbsolutePath();
+        ImageIcon backgroundIcon = new ImageIcon(filePath);
+
+        Image image = backgroundIcon.getImage(); // transform it
+        Image newimg = image.getScaledInstance(panelDatabaseConnection.getWidth(),panelDatabaseConnection.getHeight(), java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
+        backgroundIcon = new ImageIcon(newimg);  // transform it back
+
+        JLabel backgroundLabel = new JLabel(backgroundIcon);
+        backgroundLabel.setBounds(0, 0, panelDatabaseConnection.getWidth(), panelDatabaseConnection.getHeight());
+        panelDatabaseConnection.add(backgroundLabel);
+
         return panelDatabaseConnection;
     }
 
