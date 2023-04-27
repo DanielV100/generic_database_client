@@ -57,4 +57,7 @@ public class DBConnection {
     public void addRow(Connection connection, String table) throws SQLException {
         model.addRow(connection, table);
     }
+    public void addImportedRows(Connection connection, String table) throws SQLException, IOException {
+        model.addImportedRows(connection, table);
+    }
 }

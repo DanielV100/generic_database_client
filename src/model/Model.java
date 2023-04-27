@@ -135,6 +135,7 @@ public class Model {
         return input;
     }
     public void addImportedRows(Connection connection, String table) throws IOException, SQLException {
+        System.out.println(table);
         //Insert into table(n, x, y...) Values(
         String addQueryMeta = "INSERT INTO " + table + "(";
         String addQueryValues = "";
@@ -158,8 +159,9 @@ public class Model {
             PreparedStatement preparedStatement = connection.prepareStatement(addQueryMeta + addQueryValues);
             for(int n = 1; n <= data.get(x).size(); n++) {
                 preparedStatement.setString(n, data.get(x).get(n-1));
-                preparedStatement.executeUpdate();
             }
+            System.out.println(preparedStatement);
+            preparedStatement.executeUpdate();
         }
 
     }
