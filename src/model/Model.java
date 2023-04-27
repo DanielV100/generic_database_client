@@ -66,7 +66,6 @@ public class Model {
             } else {
                 deleteQuery += columns.get(i) + " = ?" + " AND ";
             }
-
         }
         System.out.println(deleteQuery);
         PreparedStatement st = connection.prepareStatement(deleteQuery);
