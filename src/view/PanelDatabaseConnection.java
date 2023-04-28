@@ -51,6 +51,7 @@ public class PanelDatabaseConnection {
         //creating button for building the connection
         buttonConnect = uiHelpers.createJButton(buttonConnect, sizes.getButton_panelDatabaseConnection_buttonConnect_buttonX(), sizes.getButton_panelDatabaseConnection_buttonConnect_buttonY(), sizes.getButton_panelDatabaseConnection_buttonConnect_buttonWidth(), sizes.getButton_panelDatabaseConnection_buttonConnect_buttonHeight(), controller.getAppPropertiesWithKey("button.panelDatabaseConnection.buttonConnect"), Color.GREEN);
         //Textfeld-Inhalte nach Click entfernen
+        panelDatabaseConnection.setLayout(new BorderLayout());
 
         textFieldPassword.addMouseListener(new MouseAdapter() {
             @Override
@@ -102,7 +103,6 @@ public class PanelDatabaseConnection {
         });
         //initializing panel with the text fields and the button which later will be on the main frame
         panelDatabaseConnection = UIHelpers.createJPanel(panelDatabaseConnection, sizes.getPanel_view_panelDatabaseConnection_panelX(), sizes.getPanel_view_panelDatabaseConnection_panelY(), sizes.getScreenWidth(),  sizes.getScreenHeight(), null);
-
 
         panelDatabaseConnection.setPreferredSize(sizes.getSize());
         panelDatabaseConnection.add(textFieldHostname,Component.CENTER_ALIGNMENT);
