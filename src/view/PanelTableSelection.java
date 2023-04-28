@@ -1,5 +1,4 @@
 package view;
-
 import controller.DBConnection;
 import resources.Sizes;
 
@@ -22,6 +21,7 @@ public class PanelTableSelection {
     public JPanel PanelTableSelection(Connection connection) throws SQLException {
         //creating list which shows the tables
         jlistTableSelection = uiHelpers.createJList(jlistTableSelection, dbConnection.getAllTablesFromDB(connection), sizes.getJlist_panelTableSelection_jlistTableSelection_jlistX(), sizes.getJlist_panelTableSelection_jlistTableSelection_jlisty(), sizes.getJlist_panelTableSelection_jlistTableSelection_jlistWidth(), sizes.getJlist_panelTableSelection_jlistTableSelection_jlistHeight());
+
         jlistTableSelection.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
