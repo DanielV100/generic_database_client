@@ -1,3 +1,4 @@
+import resources.Sizes;
 import view.View;
 
 import java.io.IOException;
