@@ -37,7 +37,7 @@ public class View {
         frameMain.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frameMain.add(panelDatabaseConnection.PanelDatabaseConnection());
         frameMain.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        frameMain.setUndecorated(false);
+        //frameMain.setUndecorated(false);
         frameMain.setVisible(true);
 
     }
