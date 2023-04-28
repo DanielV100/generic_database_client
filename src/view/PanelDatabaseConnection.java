@@ -110,6 +110,9 @@ public class PanelDatabaseConnection {
                     });
 
                 } catch (SQLException ex) {
+                    if(ex.toString().startsWith("Unkown database")) {
+                        JOptionPane.showMessageDialog(null, "Verbindung nicht möglich. Die Datenbank wurde nicht gefunden...");
+                    }
                     //Fehlermeldung
                      JOptionPane.showMessageDialog(null, "Verbindung nicht möglich");
                     throw new RuntimeException(ex);
