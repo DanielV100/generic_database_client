@@ -1,5 +1,4 @@
 package view;
-
 import controller.DBConnection;
 import resources.Sizes;
 
