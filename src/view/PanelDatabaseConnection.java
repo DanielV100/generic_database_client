@@ -11,6 +11,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -40,7 +42,7 @@ public class PanelDatabaseConnection {
         test.setVisible(false);
         test.setExtendedState(JFrame.MAXIMIZED_BOTH);
         test.setUndecorated(false);
-
+        test.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         //creating text fields for (1) hostname (2) port (3) Database name (4) username (5) password
         textFieldHostname = uiHelpers.createJTextField(textFieldHostname, controller.getAppPropertiesWithKey("textField.panelDatabaseConnection.textFieldHostname"), sizes.getTextField_panelDatabaseConnection_textFieldHostname_textFieldX(), sizes.getTextField_panelDatabaseConnection_textFieldHostname_textFieldY(), sizes.getTextField_panelDatabaseConnection_textFieldHostname_textFieldWidth(), sizes.getTextField_panelDatabaseConnection_textFieldHostname_textFieldHeight());
@@ -94,6 +96,19 @@ public class PanelDatabaseConnection {
                     //test.requestFocus();
                     test.setVisible(true);
                     //frameMain.setVisible(false);
+                    //close db connection while closing application
+                    test.addWindowListener(new WindowAdapter() {
+                        @Override
+                        public void windowClosing(WindowEvent e) {
+                            try {
+                                System.out.println("DB connection closed");
+                                connection.close();
+                            } catch (SQLException ex) {
+                                throw new RuntimeException(ex);
+                            }
+                        }
+                    });
+
                 } catch (SQLException ex) {
                     //Fehlermeldung
                      JOptionPane.showMessageDialog(null, "Verbindung nicht möglich");

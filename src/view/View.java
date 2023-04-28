@@ -6,6 +6,8 @@ import resources.Sizes;
 import javax.swing.*;
 
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 
 
@@ -31,6 +33,8 @@ public class View {
 
         //frameMain.add(backImgPanel);
         //frameMain.setBackground(Color.BLACK);
+        frameMain = UIHelpers.createJFrame(frameMain, controller.getAppPropertiesWithKey("title.view.frameMain"), sizes.getFrame_view_mainFrame_frameWidth(), sizes.getFrame_view_mainFrame_frameHeight(), null, true);
+        frameMain.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frameMain.add(panelDatabaseConnection.PanelDatabaseConnection());
         frameMain.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frameMain.setUndecorated(false);
