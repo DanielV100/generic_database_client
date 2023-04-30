@@ -21,8 +21,14 @@ public class PanelTableView {
     JPanel panelTableView = new JPanel();
     JTable tableFromDB = new JTable();
     JScrollPane scrollPane = new JScrollPane();
-
+    JPopupMenu popupMenu = new JPopupMenu();
+    JMenuItem menuItemEdit = new JMenuItem("Edit row");
+    JMenuItem menuItemDelete = new JMenuItem("Delete row");
     public JScrollPane PanelTableView(Connection connection, int index) throws SQLException {
+        //creating popupmenu with (1) edit (2) delete
+        popupMenu.add(menuItemEdit);
+        popupMenu.add(menuItemDelete);
+
         String[] columns = dbConnection.getColumnsFromTable(connection, index);
         tableFromDB = uiHelpers.createJTable(tableFromDB, columns, dbConnection.getRowsFromTable(connection, columns, index), sizes.getTable_panelTableView_tableFromDB_tableX(), sizes.getTable_panelTableView_tableFromDB_tableY(), sizes.getTable_panelTableView_tableFromDB_tableWidth(), sizes.getTable_panelTableView_tableFromDB_tableHeight());
         tableFromDB.addMouseListener(new MouseListener() {
@@ -33,13 +39,17 @@ public class PanelTableView {
 
             @Override
             public void mousePressed(MouseEvent e) {
+                if (SwingUtilities.isRightMouseButton(e) || (System.getProperty("os.name").contains("Mac OS X") && e.isControlDown())){
+                    // Display the popup menu at the location of the mouse click
+                    popupMenu.show(e.getComponent(), e.getX(), e.getY());
+                }
+                //deleting row
                 if(e.getClickCount() == 2 && e.getButton() == MouseEvent.BUTTON1) {
                     List<String> columns = new ArrayList<>();
                     List<String> rows = new ArrayList<>();
                     JTable target = (JTable) e.getSource();
                     int rowNumber = target.getSelectedRow();
                     for(int i = 0; i < target.getColumnCount(); i++) {
-                        System.out.println(target.getColumnName(i));
                         try {
                             if(target.getValueAt(rowNumber, i).toString() != null) {
                                 columns.add(target.getColumnName(i));
