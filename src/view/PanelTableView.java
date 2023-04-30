@@ -21,6 +21,7 @@ public class PanelTableView {
     JPopupMenu popupMenu;
     JMenuItem menuItemEdit;
     JMenuItem menuItemDelete;
+    JMenuItem menuItemAdd;
 
     public JScrollPane PanelTableView(Connection connection, int index) throws SQLException {
 
@@ -39,12 +40,14 @@ public class PanelTableView {
                     popupMenu = new JPopupMenu();
                     menuItemEdit = new JMenuItem("Edit row");
                     menuItemDelete = new JMenuItem("Delete row");
-                    //creating popupmenu with (1) edit (2) delete
+                    menuItemAdd = new JMenuItem("Add row");
+                    //creating popupmenu with (1) edit (2) delete (3) add
                     popupMenu.add(menuItemEdit);
-
                     popupMenu.add(menuItemDelete);
-                    // Display the popup menu at the location of the mouse click
+                    popupMenu.add(menuItemAdd);
+                    //Display the popup menu at the location of the mouse click
                     popupMenu.show(e.getComponent(), e.getX(), e.getY());
+                    //----Editing----
                     menuItemEdit.addMouseListener(new MouseAdapter() {
                         @Override
                         public void mousePressed(MouseEvent mouseEventEdit) {
@@ -71,6 +74,9 @@ public class PanelTableView {
                             }
                         }
                     });
+                    //----Editing----
+
+                    //----Deleting----
                     menuItemDelete.addMouseListener(new MouseAdapter() {
                         @Override
                         public void mousePressed(MouseEvent mouseEventDelete) {
@@ -98,6 +104,18 @@ public class PanelTableView {
                             }
                         }
                     });
+                    //----Deleting----
+
+                    menuItemAdd.addMouseListener(new MouseAdapter() {
+                        @Override
+                        public void mousePressed(MouseEvent e) {
+                            try {
+                                dbConnection.addRow(connection, dbConnection.getAllTablesFromDB(connection)[index]);
+                            } catch (SQLException ex) {
+                                throw new RuntimeException(ex);
+                            }
+                        }
+                    });
                 }
             }
 
@@ -118,38 +136,7 @@ public class PanelTableView {
         });
         scrollPane = new JScrollPane(tableFromDB);
         scrollPane.setBounds( sizes.getPanel_panelTableView_panelX(),sizes.getPanel_panelTableView_panelY() , sizes.getPanel_panelTableView_panelWidth(), sizes.getPanel_panelTableView_panelHeight());
-        scrollPane.addMouseListener(new MouseListener() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
 
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-                if(e.getClickCount() == 2 && e.getButton() == MouseEvent.BUTTON1) {
-                    try {
-                        dbConnection.addRow(connection, dbConnection.getAllTablesFromDB(connection)[index]);
-                    } catch (SQLException ex) {
-                        throw new RuntimeException(ex);
-                    }
-                }
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-
-            }
-        });
         return scrollPane;
     }
 }
