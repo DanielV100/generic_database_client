@@ -116,10 +116,22 @@ public class Model {
                 editQuery += columns.get(i) + "=" + "?" + ",";
             }
         }
-        editQuery += columns.get(0) + "=" + "?" + ";";
+        for (int x = 0; x < columns.size(); x++) {
+            if(x == columns.size() - 1) {
+                editQuery += columns.get(x) + "=" + "?" + ";";
+            } else {
+                editQuery += columns.get(x) + "=" + "?" + " AND ";
+            }
+        }
+
         PreparedStatement preparedStatement = connection.prepareStatement(editQuery);
         for (int y = 1; y <= input.length; y++) {
             preparedStatement.setString(y, input[y-1]);
+        }
+        int test = 0;
+        for (int xy = input.length+1; xy <= input.length + rows.size(); xy++) {
+            preparedStatement.setString(xy, rows.get(test));
+            test++;
         }
         preparedStatement.setString(input.length+1, rows.get(0));
         System.out.println(preparedStatement);
