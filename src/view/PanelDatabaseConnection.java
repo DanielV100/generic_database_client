@@ -38,7 +38,7 @@ public class PanelDatabaseConnection {
     public JPanel PanelDatabaseConnection() throws IOException {
         sizes.init();
         test.setLayout(null);
-        test.setBounds(0, 0, 1200, 800);
+        test.setBounds(0, 0, sizes.getScreenWidth(), sizes.getScreenHeight());
         test.setVisible(false);
         test.setExtendedState(JFrame.MAXIMIZED_BOTH);
         test.setUndecorated(false);
@@ -53,7 +53,6 @@ public class PanelDatabaseConnection {
         //creating button for building the connection
         buttonConnect = uiHelpers.createJButton(buttonConnect, (sizes.getScreenWidth()/2)-(sizes.getButton_panelDatabaseConnection_buttonConnect_buttonWidth()/2), sizes.getButton_panelDatabaseConnection_buttonConnect_buttonY(), sizes.getButton_panelDatabaseConnection_buttonConnect_buttonWidth(), sizes.getButton_panelDatabaseConnection_buttonConnect_buttonHeight(), controller.getAppPropertiesWithKey("button.panelDatabaseConnection.buttonConnect"), Color.GREEN);
         //Textfeld-Inhalte nach Click entfernen
-        panelDatabaseConnection.setLayout(new BorderLayout());
 
         textFieldPassword.addMouseListener(new MouseAdapter() {
             @Override
