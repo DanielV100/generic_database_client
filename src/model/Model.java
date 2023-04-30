@@ -5,11 +5,13 @@ import resources.Sizes;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Model {
+    ImportFilesGetter importFilesGetter = new ImportFilesGetter();
     Sizes sizes = new Sizes();
     //create connection to db
     public Connection connectToDB(String connectionString, String username, String password) throws SQLException {
@@ -196,7 +198,7 @@ public class Model {
         }
         return input;
     }
-    public void addImportedRows(Connection connection, String table) throws IOException, SQLException {
+    public void addImportedRows(Connection connection, String table) throws SQLException, IOException {
         System.out.println(table);
         //Insert into table(n, x, y...) Values(
         String addQueryMeta = "INSERT INTO " + table + "(";

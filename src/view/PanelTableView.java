@@ -6,6 +6,7 @@ import resources.Sizes;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -122,7 +123,13 @@ public class PanelTableView {
                     menuItemImport.addMouseListener(new MouseAdapter() {
                         @Override
                         public void mousePressed(MouseEvent e) {
-                            dbConnection.addImportedRows(connection, dbConnection.getAllTablesFromDB(connection)[index]);
+                            try {
+                                dbConnection.addImportedRows(connection, dbConnection.getAllTablesFromDB(connection)[index]);
+                            } catch (SQLException ex) {
+                                throw new RuntimeException(ex);
+                            } catch (IOException ex) {
+                                throw new RuntimeException(ex);
+                            }
                         }
                     });
 
