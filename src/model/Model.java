@@ -104,8 +104,26 @@ public class Model {
         }
 
     }
-    public void editRow(Connection connection, String table, List<String> columns, List<String> rows) {
-        System.out.println(getInputDialogForEditingRow(columns, rows)[1]);
+    public void editRow(Connection connection, String table, List<String> columns, List<String> rows) throws SQLException {
+        String editQuery = "UPDATE " + table + " SET ";
+        String[] input = getInputDialogForEditingRow(columns, rows);
+        for (int i = 0; i < columns.size(); i++) {
+            if(i == columns.size() - 1) {
+                editQuery += columns.get(i) + "=" + "?" + " WHERE ";
+            } else {
+                editQuery += columns.get(i) + "=" + "?" + ",";
+            }
+        }
+        editQuery += columns.get(0) + "=" + "?" + ";";
+        PreparedStatement preparedStatement = connection.prepareStatement(editQuery);
+        for (int y = 1; y <= input.length; y++) {
+            preparedStatement.setString(y, input[y-1]);
+        }
+        preparedStatement.setString(input.length+1, rows.get(0));
+        System.out.println(preparedStatement);
+        preparedStatement.executeUpdate();
+        JOptionPane.showMessageDialog(null, "Edited row!");
+
     }
     //needed for adding row
     private List<String> getAllWriteableColumns(Connection connection, String table) throws SQLException {
@@ -150,7 +168,7 @@ public class Model {
             inputFields[i] = new JTextField(rows.get(i));
             container.add(inputFields[i]);
         }
-        int option = JOptionPane.showConfirmDialog(null, container, "Add rows", JOptionPane.OK_CANCEL_OPTION);
+        int option = JOptionPane.showConfirmDialog(null, container, "Edit rows", JOptionPane.OK_CANCEL_OPTION);
         if(option == JOptionPane.OK_OPTION) {
             for(int x = 0; x < columns.size(); x++) {
                 input[x] = inputFields[x].getText();
