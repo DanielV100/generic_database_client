@@ -4,6 +4,7 @@ import resources.Sizes;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
@@ -19,15 +20,11 @@ public class PanelTableSelection {
     JList jlistTableSelection = new JList();
 
     public JPanel PanelTableSelection(Connection connection) throws SQLException {
+        sizes.init();
         //creating list which shows the tables
-        jlistTableSelection = uiHelpers.createJList(jlistTableSelection, dbConnection.getAllTablesFromDB(connection), sizes.getJlist_panelTableSelection_jlistTableSelection_jlistX(), sizes.getJlist_panelTableSelection_jlistTableSelection_jlisty(), sizes.getJlist_panelTableSelection_jlistTableSelection_jlistWidth(), sizes.getJlist_panelTableSelection_jlistTableSelection_jlistHeight());
+        jlistTableSelection = uiHelpers.createJList(jlistTableSelection, dbConnection.getAllTablesFromDB(connection), sizes.getJlist_panelTableSelection_jlistTableSelection_jlistX(), sizes.getJlist_panelTableSelection_jlistTableSelection_jlisty(), sizes.getJlist_panelTableSelection_jlistTableSelection_jlistWidth(), sizes.getScreenHeight());
 
-        jlistTableSelection.addMouseListener(new MouseListener() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-
-            }
-
+        jlistTableSelection.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
                 try {
@@ -43,25 +40,11 @@ public class PanelTableSelection {
                     throw new RuntimeException(ex);
                 }
             }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-
-            }
         });
         //creating the panel
-        panelTableSelection = uiHelpers.createJPanel(panelTableSelection, sizes.getPanel_panelTableSelection_panelX(), sizes.getPanel_panelTableSelection_panelY(), sizes.getPanel_panelTableSelection_panelWidth(), sizes.getPanel_panelTableSelection_panelHeight(), null);
+        panelTableSelection = uiHelpers.createJPanel(panelTableSelection, sizes.getPanel_panelTableSelection_panelX(), sizes.getPanel_panelTableSelection_panelY(), sizes.getScreenWidth(), sizes.getScreenHeight(), null);
         panelTableSelection.add(jlistTableSelection);
+        panelTableSelection.setPreferredSize(sizes.getSize());
         return panelTableSelection;
     }
 }

@@ -1,6 +1,7 @@
 package model;
 
 import controller.DBConnection;
+import resources.Sizes;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Model {
+    Sizes sizes = new Sizes();
     //create connection to db
     public Connection connectToDB(String connectionString, String username, String password) throws SQLException {
         return DriverManager.getConnection(connectionString, username, password);
@@ -145,7 +147,9 @@ public class Model {
         for(int i = 0; i < columns.size(); i++) {
             inputFields[i] = new JTextField(columns.get(i));
         }
-        int option = JOptionPane.showConfirmDialog(null, inputFields, "Add rows", JOptionPane.OK_CANCEL_OPTION);
+        JOptionPane pane = new JOptionPane();
+        pane.setBounds(sizes.getScreenWidth()/2, sizes.getScreenHeight()/2, sizes.getScreenWidth()/2,sizes.getScreenHeight()/2);
+        int option = pane.showConfirmDialog(null, inputFields, "Add rows", JOptionPane.OK_CANCEL_OPTION);
         if(option == JOptionPane.OK_OPTION) {
             for(int x = 0; x < columns.size(); x++) {
                 input[x] = inputFields[x].getText();
@@ -168,7 +172,9 @@ public class Model {
             inputFields[i] = new JTextField(rows.get(i));
             container.add(inputFields[i]);
         }
-        int option = JOptionPane.showConfirmDialog(null, container, "Edit rows", JOptionPane.OK_CANCEL_OPTION);
+        JOptionPane pane = new JOptionPane();
+        pane.setBounds(sizes.getScreenWidth()/2, sizes.getScreenHeight()/2, sizes.getScreenWidth()/2,sizes.getScreenHeight()/2);
+        int option = pane.showConfirmDialog(null, container, "Edit rows", JOptionPane.OK_CANCEL_OPTION);
         if(option == JOptionPane.OK_OPTION) {
             for(int x = 0; x < columns.size(); x++) {
                 input[x] = inputFields[x].getText();
