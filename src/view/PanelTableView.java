@@ -18,14 +18,12 @@ public class PanelTableView {
     JPanel panelTableView = new JPanel();
     JTable tableFromDB = new JTable();
     JScrollPane scrollPane = new JScrollPane();
-    JPopupMenu popupMenu = new JPopupMenu();
-    JMenuItem menuItemEdit = new JMenuItem("Edit row");
-    JMenuItem menuItemDelete = new JMenuItem("Delete row");
-    public JScrollPane PanelTableView(Connection connection, int index) throws SQLException {
-        //creating popupmenu with (1) edit (2) delete
-        popupMenu.add(menuItemEdit);
+    JPopupMenu popupMenu;
+    JMenuItem menuItemEdit;
+    JMenuItem menuItemDelete;
 
-        popupMenu.add(menuItemDelete);
+    public JScrollPane PanelTableView(Connection connection, int index) throws SQLException {
+
 
         String[] columns = dbConnection.getColumnsFromTable(connection, index);
         tableFromDB = uiHelpers.createJTable(tableFromDB, columns, dbConnection.getRowsFromTable(connection, columns, index), sizes.getTable_panelTableView_tableFromDB_tableX(), sizes.getTable_panelTableView_tableFromDB_tableY(), sizes.getTable_panelTableView_tableFromDB_tableWidth(), sizes.getTable_panelTableView_tableFromDB_tableHeight());
@@ -38,12 +36,39 @@ public class PanelTableView {
             @Override
             public void mousePressed(MouseEvent e) {
                 if (SwingUtilities.isRightMouseButton(e) || (System.getProperty("os.name").contains("Mac OS X") && e.isControlDown())){
+                    popupMenu = new JPopupMenu();
+                    menuItemEdit = new JMenuItem("Edit row");
+                    menuItemDelete = new JMenuItem("Delete row");
+                    //creating popupmenu with (1) edit (2) delete
+                    popupMenu.add(menuItemEdit);
+
+                    popupMenu.add(menuItemDelete);
                     // Display the popup menu at the location of the mouse click
                     popupMenu.show(e.getComponent(), e.getX(), e.getY());
                     menuItemEdit.addMouseListener(new MouseAdapter() {
                         @Override
                         public void mousePressed(MouseEvent mouseEventEdit) {
-                            super.mousePressed(e);
+                            List<String> columns = new ArrayList<>();
+                            List<String> rows = new ArrayList<>();
+                            //getting actual table
+                            JTable target = (JTable) e.getSource();
+                            //getting selected row
+                            int rowNumber = target.getSelectedRow();
+                            for(int i = 0; i < target.getColumnCount(); i++) {
+                                try {
+                                    if(target.getValueAt(rowNumber, i).toString() != null) {
+                                        columns.add(target.getColumnName(i));
+                                        rows.add(target.getValueAt(rowNumber, i).toString());
+                                    }
+                                } catch (NullPointerException nullPointerException) {
+
+                                }
+                            }
+                            try {
+                                dbConnection.editRow(connection,dbConnection.getAllTablesFromDB(connection)[index], columns, rows);
+                            } catch (SQLException ex) {
+                                throw new RuntimeException(ex);
+                            }
                         }
                     });
                     menuItemDelete.addMouseListener(new MouseAdapter() {

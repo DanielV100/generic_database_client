@@ -3,6 +3,7 @@ package model;
 import controller.DBConnection;
 
 import javax.swing.*;
+import java.awt.*;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -103,6 +104,9 @@ public class Model {
         }
 
     }
+    public void editRow(Connection connection, String table, List<String> columns, List<String> rows) {
+        System.out.println(getInputDialogForEditingRow(columns, rows)[1]);
+    }
     //needed for adding row
     private List<String> getAllWriteableColumns(Connection connection, String table) throws SQLException {
         List<String> columnsWriteable = new ArrayList<>();
@@ -124,6 +128,29 @@ public class Model {
             inputFields[i] = new JTextField(columns.get(i));
         }
         int option = JOptionPane.showConfirmDialog(null, inputFields, "Add rows", JOptionPane.OK_CANCEL_OPTION);
+        if(option == JOptionPane.OK_OPTION) {
+            for(int x = 0; x < columns.size(); x++) {
+                input[x] = inputFields[x].getText();
+            }
+        } else {
+            input = null;
+        }
+        return input;
+    }
+    private String[] getInputDialogForEditingRow(List<String> columns, List<String> rows) {
+        String input[] = new String[columns.size()];
+        JPanel container = new JPanel(new GridLayout(columns.size(), 2));
+        JLabel[] labelForColumns = new JLabel[columns.size()];
+        JTextField[] inputFields = new JTextField[columns.size()];
+        for (int i = 0; i < labelForColumns.length; i++) {
+            //on the left: lables
+            labelForColumns[i] = new JLabel(columns.get(i));
+            container.add(labelForColumns[i]);
+            //on the right-handed side: textfields
+            inputFields[i] = new JTextField(rows.get(i));
+            container.add(inputFields[i]);
+        }
+        int option = JOptionPane.showConfirmDialog(null, container, "Add rows", JOptionPane.OK_CANCEL_OPTION);
         if(option == JOptionPane.OK_OPTION) {
             for(int x = 0; x < columns.size(); x++) {
                 input[x] = inputFields[x].getText();
