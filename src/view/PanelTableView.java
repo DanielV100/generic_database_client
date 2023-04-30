@@ -22,6 +22,7 @@ public class PanelTableView {
     JMenuItem menuItemEdit;
     JMenuItem menuItemDelete;
     JMenuItem menuItemAdd;
+    JMenuItem menuItemImport;
 
     public JScrollPane PanelTableView(Connection connection, int index) throws SQLException {
         sizes.init();
@@ -37,10 +38,12 @@ public class PanelTableView {
                     menuItemEdit = new JMenuItem("Edit row");
                     menuItemDelete = new JMenuItem("Delete row");
                     menuItemAdd = new JMenuItem("Add row");
-                    //creating popupmenu with (1) edit (2) delete (3) add
+                    menuItemImport = new JMenuItem("Import from .csv");
+                    //creating popupmenu with (1) edit (2) delete (3) add (4) import from .csv
                     popupMenu.add(menuItemEdit);
                     popupMenu.add(menuItemDelete);
                     popupMenu.add(menuItemAdd);
+                    popupMenu.add(menuItemImport);
                     //Display the popup menu at the location of the mouse click
                     popupMenu.show(e.getComponent(), e.getX(), e.getY());
                     //----Editing----
@@ -102,6 +105,7 @@ public class PanelTableView {
                     });
                     //----Deleting----
 
+                    //----Adding----
                     menuItemAdd.addMouseListener(new MouseAdapter() {
                         @Override
                         public void mousePressed(MouseEvent e) {
@@ -112,6 +116,17 @@ public class PanelTableView {
                             }
                         }
                     });
+                    //----Adding----
+
+                    //----Importing----
+                    menuItemImport.addMouseListener(new MouseAdapter() {
+                        @Override
+                        public void mousePressed(MouseEvent e) {
+                            dbConnection.addImportedRows(connection, dbConnection.getAllTablesFromDB(connection)[index]);
+                        }
+                    });
+
+                    //----Adding----
                 }
             }
         });

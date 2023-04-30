@@ -60,4 +60,7 @@ public class DBConnection {
     public void editRow(Connection connection, String table, List<String> columns, List<String> rows) throws SQLException {
         model.editRow(connection, table, columns, rows);
     }
+    public void addImportedRows(Connection connection, String table) throws SQLException, IOException {
+        model.addImportedRows(connection, table);
+    }
 }

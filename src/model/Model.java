@@ -196,4 +196,35 @@ public class Model {
         }
         return input;
     }
+    public void addImportedRows(Connection connection, String table) throws IOException, SQLException {
+        System.out.println(table);
+        //Insert into table(n, x, y...) Values(
+        String addQueryMeta = "INSERT INTO " + table + "(";
+        String addQueryValues = "";
+        List<List<String>> data = importFilesGetter.getColumnsAndRowsFromCSV();
+        for (int i = 0; i < data.get(0).size(); i++) {
+            if(i == data.get(0).size() - 1) {
+                addQueryMeta += data.get(0).get(i) + ") VALUES(";
+            } else {
+                addQueryMeta += data.get(0).get(i) + ", ";
+            }
+        }
+        //x --> rows; y --> columns in rows
+        for(int x = 1; x < data.size(); x++) {
+            for(int y = 0; y < data.get(x).size(); y++) {
+                if(y == data.get(x).size() - 1) {
+                    addQueryValues += "?" + ");";
+                } else {
+                    addQueryValues += "?" + ", ";
+                }
+            }
+            PreparedStatement preparedStatement = connection.prepareStatement(addQueryMeta + addQueryValues);
+            for(int n = 1; n <= data.get(x).size(); n++) {
+                preparedStatement.setString(n, data.get(x).get(n-1));
+            }
+            System.out.println(preparedStatement);
+            preparedStatement.executeUpdate();
+        }
+
+    }
 }
