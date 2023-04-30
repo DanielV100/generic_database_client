@@ -5,10 +5,7 @@ import resources.Sizes;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -27,6 +24,7 @@ public class PanelTableView {
     public JScrollPane PanelTableView(Connection connection, int index) throws SQLException {
         //creating popupmenu with (1) edit (2) delete
         popupMenu.add(menuItemEdit);
+
         popupMenu.add(menuItemDelete);
 
         String[] columns = dbConnection.getColumnsFromTable(connection, index);
@@ -42,31 +40,39 @@ public class PanelTableView {
                 if (SwingUtilities.isRightMouseButton(e) || (System.getProperty("os.name").contains("Mac OS X") && e.isControlDown())){
                     // Display the popup menu at the location of the mouse click
                     popupMenu.show(e.getComponent(), e.getX(), e.getY());
-                }
-                //deleting row
-                if(e.getClickCount() == 2 && e.getButton() == MouseEvent.BUTTON1) {
-                    List<String> columns = new ArrayList<>();
-                    List<String> rows = new ArrayList<>();
-                    JTable target = (JTable) e.getSource();
-                    int rowNumber = target.getSelectedRow();
-                    for(int i = 0; i < target.getColumnCount(); i++) {
-                        try {
-                            if(target.getValueAt(rowNumber, i).toString() != null) {
-                                columns.add(target.getColumnName(i));
-                                rows.add(target.getValueAt(rowNumber, i).toString());
-                            }
-                        } catch (NullPointerException nullPointerException) {
-
+                    menuItemEdit.addMouseListener(new MouseAdapter() {
+                        @Override
+                        public void mousePressed(MouseEvent mouseEventEdit) {
+                            super.mousePressed(e);
                         }
+                    });
+                    menuItemDelete.addMouseListener(new MouseAdapter() {
+                        @Override
+                        public void mousePressed(MouseEvent mouseEventDelete) {
+                            //deleting row
+                            List<String> columns = new ArrayList<>();
+                            List<String> rows = new ArrayList<>();
+                            //getting actual table
+                            JTable target = (JTable) e.getSource();
+                            //getting selected row
+                            int rowNumber = target.getSelectedRow();
+                            for(int i = 0; i < target.getColumnCount(); i++) {
+                                try {
+                                    if(target.getValueAt(rowNumber, i).toString() != null) {
+                                        columns.add(target.getColumnName(i));
+                                        rows.add(target.getValueAt(rowNumber, i).toString());
+                                    }
+                                } catch (NullPointerException nullPointerException) {
 
-
-                        System.out.println(target.getValueAt(rowNumber, i));
-                    }
-                    try {
-                        dbConnection.deleteRow(connection, dbConnection.getAllTablesFromDB(connection)[index], columns, rows);
-                    } catch (SQLException ex) {
-                        JOptionPane.showMessageDialog(null, "Something went wrong.");
-                    }
+                                }
+                            }
+                            try {
+                                dbConnection.deleteRow(connection, dbConnection.getAllTablesFromDB(connection)[index], columns, rows);
+                            } catch (SQLException ex) {
+                                JOptionPane.showMessageDialog(null, "Something went wrong.");
+                            }
+                        }
+                    });
                 }
             }
 

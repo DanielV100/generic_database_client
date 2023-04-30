@@ -68,7 +68,6 @@ public class Model {
             }
 
         }
-        System.out.println(deleteQuery);
         PreparedStatement st = connection.prepareStatement(deleteQuery);
         for (int x = 1; x <= rows.size(); x++){
             st.setString(x, rows.get(x-1));
