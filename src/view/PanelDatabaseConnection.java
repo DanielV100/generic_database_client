@@ -31,10 +31,13 @@ public class PanelDatabaseConnection {
     private JCheckBox checkBoxPostgreSQL = new JCheckBox();
 
     // Choose your DB with a RadioButton
-
     private JRadioButton radioButtonMySql = new JRadioButton();
     private JRadioButton radioButtonMariaDB = new JRadioButton();
     private JRadioButton radioButtonPostgreSQL = new JRadioButton();
+    public ButtonGroup panelDatabaseConnection_buttonGroupDB = new ButtonGroup();
+    /*panelDatabaseConnection_buttonGroupDB.add(radioButtonMySql);
+    panelDatabaseConnection_buttonGroupDB.add(radioButtonMariaDB);
+    panelDatabaseConnection_buttonGroupDB.add(radioButtonPostgreSQL);*/
 
     private JTextField textFieldHostname = new JTextField();
     private JTextField textFieldPort = new JTextField();
@@ -146,8 +149,14 @@ public class PanelDatabaseConnection {
 
         panelDatabaseConnection.setPreferredSize(sizes.getSize());
 
-        panelDatabaseConnection.add(checkBoxMySql);
-        panelDatabaseConnection.add(checkBoxMariaDB);
+        // Buttongroup: only one DB can be selected
+        panelDatabaseConnection_buttonGroupDB.add(radioButtonMySql);
+        panelDatabaseConnection_buttonGroupDB.add(radioButtonMariaDB);
+        panelDatabaseConnection_buttonGroupDB.add(radioButtonPostgreSQL);
+
+        panelDatabaseConnection.add(radioButtonMySql);
+        panelDatabaseConnection.add(radioButtonMariaDB);
+        panelDatabaseConnection.add(radioButtonPostgreSQL);
 
         panelDatabaseConnection.add(textFieldHostname,Component.CENTER_ALIGNMENT);
         panelDatabaseConnection.add(textFieldPort,BorderLayout.CENTER);

@@ -63,7 +63,7 @@ public class Sizes {
         int radioButton_panelDatabaseConnection_radioButtonMySql_radioButtonX = (screenWidth/2) + 150;
         int radioButton_panelDatabaseConnection_radioButtonMySql_radioButtonY = 150;
         int radioButton_panelDatabaseConnection_radioButtonMySql_radioButtonWidth = 74;
-        int radioButton_panelDatabaseConnection_radioButtonMySql_radioButtonHeight = 40;
+        int radioButton_panelDatabaseConnection_radioButtonMySql_radioButtonHeight = 20;
         String radioButton_panelDatabaseConnection_radioButtonMySql_radioButtonLabel = "MySQL";
 
         // MariaDB RadioButton
@@ -74,9 +74,9 @@ public class Sizes {
         String radioButton_panelDatabaseConnection_radioButtonMariaDB_radioButtonLabel = "MariaDB";
 
         // PostgreSQL RadioButton
-        int radioButton_panelDatabaseConnection_radioButtonPostgreSQL_radioButtonX = (screenWidth/2) + 50;
+        int radioButton_panelDatabaseConnection_radioButtonPostgreSQL_radioButtonX = (screenWidth/2) -50;
         int radioButton_panelDatabaseConnection_radioButtonPostgreSQL_radioButtonY = 150;
-        int radioButton_panelDatabaseConnection_radioButtonPostgreSQL_radioButtonWidth = 83;
+        int radioButton_panelDatabaseConnection_radioButtonPostgreSQL_radioButtonWidth = 105;
         int radioButton_panelDatabaseConnection_radioButtonPostgreSQL_radioButtonHeight = 20;
         String radioButton_panelDatabaseConnection_radioButtonPostgreSQL_radioButtonLabel = "PostgreSQL";
 
