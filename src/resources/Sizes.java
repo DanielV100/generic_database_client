@@ -38,25 +38,25 @@ public class Sizes {
     // Checkboxes
 
         // MySQL Checkbox
-        int checkBox_panelDatabaseConnection_checkBoxMySql_checkBoxX = (screenWidth/2) + 150;
+        /*int checkBox_panelDatabaseConnection_checkBoxMySql_checkBoxX = (screenWidth/2) + 150;
         int checkBox_panelDatabaseConnection_checkBoxMySql_checkBoxY = 150;
         int checkBox_panelDatabaseConnection_checkBoxMySql_checkBoxWidth = 74;
         int checkBox_panelDatabaseConnection_checkBoxMySql_checkBoxHeight = 20;
-        String checkBox_panelDatabaseConnection_checkBoxMySql_checkBoxLabel = "MySQL";
+        String checkBox_panelDatabaseConnection_checkBoxMySql_checkBoxLabel = "MySQL";*/
 
         // MariaDB Checkbox
-        int checkBox_panelDatabaseConnection_checkBoxMariaDB_checkBoxX = (screenWidth/2) + 50;
+        /*int checkBox_panelDatabaseConnection_checkBoxMariaDB_checkBoxX = (screenWidth/2) + 50;
         int checkBox_panelDatabaseConnection_checkBoxMariaDB_checkBoxY = 150;
         int checkBox_panelDatabaseConnection_checkBoxMariaDB_checkBoxWidth = 83;
         int checkBox_panelDatabaseConnection_checkBoxMariaDB_checkBoxHeight = 20;
-        String checkBox_panelDatabaseConnection_checkBoxMariaDB_checkBoxLabel = "MariaDB";
+        String checkBox_panelDatabaseConnection_checkBoxMariaDB_checkBoxLabel = "MariaDB";*/
 
         // PostgreSQL Checkbox
-        int checkBox_panelDatabaseConnection_checkBoxPostgreSQL_checkBoxX = (screenWidth/2) - 100;
+        /*int checkBox_panelDatabaseConnection_checkBoxPostgreSQL_checkBoxX = (screenWidth/2) - 100;
         int checkBox_panelDatabaseConnection_checkBoxPostgreSQL_checkBoxY = 150;
         int checkBox_panelDatabaseConnection_checkBoxPostgreSQL_checkBoxWidth = 90;
         int checkBox_panelDatabaseConnection_checkBoxPostgreSQL_checkBoxHeight = 20;
-        String checkBox_panelDatabaseConnection_checkBoxPostgreSQL_checkBoxLabel = "PostgreSQL";
+        String checkBox_panelDatabaseConnection_checkBoxPostgreSQL_checkBoxLabel = "PostgreSQL";*/
 
     // RadioButtons
         // MySQL RadioButton
@@ -243,7 +243,7 @@ public class Sizes {
     }
     // Checkboxes
         // MySQL Checkbox
-        public int getCheckBox_panelDatabaseConnection_checkBoxMySql_checkBoxX() {
+        /*public int getCheckBox_panelDatabaseConnection_checkBoxMySql_checkBoxX() {
             return checkBox_panelDatabaseConnection_checkBoxMySql_checkBoxX;
         }
         public int getCheckBox_panelDatabaseConnection_checkBoxMySql_checkBoxY() {
@@ -257,10 +257,10 @@ public class Sizes {
         }
         public String getCheckBox_panelDatabaseConnection_checkBoxMySql_checkBoxLabel() {
             return checkBox_panelDatabaseConnection_checkBoxMySql_checkBoxLabel;
-        }
+        }*/
 
         // MariaDB Checkbox
-        public int getCheckBox_panelDatabaseConnection_checkBoxMariaDB_checkBoxX() {
+        /*public int getCheckBox_panelDatabaseConnection_checkBoxMariaDB_checkBoxX() {
             return checkBox_panelDatabaseConnection_checkBoxMariaDB_checkBoxX;
         }
         public int getCheckBox_panelDatabaseConnection_checkBoxMariaDB_checkBoxY() {
@@ -274,10 +274,10 @@ public class Sizes {
         }
         public String getCheckBox_panelDatabaseConnection_checkBoxMariaDB_checkBoxLabel() {
             return checkBox_panelDatabaseConnection_checkBoxMariaDB_checkBoxLabel;
-        }
+        }*/
 
         // PostgreSQL
-        public int getCheckBox_panelDatabaseConnection_checkBoxPostgreSQL_checkBoxX() {
+        /*public int getCheckBox_panelDatabaseConnection_checkBoxPostgreSQL_checkBoxX() {
             return checkBox_panelDatabaseConnection_checkBoxPostgreSQL_checkBoxX;
         }
         public int getCheckBox_panelDatabaseConnection_checkBoxPostgreSQL_checkBoxY() {
@@ -291,7 +291,7 @@ public class Sizes {
         }
         public String getCheckBox_panelDatabaseConnection_checkBoxPostgreSQL_checkBoxLabel() {
             return checkBox_panelDatabaseConnection_checkBoxPostgreSQL_checkBoxLabel;
-        }
+        }*/
 
     // RadioButtons
         // MySQL
@@ -365,6 +365,7 @@ public class Sizes {
         return textField_panelDatabaseConnection_textFieldPort_textFieldWidth;
     }
 
+    // Textfields
     public int getTextField_panelDatabaseConnection_textFieldPort_textFieldHeight() {
         return textField_panelDatabaseConnection_textFieldPort_textFieldHeight;
     }
@@ -392,6 +393,8 @@ public class Sizes {
     public int getTextField_panelDatabaseConnection_textFieldHostname_textFieldY() {
         return textField_panelDatabaseConnection_textFieldHostname_textFieldY;
     }
+
+    // Frames
     public int getFrame_view_mainFrame_frameHeight() {
         return frame_view_mainFrame_frameHeight;
     }
@@ -400,6 +403,7 @@ public class Sizes {
         return frame_view_mainFrame_frameWidth;
     }
 
+    // Panels
     public int getPanel_view_panelDatabaseConnection_panelWidth() {
         return panel_view_panelDatabaseConnection_panelWidth;
     }
@@ -416,6 +420,7 @@ public class Sizes {
         return panel_view_panelDatabaseConnection_panelY;
     }
 
+    // Screen
     public int getScreenHeight() {
         return screenHeight;
     }
