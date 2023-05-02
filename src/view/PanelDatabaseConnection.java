@@ -28,7 +28,7 @@ public class PanelDatabaseConnection {
     // Choose your DB with a Checkbox
     private JCheckBox checkBoxMySql = new JCheckBox();
     private JCheckBox checkBoxMariaDB = new JCheckBox();
-    //private JCheckBox checkBoxPostgress = new JCheckBox("Postgress");
+    private JCheckBox checkBoxPostgreSQL = new JCheckBox();
 
     private JTextField textFieldHostname = new JTextField();
     private JTextField textFieldPort = new JTextField();
@@ -50,8 +50,10 @@ public class PanelDatabaseConnection {
         test.setUndecorated(false);
         test.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        //creating checkboxes for (1) MySQL (2) mariaDB
-        checkBoxMySql = uiHelpers.createJCheckBox(checkBoxMySql, ((sizes.getScreenWidth()/2)-(sizes.getcheckBox_panelDatabaseConnection_checkBoxMySql_checkBoxX())), (sizes.getcheckBox_panelDatabaseConnection_checkBoxMySql_checkBoxY()), sizes.getcheckBox_panelDatabaseConnection_checkBoxMySql_checkBoxWidth(), sizes.getcheckBox_panelDatabaseConnection_checkBoxMySql_checkBoxHeight(), sizes.getCheckBox_panelDatabaseConnection_checkBoxMySql_checkBoxLabel());
+        //creating checkboxes for (1) MySQL (2) mariaDB (3) PostgreSQL
+        checkBoxMySql = uiHelpers.createJCheckBox(checkBoxMySql, ((sizes.getScreenWidth()/2)-(sizes.getCheckBox_panelDatabaseConnection_checkBoxMySql_checkBoxX())), (sizes.getCheckBox_panelDatabaseConnection_checkBoxMySql_checkBoxY()), sizes.getCheckBox_panelDatabaseConnection_checkBoxMySql_checkBoxWidth(), sizes.getCheckBox_panelDatabaseConnection_checkBoxMySql_checkBoxHeight(), sizes.getCheckBox_panelDatabaseConnection_checkBoxMySql_checkBoxLabel());
+        checkBoxMariaDB = uiHelpers.createJCheckBox(checkBoxMariaDB, ((sizes.getScreenWidth()/2)-(sizes.getCheckBox_panelDatabaseConnection_checkBoxMariaDB_checkBoxX())), (sizes.getCheckBox_panelDatabaseConnection_checkBoxMariaDB_checkBoxY()), sizes.getCheckBox_panelDatabaseConnection_checkBoxMariaDB_checkBoxWidth(), sizes.getCheckBox_panelDatabaseConnection_checkBoxMariaDB_checkBoxHeight(), sizes.getCheckBox_panelDatabaseConnection_checkBoxMariaDB_checkBoxLabel());
+        checkBoxPostgreSQL = uiHelpers.createJCheckBox(checkBoxPostgreSQL, ((sizes.getScreenWidth()/2)-(sizes.getCheckBox_panelDatabaseConnection_checkBoxPostgreSQL_checkBoxX())), (sizes.getCheckBox_panelDatabaseConnection_checkBoxPostgreSQL_checkBoxY()), sizes.getCheckBox_panelDatabaseConnection_checkBoxPostgreSQL_checkBoxWidth(), sizes.getCheckBox_panelDatabaseConnection_checkBoxPostgreSQL_checkBoxHeight(), sizes.getCheckBox_panelDatabaseConnection_checkBoxPostgreSQL_checkBoxLabel());
 
         //creating text fields for (1) hostname (2) port (3) Database name (4) username (5) password
         textFieldHostname = uiHelpers.createJTextField(textFieldHostname, controller.getAppPropertiesWithKey("textField.panelDatabaseConnection.textFieldHostname"), (sizes.getScreenWidth()/2)-(sizes.getButton_panelDatabaseConnection_buttonConnect_buttonWidth()/2), sizes.getTextField_panelDatabaseConnection_textFieldHostname_textFieldY(), sizes.getTextField_panelDatabaseConnection_textFieldHostname_textFieldWidth(), sizes.getTextField_panelDatabaseConnection_textFieldHostname_textFieldHeight());
