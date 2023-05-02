@@ -58,6 +58,28 @@ public class Sizes {
         int checkBox_panelDatabaseConnection_checkBoxPostgreSQL_checkBoxHeight = 20;
         String checkBox_panelDatabaseConnection_checkBoxPostgreSQL_checkBoxLabel = "PostgreSQL";
 
+    // RadioButtons
+        // MySQL RadioButton
+        int radioButton_panelDatabaseConnection_radioButtonMySql_radioButtonX = (screenWidth/2) + 150;
+        int radioButton_panelDatabaseConnection_radioButtonMySql_radioButtonY = 150;
+        int radioButton_panelDatabaseConnection_radioButtonMySql_radioButtonWidth = 74;
+        int radioButton_panelDatabaseConnection_radioButtonMySql_radioButtonHeight = 40;
+        String radioButton_panelDatabaseConnection_radioButtonMySql_radioButtonLabel = "MySQL";
+
+        // MariaDB RadioButton
+        int radioButton_panelDatabaseConnection_radioButtonMariaDB_radioButtonX = (screenWidth/2) + 50;
+        int radioButton_panelDatabaseConnection_radioButtonMariaDB_radioButtonY = 150;
+        int radioButton_panelDatabaseConnection_radioButtonMariaDB_radioButtonWidth = 83;
+        int radioButton_panelDatabaseConnection_radioButtonMariaDB_radioButtonHeight = 20;
+        String radioButton_panelDatabaseConnection_radioButtonMariaDB_radioButtonLabel = "MariaDB";
+
+        // PostgreSQL RadioButton
+        int radioButton_panelDatabaseConnection_radioButtonPostgreSQL_radioButtonX = (screenWidth/2) + 50;
+        int radioButton_panelDatabaseConnection_radioButtonPostgreSQL_radioButtonY = 150;
+        int radioButton_panelDatabaseConnection_radioButtonPostgreSQL_radioButtonWidth = 83;
+        int radioButton_panelDatabaseConnection_radioButtonPostgreSQL_radioButtonHeight = 20;
+        String radioButton_panelDatabaseConnection_radioButtonPostgreSQL_radioButtonLabel = "PostgreSQL";
+
     //Buttons
         //Connection button
     int button_panelDatabaseConnection_buttonConnect_buttonWidth = 300;
@@ -271,6 +293,57 @@ public class Sizes {
             return checkBox_panelDatabaseConnection_checkBoxPostgreSQL_checkBoxLabel;
         }
 
+    // RadioButtons
+        // MySQL
+        public int getRadioButton_panelDatabaseConnection_radioButtonMySql_radioButtonX() {
+            return radioButton_panelDatabaseConnection_radioButtonMySql_radioButtonX;
+        }
+        public int getRadioButton_panelDatabaseConnection_radioButtonMySql_radioButtonY() {
+            return radioButton_panelDatabaseConnection_radioButtonMySql_radioButtonY;
+        }
+        public int getRadioButton_panelDatabaseConnection_radioButtonMySql_radioButtonWidth() {
+            return radioButton_panelDatabaseConnection_radioButtonMySql_radioButtonWidth;
+        }
+        public int getRadioButton_panelDatabaseConnection_radioButtonMySql_radioButtonHeight() {
+            return radioButton_panelDatabaseConnection_radioButtonMySql_radioButtonHeight;
+        }
+        public String getRadioButton_panelDatabaseConnection_radioButtonMySql_radioButtonLabel() {
+            return radioButton_panelDatabaseConnection_radioButtonMySql_radioButtonLabel;
+        }
+
+        // MariaDB
+        public int getRadioButton_panelDatabaseConnection_radioButtonMariaDB_radioButtonX() {
+            return radioButton_panelDatabaseConnection_radioButtonMariaDB_radioButtonX;
+        }
+        public int getRadioButton_panelDatabaseConnection_radioButtonMariaDB_radioButtonY() {
+            return radioButton_panelDatabaseConnection_radioButtonMariaDB_radioButtonY;
+        }
+        public int getRadioButton_panelDatabaseConnection_radioButtonMariaDB_radioButtonWidth() {
+            return radioButton_panelDatabaseConnection_radioButtonMariaDB_radioButtonWidth;
+        }
+        public int getRadioButton_panelDatabaseConnection_radioButtonMariaDB_radioButtonHeight() {
+            return radioButton_panelDatabaseConnection_radioButtonMariaDB_radioButtonHeight;
+        }
+        public String getRadioButton_panelDatabaseConnection_radioButtonMariaDB_radioButtonLabel() {
+            return radioButton_panelDatabaseConnection_radioButtonMariaDB_radioButtonLabel;
+        }
+
+        // PostgreSQL
+        public int getRadioButton_panelDatabaseConnection_radioButtonPostgreSQL_radioButtonX() {
+            return radioButton_panelDatabaseConnection_radioButtonPostgreSQL_radioButtonX;
+        }
+        public int getRadioButton_panelDatabaseConnection_radioButtonPostgreSQL_radioButtonY() {
+            return radioButton_panelDatabaseConnection_radioButtonPostgreSQL_radioButtonY;
+        }
+        public int getRadioButton_panelDatabaseConnection_radioButtonPostgreSQL_radioButtonWidth() {
+            return radioButton_panelDatabaseConnection_radioButtonPostgreSQL_radioButtonWidth;
+        }
+        public int getRadioButton_panelDatabaseConnection_radioButtonPostgreSQL_radioButtonHeight() {
+            return radioButton_panelDatabaseConnection_radioButtonPostgreSQL_radioButtonHeight;
+        }
+        public String getRadioButton_panelDatabaseConnection_radioButtonPostgreSQL_radioButtonLabel() {
+            return radioButton_panelDatabaseConnection_radioButtonPostgreSQL_radioButtonLabel;
+        }
     // Buttons
     public int getButton_panelDatabaseConnection_buttonConnect_buttonWidth() {
         return button_panelDatabaseConnection_buttonConnect_buttonWidth;

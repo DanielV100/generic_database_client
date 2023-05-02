@@ -30,6 +30,12 @@ public class PanelDatabaseConnection {
     private JCheckBox checkBoxMariaDB = new JCheckBox();
     private JCheckBox checkBoxPostgreSQL = new JCheckBox();
 
+    // Choose your DB with a RadioButton
+
+    private JRadioButton radioButtonMySql = new JRadioButton();
+    private JRadioButton radioButtonMariaDB = new JRadioButton();
+    private JRadioButton radioButtonPostgreSQL = new JRadioButton();
+
     private JTextField textFieldHostname = new JTextField();
     private JTextField textFieldPort = new JTextField();
     private JTextField textFieldDatabaseName = new JTextField();
@@ -51,9 +57,15 @@ public class PanelDatabaseConnection {
         test.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         //creating checkboxes for (1) MySQL (2) mariaDB (3) PostgreSQL
-        checkBoxMySql = uiHelpers.createJCheckBox(checkBoxMySql, ((sizes.getScreenWidth()/2)-(sizes.getCheckBox_panelDatabaseConnection_checkBoxMySql_checkBoxX())), (sizes.getCheckBox_panelDatabaseConnection_checkBoxMySql_checkBoxY()), sizes.getCheckBox_panelDatabaseConnection_checkBoxMySql_checkBoxWidth(), sizes.getCheckBox_panelDatabaseConnection_checkBoxMySql_checkBoxHeight(), sizes.getCheckBox_panelDatabaseConnection_checkBoxMySql_checkBoxLabel());
+        /*checkBoxMySql = uiHelpers.createJCheckBox(checkBoxMySql, ((sizes.getScreenWidth()/2)-(sizes.getCheckBox_panelDatabaseConnection_checkBoxMySql_checkBoxX())), (sizes.getCheckBox_panelDatabaseConnection_checkBoxMySql_checkBoxY()), sizes.getCheckBox_panelDatabaseConnection_checkBoxMySql_checkBoxWidth(), sizes.getCheckBox_panelDatabaseConnection_checkBoxMySql_checkBoxHeight(), sizes.getCheckBox_panelDatabaseConnection_checkBoxMySql_checkBoxLabel());
         checkBoxMariaDB = uiHelpers.createJCheckBox(checkBoxMariaDB, ((sizes.getScreenWidth()/2)-(sizes.getCheckBox_panelDatabaseConnection_checkBoxMariaDB_checkBoxX())), (sizes.getCheckBox_panelDatabaseConnection_checkBoxMariaDB_checkBoxY()), sizes.getCheckBox_panelDatabaseConnection_checkBoxMariaDB_checkBoxWidth(), sizes.getCheckBox_panelDatabaseConnection_checkBoxMariaDB_checkBoxHeight(), sizes.getCheckBox_panelDatabaseConnection_checkBoxMariaDB_checkBoxLabel());
         checkBoxPostgreSQL = uiHelpers.createJCheckBox(checkBoxPostgreSQL, ((sizes.getScreenWidth()/2)-(sizes.getCheckBox_panelDatabaseConnection_checkBoxPostgreSQL_checkBoxX())), (sizes.getCheckBox_panelDatabaseConnection_checkBoxPostgreSQL_checkBoxY()), sizes.getCheckBox_panelDatabaseConnection_checkBoxPostgreSQL_checkBoxWidth(), sizes.getCheckBox_panelDatabaseConnection_checkBoxPostgreSQL_checkBoxHeight(), sizes.getCheckBox_panelDatabaseConnection_checkBoxPostgreSQL_checkBoxLabel());
+        */
+
+        // crating radioButtons for (1) MySQL (2) mariaDB (3) PostgreSQL
+        radioButtonMySql = uiHelpers.createJRadioButton(radioButtonMySql, ((sizes.getScreenWidth()/2)-(sizes.getRadioButton_panelDatabaseConnection_radioButtonMySql_radioButtonX())), (sizes.getRadioButton_panelDatabaseConnection_radioButtonMySql_radioButtonY()), sizes.getRadioButton_panelDatabaseConnection_radioButtonMySql_radioButtonWidth(), sizes.getRadioButton_panelDatabaseConnection_radioButtonMySql_radioButtonHeight(), sizes.getRadioButton_panelDatabaseConnection_radioButtonMySql_radioButtonLabel());
+        radioButtonMariaDB = uiHelpers.createJRadioButton(radioButtonMariaDB, ((sizes.getScreenWidth()/2)-(sizes.getRadioButton_panelDatabaseConnection_radioButtonMariaDB_radioButtonX())), (sizes.getRadioButton_panelDatabaseConnection_radioButtonMariaDB_radioButtonY()), sizes.getRadioButton_panelDatabaseConnection_radioButtonMariaDB_radioButtonWidth(), sizes.getRadioButton_panelDatabaseConnection_radioButtonMariaDB_radioButtonHeight(), sizes.getRadioButton_panelDatabaseConnection_radioButtonMariaDB_radioButtonLabel());
+        radioButtonPostgreSQL = uiHelpers.createJRadioButton(radioButtonPostgreSQL, ((sizes.getScreenWidth()/2)-(sizes.getRadioButton_panelDatabaseConnection_radioButtonPostgreSQL_radioButtonX())), (sizes.getRadioButton_panelDatabaseConnection_radioButtonPostgreSQL_radioButtonY()), sizes.getRadioButton_panelDatabaseConnection_radioButtonPostgreSQL_radioButtonWidth(), sizes.getRadioButton_panelDatabaseConnection_radioButtonPostgreSQL_radioButtonHeight(), sizes.getRadioButton_panelDatabaseConnection_radioButtonPostgreSQL_radioButtonLabel());
 
         //creating text fields for (1) hostname (2) port (3) Database name (4) username (5) password
         textFieldHostname = uiHelpers.createJTextField(textFieldHostname, controller.getAppPropertiesWithKey("textField.panelDatabaseConnection.textFieldHostname"), (sizes.getScreenWidth()/2)-(sizes.getButton_panelDatabaseConnection_buttonConnect_buttonWidth()/2), sizes.getTextField_panelDatabaseConnection_textFieldHostname_textFieldY(), sizes.getTextField_panelDatabaseConnection_textFieldHostname_textFieldWidth(), sizes.getTextField_panelDatabaseConnection_textFieldHostname_textFieldHeight());

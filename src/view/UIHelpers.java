@@ -22,6 +22,13 @@ public class UIHelpers {
         return checkBox;
     }
 
+    // Radiobuttons can be created by calling this method
+    protected static JRadioButton createJRadioButton(JRadioButton radioButton, int radioButtonX, int radioButtonY, int radioButtonWidth, int radioButtonHeight, String radioButtonLabel) {
+        radioButton = new JRadioButton(radioButtonLabel);
+        radioButton.setBounds(radioButtonX, radioButtonY, radioButtonWidth, radioButtonHeight);
+        return radioButton;
+    }
+
     //Buttons can be created by calling this method
     protected static JButton createJButton(JButton button, int buttonX, int buttonY, int buttonWidth, int buttonHeight, String buttonLabel, Color buttonColor){
         button = new JButton(buttonLabel);
