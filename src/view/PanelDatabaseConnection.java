@@ -24,6 +24,12 @@ public class PanelDatabaseConnection {
     UIHelpers uiHelpers = new UIHelpers();
 
     private JPanel panelDatabaseConnection = new JPanel();
+
+    // Choose your DB with a Checkbox
+    private JCheckBox checkBoxMySql = new JCheckBox();
+    private JCheckBox checkBoxMariaDB = new JCheckBox();
+    //private JCheckBox checkBoxPostgress = new JCheckBox("Postgress");
+
     private JTextField textFieldHostname = new JTextField();
     private JTextField textFieldPort = new JTextField();
     private JTextField textFieldDatabaseName = new JTextField();
@@ -43,6 +49,9 @@ public class PanelDatabaseConnection {
         test.setExtendedState(JFrame.MAXIMIZED_BOTH);
         test.setUndecorated(false);
         test.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+        //creating checkboxes for (1) MySQL (2) mariaDB
+        checkBoxMySql = uiHelpers.createJCheckBox(checkBoxMySql, ((sizes.getScreenWidth()/2)-(sizes.getcheckBox_panelDatabaseConnection_checkBoxMySql_checkBoxX())), (sizes.getcheckBox_panelDatabaseConnection_checkBoxMySql_checkBoxY()), sizes.getcheckBox_panelDatabaseConnection_checkBoxMySql_checkBoxWidth(), sizes.getcheckBox_panelDatabaseConnection_checkBoxMySql_checkBoxHeight(), sizes.getCheckBox_panelDatabaseConnection_checkBoxMySql_checkBoxLabel());
 
         //creating text fields for (1) hostname (2) port (3) Database name (4) username (5) password
         textFieldHostname = uiHelpers.createJTextField(textFieldHostname, controller.getAppPropertiesWithKey("textField.panelDatabaseConnection.textFieldHostname"), (sizes.getScreenWidth()/2)-(sizes.getButton_panelDatabaseConnection_buttonConnect_buttonWidth()/2), sizes.getTextField_panelDatabaseConnection_textFieldHostname_textFieldY(), sizes.getTextField_panelDatabaseConnection_textFieldHostname_textFieldWidth(), sizes.getTextField_panelDatabaseConnection_textFieldHostname_textFieldHeight());
@@ -122,6 +131,10 @@ public class PanelDatabaseConnection {
         panelDatabaseConnection = UIHelpers.createJPanel(panelDatabaseConnection, sizes.getPanel_view_panelDatabaseConnection_panelX(), sizes.getPanel_view_panelDatabaseConnection_panelY(), sizes.getScreenWidth(),  sizes.getScreenHeight(), null);
 
         panelDatabaseConnection.setPreferredSize(sizes.getSize());
+
+        panelDatabaseConnection.add(checkBoxMySql);
+        panelDatabaseConnection.add(checkBoxMariaDB);
+
         panelDatabaseConnection.add(textFieldHostname,Component.CENTER_ALIGNMENT);
         panelDatabaseConnection.add(textFieldPort,BorderLayout.CENTER);
         panelDatabaseConnection.add(textFieldDatabaseName);

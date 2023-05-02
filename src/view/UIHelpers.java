@@ -15,6 +15,12 @@ public class UIHelpers {
         frame.setVisible(frameVisibility);
         return frame;
     }
+    // Checkboxes can be created by calling this method
+    protected static JCheckBox createJCheckBox(JCheckBox checkBox, int checkboxX, int checkboxY, int checkboxWidth, int checkboxHeight, String checkboxLabel) {
+        checkBox = new JCheckBox(checkboxLabel);
+        checkBox.setBounds(checkboxX, checkboxY, checkboxWidth, checkboxHeight);
+        return checkBox;
+    }
 
     //Buttons can be created by calling this method
     protected static JButton createJButton(JButton button, int buttonX, int buttonY, int buttonWidth, int buttonHeight, String buttonLabel, Color buttonColor){

@@ -35,6 +35,22 @@ public class Sizes {
     int panel_panelTableView_panelX = 400;
     int panel_panelTableView_panelY = 0;
 
+    // Checkboxes
+
+        // MySQL Checkbox
+        int checkBox_panelDatabaseConnection_checkBoxMySql_checkBoxX = (screenWidth/2) + 150;
+        int checkBox_panelDatabaseConnection_checkBoxMySql_checkBoxY = 150;
+        int checkBox_panelDatabaseConnection_checkBoxMySql_checkBoxWidth = 300;
+        int checkBox_panelDatabaseConnection_checkBoxMySql_checkBoxHeight = 40;
+        String checkBox_panelDatabaseConnection_checkBoxMySql_checkBoxLabel = "MySQL";
+
+
+
+        // MariaDB Checkbox
+        /* int checkBox_panelDatabaseConnection_checkBoxMariaDB_checkBoxWidth = 300;
+        int checkBox_panelDatabaseConnection_checkBoxMariaDB_checkBoxHeight = 40;
+        int checkBox_panelDatabaseConnection_checkBoxMariaDB_checkBoxX = (screenWidth/2);
+        int checkBox_panelDatabaseConnection_checkBoxMariaDB_checkBoxY = 500; */
 
     //Buttons
         //Connection button
@@ -197,7 +213,41 @@ public class Sizes {
     public int getTextField_panelDatabaseConnection_textFieldDatabaseName_textFieldY() {
         return textField_panelDatabaseConnection_textFieldDatabaseName_textFieldY;
     }
+    // Checkboxes
+        // MySQL Checkbox
+        public int getcheckBox_panelDatabaseConnection_checkBoxMySql_checkBoxX() {
+            return checkBox_panelDatabaseConnection_checkBoxMySql_checkBoxX;
+        }
+        public int getcheckBox_panelDatabaseConnection_checkBoxMySql_checkBoxY() {
+            return checkBox_panelDatabaseConnection_checkBoxMySql_checkBoxY;
+        }
+        public int getcheckBox_panelDatabaseConnection_checkBoxMySql_checkBoxWidth() {
+            return checkBox_panelDatabaseConnection_checkBoxMySql_checkBoxWidth;
+        }
+        public int getcheckBox_panelDatabaseConnection_checkBoxMySql_checkBoxHeight() {
+            return checkBox_panelDatabaseConnection_checkBoxMySql_checkBoxHeight;
+        }
+        public String getCheckBox_panelDatabaseConnection_checkBoxMySql_checkBoxLabel() {
+            return checkBox_panelDatabaseConnection_checkBoxMySql_checkBoxLabel;
+        }
 
+
+        // MariaDB Checkbox
+        /*public int getcheckBox_panelDatabaseConnection_checkBoxMariaDB_checkBoxWidth() {
+            return checkBox_panelDatabaseConnection_checkBoxMariaDB_checkBoxWidth;
+        }
+        public int getcheckBox_panelDatabaseConnection_checkBoxMariaDB_checkBoxHeight() {
+            return checkBox_panelDatabaseConnection_checkBoxMariaDB_checkBoxHeight;
+        }
+        public int getcheckBox_panelDatabaseConnection_checkBoxMariaDB_checkBoxX() {
+            return checkBox_panelDatabaseConnection_checkBoxMariaDB_checkBoxX;
+        }
+        public int getcheckBox_panelDatabaseConnection_checkBoxMariaDB_checkBoxY() {
+            return checkBox_panelDatabaseConnection_checkBoxMariaDB_checkBoxY;
+        } */
+
+
+    // Buttons
     public int getButton_panelDatabaseConnection_buttonConnect_buttonWidth() {
         return button_panelDatabaseConnection_buttonConnect_buttonWidth;
     }
