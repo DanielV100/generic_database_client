@@ -42,6 +42,11 @@ public class UIHelpers {
         textField.setBounds(textFieldX, textFieldY, textFieldWidth, textFieldHeight);
         return textField;
     }
+    protected static JPasswordField createJPasswordField(JPasswordField PasswordField, String textFieldText, int textFieldX, int textFieldY, int textFieldWidth, int textFieldHeight) {
+        PasswordField = new JPasswordField(textFieldText);
+        PasswordField.setBounds(textFieldX, textFieldY, textFieldWidth, textFieldHeight);
+        return PasswordField;
+    }
 
     protected static JList createJList(JList jlist, String[] dataToDisplay, int listX, int listY, int listWidth, int listHeight) {
         jlist = new JList(dataToDisplay);
