@@ -38,37 +38,37 @@ public class Sizes {
 
     //Buttons
         //Connection button
-    int button_panelDatabaseConnection_buttonConnect_buttonWidth = 1000;
+    int button_panelDatabaseConnection_buttonConnect_buttonWidth = 300;
     int button_panelDatabaseConnection_buttonConnect_buttonHeight = 40;
-    int button_panelDatabaseConnection_buttonConnect_buttonX = 200;
-    int button_panelDatabaseConnection_buttonConnect_buttonY= 450;
+    int button_panelDatabaseConnection_buttonConnect_buttonX = (screenWidth/2);
+    int button_panelDatabaseConnection_buttonConnect_buttonY= 520;
 
     //----Text Fields----
         //Hostname
-    int textField_panelDatabaseConnection_textFieldHostname_textFieldWidth = 200;
+    int textField_panelDatabaseConnection_textFieldHostname_textFieldWidth = 300;
     int textField_panelDatabaseConnection_textFieldHostname_textFieldHeight = 50;
     int textField_panelDatabaseConnection_textFieldHostname_textFieldX = 200;
     int textField_panelDatabaseConnection_textFieldHostname_textFieldY = 200;
         //Port
-    int textField_panelDatabaseConnection_textFieldPort_textFieldWidth = 200;
+    int textField_panelDatabaseConnection_textFieldPort_textFieldWidth = 300;
     int textField_panelDatabaseConnection_textFieldPort_textFieldHeight = 50;
     int textField_panelDatabaseConnection_textFieldPort_textFieldX = 200;
-    int textField_panelDatabaseConnection_textFieldPort_textFieldY = 250;
+    int textField_panelDatabaseConnection_textFieldPort_textFieldY = 260;
      //Database name
-    int textField_panelDatabaseConnection_textFieldDatabaseName_textFieldWidth = 200;
+    int textField_panelDatabaseConnection_textFieldDatabaseName_textFieldWidth = 300;
     int textField_panelDatabaseConnection_textFieldDatabaseName_textFieldHeight = 50;
     int textField_panelDatabaseConnection_textFieldDatabaseName_textFieldX = 200;
-    int textField_panelDatabaseConnection_textFieldDatabaseName_textFieldY = 300;
+    int textField_panelDatabaseConnection_textFieldDatabaseName_textFieldY = 320;
      //Username
-    int textField_panelDatabaseConnection_textFieldUsername_textFieldWidth = 200;
+    int textField_panelDatabaseConnection_textFieldUsername_textFieldWidth = 300;
     int textField_panelDatabaseConnection_textFieldUsername_textFieldHeight = 50;
     int textField_panelDatabaseConnection_textFieldUsername_textFieldX = 200;
-    int textField_panelDatabaseConnection_textFieldUsername_textFieldY = 350;
+    int textField_panelDatabaseConnection_textFieldUsername_textFieldY = 380;
         //Password
-    int textField_panelDatabaseConnection_textFieldPassword_textFieldWidth = 200;
+    int textField_panelDatabaseConnection_textFieldPassword_textFieldWidth = 300;
     int textField_panelDatabaseConnection_textFieldPassword_textFieldHeight = 50;
     int textField_panelDatabaseConnection_textFieldPassword_textFieldX = 200;
-    int textField_panelDatabaseConnection_textFieldPassword_textFieldY = 400;
+    int textField_panelDatabaseConnection_textFieldPassword_textFieldY = 440;
 
     //----JLists----
         //list with all tables in it
