@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.StringTokenizer;
 
+
 public class ImportFilesGetter {
     String csvFile = "/Users/daniel/Desktop/generic_database_client/generic_database_client/src/resources/sample.csv";
     BufferedReader bufferedReader = null;

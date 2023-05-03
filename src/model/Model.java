@@ -104,6 +104,7 @@ public class Model {
                 preparedStatement.setString(y, input[y-1]);
             }
             preparedStatement.executeUpdate();
+            System.out.println(preparedStatement);
             JOptionPane.showMessageDialog(null, "Added row!");
         }
 
