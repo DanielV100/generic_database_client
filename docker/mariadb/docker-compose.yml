@@ -4,6 +4,8 @@ services:
         image: mariadb:latest
         environment:
             MYSQL_ROOT_PASSWORD: geheim
+        ports:
+            - "3307:3306"
         restart: always
     phpmyadmin:
         image: phpmyadmin/phpmyadmin:latest

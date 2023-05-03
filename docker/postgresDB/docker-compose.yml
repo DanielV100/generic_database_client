@@ -9,6 +9,8 @@ services:
     environment:
       POSTGRES_USER: root
       POSTGRES_PASSWORD: geheim
+    ports:
+            - "3308:5432"
 
   adminer:
     image: adminer

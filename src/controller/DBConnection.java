@@ -3,9 +3,13 @@ package controller;
 import model.Model;
 import view.View;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.sql.*;
 import java.util.List;
+
+import static view.PanelDatabaseConnection.selectedDB;
 
 public class DBConnection {
     Model model = new Model();
@@ -30,7 +34,8 @@ public class DBConnection {
         return port;
     }
     public String createConnectionString(String hostname, String port, String databaseName) {
-        return "jdbc:mysql://" + hostname + ":" + port + "/" + databaseName;
+
+        return "jdbc:"+ selectedDB +"://" + hostname + ":" + port + "/" + databaseName;
     }
 
     //trying to connect to db via jdbc - driver is needed!
