@@ -26,8 +26,11 @@ public class PanelDatabaseConnection {
     private JTextField textFieldPort = new JTextField();
     private JTextField textFieldDatabaseName = new JTextField();
     private JTextField textFieldUsername = new JTextField();
-    private JTextField textFieldPassword = new JTextField();
+    private JPasswordField textFieldPassword = new JPasswordField();
     private JButton buttonConnect = new JButton();
+
+    int result = JOptionPane.showConfirmDialog(null, "Möchten Sie die gespeicherten Anmeldeinformationen laden?", "Bestätigen", JOptionPane.YES_NO_OPTION);
+    String filePathtext = "credentials.txt";
     JFrame test = new JFrame();
 
     PanelTableSelection panelTableSelection = new PanelTableSelection();
@@ -47,7 +50,7 @@ public class PanelDatabaseConnection {
         textFieldPort = uiHelpers.createJTextField(textFieldPort, controller.getAppPropertiesWithKey("textField.panelDatabaseConnection.textFieldPort"), sizes.getTextField_panelDatabaseConnection_textFieldPort_textFieldX(), sizes.getTextField_panelDatabaseConnection_textFieldPort_textFieldY(), sizes.getTextField_panelDatabaseConnection_textFieldPort_textFieldWidth(), sizes.getTextField_panelDatabaseConnection_textFieldPort_textFieldHeight());
         textFieldDatabaseName = uiHelpers.createJTextField(textFieldDatabaseName, controller.getAppPropertiesWithKey("textField.panelDatabaseConnection.textFieldDatabaseName"), sizes.getTextField_panelDatabaseConnection_textFieldDatabaseName_textFieldX(), sizes.getTextField_panelDatabaseConnection_textFieldDatabaseName_textFieldY(), sizes.getTextField_panelDatabaseConnection_textFieldDatabaseName_textFieldWidth(), sizes.getTextField_panelDatabaseConnection_textFieldDatabaseName_textFieldHeight());
         textFieldUsername = uiHelpers.createJTextField(textFieldHostname, controller.getAppPropertiesWithKey("textField.panelDatabaseConnection.textFieldUsername"), sizes.getTextField_panelDatabaseConnection_textFieldUsername_textFieldX(), sizes.getTextField_panelDatabaseConnection_textFieldUsername_textFieldY(), sizes.getTextField_panelDatabaseConnection_textFieldUsername_textFieldWidth(), sizes.getTextField_panelDatabaseConnection_textFieldUsername_textFieldHeight());
-        textFieldPassword = uiHelpers.createJTextField(textFieldPassword, controller.getAppPropertiesWithKey("textField.panelDatabaseConnection.textFieldPassword"), sizes.getTextField_panelDatabaseConnection_textFieldPassword_textFieldX(), sizes.getTextField_panelDatabaseConnection_textFieldPassword_textFieldY(), sizes.getTextField_panelDatabaseConnection_textFieldPassword_textFieldWidth(), sizes.getTextField_panelDatabaseConnection_textFieldPassword_textFieldHeight());
+        textFieldPassword = uiHelpers.createJPasswordField(textFieldPassword, controller.getAppPropertiesWithKey("textField.panelDatabaseConnection.textFieldPassword"), sizes.getTextField_panelDatabaseConnection_textFieldPassword_textFieldX(), sizes.getTextField_panelDatabaseConnection_textFieldPassword_textFieldY(), sizes.getTextField_panelDatabaseConnection_textFieldPassword_textFieldWidth(), sizes.getTextField_panelDatabaseConnection_textFieldPassword_textFieldHeight());
         //creating button for building the connection
         buttonConnect = uiHelpers.createJButton(buttonConnect, sizes.getButton_panelDatabaseConnection_buttonConnect_buttonX(), sizes.getButton_panelDatabaseConnection_buttonConnect_buttonY(), sizes.getButton_panelDatabaseConnection_buttonConnect_buttonWidth(), sizes.getButton_panelDatabaseConnection_buttonConnect_buttonHeight(), controller.getAppPropertiesWithKey("button.panelDatabaseConnection.buttonConnect"), Color.GREEN);
         //Textfeld-Inhalte nach Click entfernen
@@ -83,6 +86,7 @@ public class PanelDatabaseConnection {
             }
 
         });
+
         buttonConnect.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -90,6 +94,18 @@ public class PanelDatabaseConnection {
                     Connection connection = dbConnection.initDBConnection(textFieldHostname.getText(), textFieldPort.getText(), textFieldDatabaseName.getText(), textFieldUsername.getText(), textFieldPassword.getText());
                     //Erfolgsmeldung
                     JOptionPane.showMessageDialog(null, "Verbindung erfolgreich");
+
+                    int passwordspeichern = JOptionPane.showConfirmDialog(null, "Möchten Sie die das Password speichern?", "Bestätigen", JOptionPane.YES_NO_OPTION);
+                    String hostname = textFieldHostname.getText();
+                    String portname = textFieldPort.getText();
+                    String dbname   = textFieldDatabaseName.getText();
+                    String username = textFieldUsername.getText();
+                    String password = "123";
+                    if (passwordspeichern == JOptionPane.YES_OPTION) {
+                    password = textFieldPassword.getText();
+                    }
+                    UserCredentials credentials = new UserCredentials(hostname, portname, dbname, username, password);
+                    CredentialManager.saveCredentials(credentials, filePathtext);
                     test.add(panelTableSelection.PanelTableSelection(connection));
                     //test.requestFocus();
                     test.setVisible(true);
@@ -101,6 +117,7 @@ public class PanelDatabaseConnection {
                 }
             }
         });
+
         //initializing panel with the text fields and the button which later will be on the main frame
         panelDatabaseConnection = UIHelpers.createJPanel(panelDatabaseConnection, sizes.getPanel_view_panelDatabaseConnection_panelX(), sizes.getPanel_view_panelDatabaseConnection_panelY(), sizes.getScreenWidth(),  sizes.getScreenHeight(), null);
 
@@ -111,6 +128,27 @@ public class PanelDatabaseConnection {
         panelDatabaseConnection.add(textFieldUsername);
         panelDatabaseConnection.add(textFieldPassword);
         panelDatabaseConnection.add(buttonConnect);
+
+        //laden von gespeicherten Nutzerdaten
+        UserCredentials credentials = CredentialManager.loadCredentials(filePathtext);
+        if (credentials != null) {
+            // do something with the loaded credentials
+            if (result == JOptionPane.YES_OPTION) {
+                // Anmeldeinformationen laden und in Textfelder anzeigen
+                String hostnameload = credentials.getHostname();
+                String portnameload = credentials.getPortname();
+                String dbnameload = credentials.getDbname();
+                String usernameload = credentials.getUsername();
+                String passwordload = credentials.getPassword();
+                textFieldHostname.setText(hostnameload);
+                textFieldPort.setText(portnameload);
+                textFieldDatabaseName.setText(dbnameload);
+                textFieldUsername.setText(usernameload);
+                textFieldPassword.setText(passwordload);
+            } else {
+                // handle case where no credentials were loaded
+            }
+        }
 
         File file = new File(getClass().getClassLoader().getResource("resources/test.jpg").getFile());
         String filePath = file.getAbsolutePath();
@@ -125,6 +163,7 @@ public class PanelDatabaseConnection {
         panelDatabaseConnection.add(backgroundLabel);
 
         return panelDatabaseConnection;
+
     }
 
 }
