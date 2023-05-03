@@ -111,9 +111,10 @@ public class Model {
 
     }
     public void editRow(Connection connection, String table, List<String> columns, List<String> rows) throws SQLException {
-        //getAllWriteableColumns(connection, table);
+        //if a column isn't writable it will shown anyways - but its not editable - this list is needed to compare columns with the writable columns to find out which is readonly
+        List<String> writableColumns = getAllWriteableColumns(connection, table);
         String editQuery = "UPDATE " + table + " SET ";
-        String[] input = getInputDialogForEditingRow(columns, rows);
+        String[] input = getInputDialogForEditingRow(columns, rows, writableColumns);
         for (int i = 0; i < columns.size(); i++) {
             if(i == columns.size() - 1) {
                 editQuery += columns.get(i) + "=" + "?" + " WHERE ";
@@ -170,11 +171,12 @@ public class Model {
         JTextField[] inputFields = new JTextField[columns.size()];
         JLabel[] labels = new JLabel[columns.size()];
         String input[] = new String[columns.size()];
+        //pseudo elements (optional parameter)
         List<String> rows = new ArrayList<>();
-
+        List<String> writableColumns = new ArrayList<>();
         JOptionPane pane = new JOptionPane();
         pane.setBounds(sizes.getScreenWidth()/2, sizes.getScreenHeight()/2, sizes.getScreenWidth()/2,sizes.getScreenHeight()/2);
-        int option = pane.showConfirmDialog(null, createContainerForJOptionPane(columns, labels, inputFields, columnsType, columnsTypeLength, false, rows), "Add rows", JOptionPane.OK_CANCEL_OPTION);
+        int option = pane.showConfirmDialog(null, createContainerForJOptionPane(columns, labels, inputFields, columnsType, columnsTypeLength, false, rows, writableColumns), "Add rows", JOptionPane.OK_CANCEL_OPTION);
         if(option == JOptionPane.OK_OPTION) {
             for(int x = 0; x < columns.size(); x++) {
                 input[x] = inputFields[x].getText();
@@ -184,23 +186,14 @@ public class Model {
         }
         return input;
     }
-    private String[] getInputDialogForEditingRow(List<String> columns, List<String> rows) {
-
+    private String[] getInputDialogForEditingRow(List<String> columns, List<String> rows, List<String> writableColumns) {
         String input[] = new String[columns.size()];
         JPanel container = new JPanel(new GridLayout(columns.size(), 2));
         JLabel[] labelForColumns = new JLabel[columns.size()];
         JTextField[] inputFields = new JTextField[columns.size()];
-        for (int i = 0; i < labelForColumns.length; i++) {
-            //on the left: lables
-            labelForColumns[i] = new JLabel(columns.get(i));
-            container.add(labelForColumns[i]);
-            //on the right-handed side: textfields
-            inputFields[i] = new JTextField(rows.get(i));
-            container.add(inputFields[i]);
-        }
         JOptionPane pane = new JOptionPane();
         pane.setBounds(sizes.getScreenWidth()/2, sizes.getScreenHeight()/2, sizes.getScreenWidth()/2,sizes.getScreenHeight()/2);
-        int option = pane.showConfirmDialog(null, container, "Edit rows", JOptionPane.OK_CANCEL_OPTION);
+        int option = pane.showConfirmDialog(null, createContainerForJOptionPane(columns, labelForColumns, inputFields, columnsType, columnsTypeLength, true, rows, writableColumns), "Edit rows", JOptionPane.OK_CANCEL_OPTION);
         if(option == JOptionPane.OK_OPTION) {
             for(int x = 0; x < columns.size(); x++) {
                 input[x] = inputFields[x].getText();
@@ -241,7 +234,7 @@ public class Model {
         }
 
     }
-    private JPanel createContainerForJOptionPane(List<String> columns, JLabel[] labelForColumns, JTextField[] inputFields, List<String> columnsType, List<Integer> columnsTypeLength, Boolean isEdit, List<String> rows) {
+    private JPanel createContainerForJOptionPane(List<String> columns, JLabel[] labelForColumns, JTextField[] inputFields, List<String> columnsType, List<Integer> columnsTypeLength, Boolean isEdit, List<String> rows, List<String> writableColumns) {
         String numbers = "123456789";
         String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         String specialChars = ";,+*#'_^^´`;";
@@ -252,11 +245,16 @@ public class Model {
             container.add(labelForColumns[i]);
             //on the right-handed side: textfields
             if(isEdit) {
+                if(!(writableColumns.contains(columns.get(i)))) {
+                    inputFields[i].setEditable(false);
+                }
                 inputFields[i] = new JTextField(rows.get(i));
             } else {
                 inputFields[i] = new JTextField();
             }
             int index = i;
+
+            //validate input
             inputFields[i].addKeyListener(new KeyAdapter() {
                 @Override
                 public void keyPressed(KeyEvent e) {
@@ -266,6 +264,14 @@ public class Model {
                         }
                         if(columnsTypeLength.get(index) < inputFields[index].getText().length()) {
                             JOptionPane.showMessageDialog(null, "Input to long. Maximum size: " + columnsTypeLength.get(index));
+                            inputFields[index].setText("");
+                        }
+                        if(columnsType.get(index) == "INT" && (alphabet.contains(String.valueOf(e.getKeyChar())) || specialChars.contains(String.valueOf(e.getKeyChar())) ||alphabet.toLowerCase().contains(String.valueOf(e.getKeyChar())))) {
+                            JOptionPane.showMessageDialog(null, "This value has to be a " + columnsType.get(index) + " and you typed " + e.getKeyChar());
+                            inputFields[index].setText("");
+                        }
+                        if(columnsType.get(index) == "TEXT" && (numbers.contains(String.valueOf(e.getKeyChar())) || specialChars.contains(String.valueOf(e.getKeyChar())))) {
+                            JOptionPane.showMessageDialog(null, "This value has to be a " + columnsType.get(index) + " and you typed " + e.getKeyChar());
                             inputFields[index].setText("");
                         }
                     }
