@@ -1,3 +1,2 @@
-﻿officeNr;city;phone;addressLine1;addressLine2;state;country;postalCode;territory
-14;hggh;78;hkj;h;hj;hjk;jh;vj
-79;jk;bk;jk;bkj;kbj;bk;bjk;bjk
+﻿"employeeNumber;lastName;firstName;extension;email;officeCode;reportsTo;jobTitle"
+"9000;Mustermann;Test;x5991;test@gmail.com;1;1002;Developer"
