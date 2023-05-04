@@ -123,16 +123,29 @@ public class Model {
             }
         }
         for (int x = 0; x < columns.size(); x++) {
-            if(x == columns.size() - 1) {
-                editQuery += columns.get(x) + "=" + "?" + ";";
-            } else {
-                editQuery += columns.get(x) + "=" + "?" + " AND ";
+            //check if there is a row wich is empty, if so don't add it t the query
+            if(!(rows.get(x) == "")) {
+                if(x == columns.size() - 1) {
+                    editQuery += columns.get(x) + "=" + "?" + ";";
+                } else {
+                    editQuery += columns.get(x) + "=" + "?" + " AND ";
+                }
             }
+        }
+        if(editQuery.endsWith(" AND ")) {
+            editQuery = editQuery.replaceAll("AND $", " ");
+            System.out.println("Edit query: " + editQuery);
         }
 
         PreparedStatement preparedStatement = connection.prepareStatement(editQuery);
         for (int y = 1; y <= input.length; y++) {
             preparedStatement.setString(y, input[y-1]);
+        }
+        //remove empty rows from row
+        for (int z = rows.size() - 1; z >= 0; z--) {
+            if (rows.get(z).equals("")) {
+                rows.remove(z);
+            }
         }
         int test = 0;
         for (int xy = input.length+1; xy <= input.length + rows.size(); xy++) {

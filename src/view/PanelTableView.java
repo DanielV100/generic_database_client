@@ -29,7 +29,8 @@ public class PanelTableView {
         sizes.init();
 
         String[] columns = dbConnection.getColumnsFromTable(connection, index);
-        tableFromDB = uiHelpers.createJTable(tableFromDB, columns, dbConnection.getRowsFromTable(connection, columns, index), sizes.getTable_panelTableView_tableFromDB_tableX(), sizes.getTable_panelTableView_tableFromDB_tableY(), sizes.getScreenWidth()-sizes.getJlist_panelTableSelection_jlistTableSelection_jlistWidth(), sizes.getScreenHeight());
+        //Table height is extremly high --> show all data
+        tableFromDB = uiHelpers.createJTable(tableFromDB, columns, dbConnection.getRowsFromTable(connection, columns, index), sizes.getTable_panelTableView_tableFromDB_tableX(), sizes.getTable_panelTableView_tableFromDB_tableY(), sizes.getScreenWidth()-sizes.getJlist_panelTableSelection_jlistTableSelection_jlistWidth(), sizes.getScreenHeight() + 1000);
         tableFromDB.addMouseListener(new MouseAdapter() {
 
             @Override
@@ -64,7 +65,8 @@ public class PanelTableView {
                                         rows.add(target.getValueAt(rowNumber, i).toString());
                                     }
                                 } catch (NullPointerException nullPointerException) {
-
+                                    columns.add(target.getColumnName(i));
+                                    rows.add("");
                                 }
                             }
                             try {
