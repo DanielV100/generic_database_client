@@ -124,7 +124,7 @@ public class Model {
         }
         for (int x = 0; x < columns.size(); x++) {
             //check if there is a row wich is empty, if so don't add it t the query
-            if(!(rows.get(x) == "")) {
+            if(!(rows.get(x).isEmpty())) {
                 if(x == columns.size() - 1) {
                     editQuery += columns.get(x) + "=" + "?" + ";";
                 } else {
