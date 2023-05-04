@@ -13,7 +13,7 @@ import java.util.StringTokenizer;
 public class ImportFilesGetter {
     String csvFile = "/Users/daniel/Desktop/generic_database_client/generic_database_client/src/resources/samp.csv";
 
-Importer Einfügen --> Ein Fenster mit großem Textfeld, was ; separierte Zeilen importiert
+//Importer Einfügen --> Ein Fenster mit großem Textfeld, was ; separierte Zeilen importiert
     public List<List<String>> getColumnsAndRowsFromCSV() throws IOException {
         List<List<String>> rowsFromCSV = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
