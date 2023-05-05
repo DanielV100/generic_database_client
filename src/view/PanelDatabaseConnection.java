@@ -5,6 +5,7 @@ import controller.DBConnection;
 import resources.Sizes;
 
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicButtonUI;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -56,6 +57,9 @@ public class PanelDatabaseConnection {
 
     //"/Users/lorenz.lederer/Downloads/5g-networking-technology-background-with-blue-digital-line/rm373batch2-08.jpg"));
     public JPanel PanelDatabaseConnection() throws IOException {
+
+
+
         sizes.init();
         test.setLayout(null);
         test.setBounds(0, 0, sizes.getScreenWidth(), sizes.getScreenHeight());
@@ -107,9 +111,33 @@ public class PanelDatabaseConnection {
             int result = JOptionPane.showConfirmDialog(null, "Möchten Sie die gespeicherten Anmeldeinformationen laden?", "Bestätigen", JOptionPane.YES_NO_OPTION);
         }
         //creating button for building the connection
-        buttonConnect = uiHelpers.createJButton(buttonConnect, (sizes.getScreenWidth()/2)-(sizes.getButton_panelDatabaseConnection_buttonConnect_buttonWidth()/2), sizes.getButton_panelDatabaseConnection_buttonConnect_buttonY(), sizes.getButton_panelDatabaseConnection_buttonConnect_buttonWidth(), sizes.getButton_panelDatabaseConnection_buttonConnect_buttonHeight(), controller.getAppPropertiesWithKey("button.panelDatabaseConnection.buttonConnect"), Color.GREEN);
-        //Textfeld-Inhalte nach Click entfernen
+        buttonConnect = uiHelpers.createJButton(buttonConnect, (sizes.getScreenWidth()/2)-(sizes.getButton_panelDatabaseConnection_buttonConnect_buttonWidth()/2), sizes.getButton_panelDatabaseConnection_buttonConnect_buttonY(), sizes.getButton_panelDatabaseConnection_buttonConnect_buttonWidth(), sizes.getButton_panelDatabaseConnection_buttonConnect_buttonHeight(), controller.getAppPropertiesWithKey("button.panelDatabaseConnection.buttonConnect"),Color.lightGray);
 
+        buttonConnect.setUI(new BasicButtonUI() {
+            @Override
+            protected void paintButtonPressed(Graphics g, AbstractButton b) {
+                // Override the paintButtonPressed method to change the border color
+                g.setColor(Color.lightGray);
+                g.drawRect(0, 0, b.getWidth()-1, b.getHeight()-1);
+            }
+        });
+        buttonConnect.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                // Change the background color when the mouse enters the button
+                buttonConnect.setBackground(Color.GRAY);
+                buttonConnect.setForeground(Color.WHITE);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                // Change the background color back to the default when the mouse exits the button
+                buttonConnect.setBackground(Color.lightGray);
+                buttonConnect.setForeground(Color.BLACK);
+            }
+        });
+
+        //Textfeld-Inhalte nach Click entfernen
         textFieldPassword.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
