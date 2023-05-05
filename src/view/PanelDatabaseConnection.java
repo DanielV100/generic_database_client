@@ -68,6 +68,12 @@ public class PanelDatabaseConnection {
         test.setUndecorated(false);
         test.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
+        JLabel headingLabel = new JLabel("Generic Database Client");
+        headingLabel.setFont(new Font("Helvetica", Font.BOLD, 48));
+        headingLabel.setForeground(Color.DARK_GRAY);
+        headingLabel.setBounds((sizes.getScreenWidth() / 2) - 280, 10, 600, 200);
+
+
         //creating checkboxes for (1) MySQL (2) mariaDB (3) PostgreSQL
         /*checkBoxMySql = uiHelpers.createJCheckBox(checkBoxMySql, ((sizes.getScreenWidth()/2)-(sizes.getCheckBox_panelDatabaseConnection_checkBoxMySql_checkBoxX())), (sizes.getCheckBox_panelDatabaseConnection_checkBoxMySql_checkBoxY()), sizes.getCheckBox_panelDatabaseConnection_checkBoxMySql_checkBoxWidth(), sizes.getCheckBox_panelDatabaseConnection_checkBoxMySql_checkBoxHeight(), sizes.getCheckBox_panelDatabaseConnection_checkBoxMySql_checkBoxLabel());
         checkBoxMariaDB = uiHelpers.createJCheckBox(checkBoxMariaDB, ((sizes.getScreenWidth()/2)-(sizes.getCheckBox_panelDatabaseConnection_checkBoxMariaDB_checkBoxX())), (sizes.getCheckBox_panelDatabaseConnection_checkBoxMariaDB_checkBoxY()), sizes.getCheckBox_panelDatabaseConnection_checkBoxMariaDB_checkBoxWidth(), sizes.getCheckBox_panelDatabaseConnection_checkBoxMariaDB_checkBoxHeight(), sizes.getCheckBox_panelDatabaseConnection_checkBoxMariaDB_checkBoxLabel());
@@ -244,6 +250,7 @@ public class PanelDatabaseConnection {
         panelDatabaseConnection.add(radioButtonMariaDB);
         panelDatabaseConnection.add(radioButtonPostgreSQL);
 
+        panelDatabaseConnection.add(headingLabel);
         panelDatabaseConnection.add(textFieldHostname,Component.CENTER_ALIGNMENT);
         panelDatabaseConnection.add(textFieldPort,BorderLayout.CENTER);
         panelDatabaseConnection.add(textFieldDatabaseName);
