@@ -101,11 +101,15 @@ public class PanelDatabaseConnection {
         //creating text fields for (1) hostname (2) port (3) Database name (4) username (5) password
 
         textFieldHostname = uiHelpers.createJTextField(textFieldHostname, controller.getAppPropertiesWithKey("textField.panelDatabaseConnection.textFieldHostname"), (sizes.getScreenWidth()/2)-(sizes.getButton_panelDatabaseConnection_buttonConnect_buttonWidth()/2), sizes.getTextField_panelDatabaseConnection_textFieldHostname_textFieldY(), sizes.getTextField_panelDatabaseConnection_textFieldHostname_textFieldWidth(), sizes.getTextField_panelDatabaseConnection_textFieldHostname_textFieldHeight());
+        textFieldHostname.setToolTipText("Hostname (localhost, ip)");
         textFieldPort = uiHelpers.createJTextField(textFieldPort, controller.getAppPropertiesWithKey("textField.panelDatabaseConnection.textFieldPort"), (sizes.getScreenWidth()/2)-(sizes.getButton_panelDatabaseConnection_buttonConnect_buttonWidth()/2), sizes.getTextField_panelDatabaseConnection_textFieldPort_textFieldY(), sizes.getTextField_panelDatabaseConnection_textFieldPort_textFieldWidth(), sizes.getTextField_panelDatabaseConnection_textFieldPort_textFieldHeight());
+        textFieldPort.setToolTipText("Port number (3306 is standard)");
         textFieldDatabaseName = uiHelpers.createJTextField(textFieldDatabaseName, controller.getAppPropertiesWithKey("textField.panelDatabaseConnection.textFieldDatabaseName"), (sizes.getScreenWidth()/2)-(sizes.getButton_panelDatabaseConnection_buttonConnect_buttonWidth()/2), sizes.getTextField_panelDatabaseConnection_textFieldDatabaseName_textFieldY(), sizes.getTextField_panelDatabaseConnection_textFieldDatabaseName_textFieldWidth(), sizes.getTextField_panelDatabaseConnection_textFieldDatabaseName_textFieldHeight());
+        textFieldDatabaseName.setToolTipText("Database name");
         textFieldUsername = uiHelpers.createJTextField(textFieldHostname, controller.getAppPropertiesWithKey("textField.panelDatabaseConnection.textFieldUsername"), (sizes.getScreenWidth()/2)-(sizes.getButton_panelDatabaseConnection_buttonConnect_buttonWidth()/2), sizes.getTextField_panelDatabaseConnection_textFieldUsername_textFieldY(), sizes.getTextField_panelDatabaseConnection_textFieldUsername_textFieldWidth(), sizes.getTextField_panelDatabaseConnection_textFieldUsername_textFieldHeight());
+        textFieldUsername.setToolTipText("Username");
         textFieldPassword = uiHelpers.createJPasswordField(textFieldPassword, controller.getAppPropertiesWithKey("textField.panelDatabaseConnection.textFieldPassword"), (sizes.getScreenWidth()/2)-(sizes.getButton_panelDatabaseConnection_buttonConnect_buttonWidth()/2), sizes.getTextField_panelDatabaseConnection_textFieldPassword_textFieldY(), sizes.getTextField_panelDatabaseConnection_textFieldPassword_textFieldWidth(), sizes.getTextField_panelDatabaseConnection_textFieldPassword_textFieldHeight());
-
+        textFieldPassword.setToolTipText("Password");
         //Speichern der Daten soll nicht beim ersten Start erfolgen
         if (filetext.exists()) {
             int result = JOptionPane.showConfirmDialog(null, "Möchten Sie die gespeicherten Anmeldeinformationen laden?", "Bestätigen", JOptionPane.YES_NO_OPTION);
@@ -129,9 +133,6 @@ public class PanelDatabaseConnection {
                 buttonConnect.setForeground(Color.WHITE);
                 Font font = buttonConnect.getFont().deriveFont(Font.BOLD, 16f);
                 buttonConnect.setFont(font);
-                buttonConnect.setBorder(BorderFactory.createCompoundBorder(
-                        BorderFactory.createLineBorder(Color.GRAY),
-                        BorderFactory.createEmptyBorder(5, 15, 5, 15)));
             }
 
             @Override
@@ -141,7 +142,6 @@ public class PanelDatabaseConnection {
                 buttonConnect.setForeground(Color.BLACK);
                 Font font = buttonConnect.getFont().deriveFont(Font.PLAIN, 14f);
                 buttonConnect.setFont(font);
-                buttonConnect.setBorder(BorderFactory.createLineBorder(Color.lightGray));
 
             }
         });
