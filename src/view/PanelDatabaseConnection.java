@@ -127,6 +127,11 @@ public class PanelDatabaseConnection {
                 // Change the background color when the mouse enters the button
                 buttonConnect.setBackground(Color.GRAY);
                 buttonConnect.setForeground(Color.WHITE);
+                Font font = buttonConnect.getFont().deriveFont(Font.BOLD, 16f);
+                buttonConnect.setFont(font);
+                buttonConnect.setBorder(BorderFactory.createCompoundBorder(
+                        BorderFactory.createLineBorder(Color.GRAY),
+                        BorderFactory.createEmptyBorder(5, 15, 5, 15)));
             }
 
             @Override
@@ -134,6 +139,10 @@ public class PanelDatabaseConnection {
                 // Change the background color back to the default when the mouse exits the button
                 buttonConnect.setBackground(Color.lightGray);
                 buttonConnect.setForeground(Color.BLACK);
+                Font font = buttonConnect.getFont().deriveFont(Font.PLAIN, 14f);
+                buttonConnect.setFont(font);
+                buttonConnect.setBorder(BorderFactory.createLineBorder(Color.lightGray));
+
             }
         });
 
