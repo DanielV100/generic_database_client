@@ -69,7 +69,7 @@ public class PanelDatabaseConnection {
         test.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         JLabel headingLabel = new JLabel("Generic Database Client");
-        headingLabel.setFont(new Font("Helvetica", Font.BOLD, 48));
+        headingLabel.setFont(new Font("Arial", Font.BOLD, 48));
         headingLabel.setForeground(Color.DARK_GRAY);
         headingLabel.setBounds((sizes.getScreenWidth() / 2) - 280, 10, 600, 200);
 
