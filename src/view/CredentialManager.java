@@ -10,7 +10,7 @@ public class CredentialManager {
 
     public static void saveCredentials(UserCredentials credentials, String filePath) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
-            writer.write(credentials.getHostname() + "," + credentials.getPortname() + "," + credentials.getDbname() + "," + credentials.getUsername() + "," + credentials.getPassword());
+            writer.write(credentials.getHostname() + "," + credentials.getPortname() + "," + credentials.getDbname() + "," + credentials.getUsername() + "," + credentials.getPassword() + "," + credentials.getSelectedDB());
             //System.out.println("Credentials saved to file: " + filePath);
         } catch (IOException e) {
             e.printStackTrace();
@@ -26,7 +26,8 @@ public class CredentialManager {
                 String dbname   = tokens[2];
                 String username = tokens[3];
                 String password = tokens[4];
-                return new UserCredentials(hostname, portname, dbname, username, password);
+                String selecteddb = tokens[5];
+                return new UserCredentials(hostname, portname, dbname, username, password, selecteddb);
             }
         } catch (IOException e) {
             e.printStackTrace();

@@ -150,10 +150,11 @@ public class PanelDatabaseConnection {
                     String dbname   = textFieldDatabaseName.getText();
                     String username = textFieldUsername.getText();
                     String password = "123";
+                    String selecteddb = selectedDB;
                     if (passwordspeichern == JOptionPane.YES_OPTION) {
                     password = textFieldPassword.getText();
                     }
-                    UserCredentials credentials = new UserCredentials(hostname, portname, dbname, username, password);
+                    UserCredentials credentials = new UserCredentials(hostname, portname, dbname, username, password, selecteddb);
                     CredentialManager.saveCredentials(credentials, filePathtext);
                     test.add(panelTableSelection.PanelTableSelection(connection));
                     //test.requestFocus();
@@ -219,11 +220,22 @@ public class PanelDatabaseConnection {
                 String dbnameload = credentials.getDbname();
                 String usernameload = credentials.getUsername();
                 String passwordload = credentials.getPassword();
+                String selecteddbload = credentials.getSelectedDB();
                 textFieldHostname.setText(hostnameload);
                 textFieldPort.setText(portnameload);
                 textFieldDatabaseName.setText(dbnameload);
                 textFieldUsername.setText(usernameload);
                 textFieldPassword.setText(passwordload);
+                if(selecteddbload.toLowerCase().equals("mysql")) {
+                    selectedDB = selecteddbload;
+                    radioButtonMySql.setSelected(true);
+                } else if(selecteddbload.toLowerCase().equals("mariadb")) {
+                    selectedDB = selecteddbload;
+                    radioButtonMariaDB.setSelected(true);
+                } else if(selecteddbload.toLowerCase().equals("postgresql")) {
+                    selectedDB = selecteddbload;
+                    radioButtonPostgreSQL.setSelected(true);
+                }
             } else {
                 // handle case where no credentials were loaded
             }
