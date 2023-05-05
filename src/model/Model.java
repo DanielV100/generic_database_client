@@ -269,9 +269,10 @@ public class Model {
                 if((!(writableColumns.contains(columns.get(i))))  || primaryKeys.contains(table.toLowerCase() + "." + columns.get(i))) {
                     inputFields[i].setEditable(false);
                     inputFields[i].setBackground(Color.LIGHT_GRAY);
+                    inputFields[i].setToolTipText("This field is a primary key and can't be changed because it's used in other tables.");
                 } else if (foreignKeys.contains(table.toLowerCase() + "." + columns.get(i))) {
-                    //dropdown
-
+                    inputFields[i].setBackground(Color.YELLOW);
+                    inputFields[i].setToolTipText("Mind that the data from this row comes from another table (foreign key).");
                 }
 
             }
