@@ -72,7 +72,9 @@ public class PanelTableView {
                             try {
                                 dbConnection.editRow(connection,dbConnection.getAllTablesFromDB(connection)[index], columns, rows);
                             } catch (SQLException ex) {
-                                throw new RuntimeException(ex);
+                                if(ex.toString().contains("java.sql.SQLIntegrityConstraintViolationException")) {
+                                    JOptionPane.showMessageDialog(null, "This row can't be changed because it's referenced in an other table.");
+                                }
                             }
                         }
                     });

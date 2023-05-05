@@ -68,4 +68,7 @@ public class DBConnection {
     public void addImportedRows(Connection connection, String table) throws SQLException, IOException {
         model.addImportedRows(connection, table);
     }
+    public void getAllKeys(Connection connection) throws SQLException {
+        model.getAllKeys(connection);
+    }
 }
