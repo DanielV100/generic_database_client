@@ -205,6 +205,7 @@ public class Model {
         String addQueryMeta = "INSERT INTO " + table + "(";
         //String addQueryMeta = "INSERT INTO `" + table + " VALUES(";
         String addQueryValues = "";
+        String columns = "";
         List<List<String>> data = importFilesGetter.getColumnsAndRowsFromCSV();
         for (int i = 0; i < data.get(0).size(); i++) {
             if(i == data.get(0).size() - 1) {
@@ -212,6 +213,7 @@ public class Model {
             } else {
                 addQueryMeta +=data.get(0).get(i) + ", ";
             }
+            columns += data.get(0).get(i) + ";";
         }
         //x --> rows; y --> columns in rows
         for(int x = 1; x < data.size(); x++) {
