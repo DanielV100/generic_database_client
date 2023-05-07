@@ -46,6 +46,7 @@ public class PanelTableView {
         tableFromDB = new JTable(model);
         tableFromDB.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         tableFromDB.getTableHeader().setBackground(Color.YELLOW);
+        tableFromDB.getTableHeader().setFont(new Font("Arial",Font.BOLD, 14));
         tableFromDB.addMouseListener(new MouseAdapter() {
 
             @Override
