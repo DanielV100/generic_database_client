@@ -48,6 +48,9 @@ public class PanelTableView {
         tableFromDB.getTableHeader().setBackground(new Color(238, 220, 130));
         tableFromDB.getTableHeader().setFont(new Font("Arial",Font.BOLD, 14));
         tableFromDB.setRowHeight(30);
+        tableFromDB.setGridColor(new Color(211, 211, 211));
+        tableFromDB.setDefaultRenderer(Object.class, new AlternateRowColorRenderer());
+        tableFromDB.setSelectionBackground(Color.BLUE);
         tableFromDB.addMouseListener(new MouseAdapter() {
 
             @Override

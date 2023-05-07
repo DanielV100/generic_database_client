@@ -145,7 +145,7 @@ public class PanelDatabaseConnection {
             @Override
             public void mouseEntered(MouseEvent e) {
                 // Change the background color when the mouse enters the button
-                buttonConnect.setBackground(Color.GRAY);
+                buttonConnect.setBackground(Color.BLACK);
                 buttonConnect.setForeground(Color.WHITE);
                 Font font = buttonConnect.getFont().deriveFont(Font.BOLD, 16f);
                 buttonConnect.setFont(font);
