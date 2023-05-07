@@ -4,6 +4,8 @@ import controller.DBConnection;
 import resources.Sizes;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
@@ -31,7 +33,17 @@ public class PanelTableView {
 
         String[] columns = dbConnection.getColumnsFromTable(connection, index);
         //Table height is extremly high --> show all data
-        tableFromDB = uiHelpers.createJTable(tableFromDB, columns, dbConnection.getRowsFromTable(connection, columns, index), sizes.getTable_panelTableView_tableFromDB_tableX(), sizes.getTable_panelTableView_tableFromDB_tableY(), sizes.getScreenWidth()-sizes.getJlist_panelTableSelection_jlistTableSelection_jlistWidth(), sizes.getScreenHeight() + 1000);
+        //tableFromDB = uiHelpers.createJTable(tableFromDB, columns, dbConnection.getRowsFromTable(connection, columns, index), sizes.getTable_panelTableView_tableFromDB_tableX(), sizes.getTable_panelTableView_tableFromDB_tableY(), sizes.getScreenWidth()-sizes.getJlist_panelTableSelection_jlistTableSelection_jlistWidth(), sizes.getScreenHeight() + 1000);
+       //makes cells non editable
+        DefaultTableModel model = new DefaultTableModel(dbConnection.getRowsFromTable(connection, columns, index), columns) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // make the first column non-editable
+            }
+        };
+
+        tableFromDB = new JTable(model);
+
         tableFromDB.addMouseListener(new MouseAdapter() {
 
             @Override
