@@ -4,7 +4,9 @@ import controller.DBConnection;
 import resources.Sizes;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableModel;
 import java.awt.*;
 import java.awt.event.*;
@@ -38,12 +40,12 @@ public class PanelTableView {
         DefaultTableModel model = new DefaultTableModel(dbConnection.getRowsFromTable(connection, columns, index), columns) {
             @Override
             public boolean isCellEditable(int row, int column) {
-                return false; // make the first column non-editable
+                return false; //make the first column non-editable
             }
         };
-
         tableFromDB = new JTable(model);
-
+        tableFromDB.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        tableFromDB.getTableHeader().setBackground(Color.YELLOW);
         tableFromDB.addMouseListener(new MouseAdapter() {
 
             @Override
@@ -172,7 +174,7 @@ public class PanelTableView {
             }
         });
         scrollPane = new JScrollPane(tableFromDB);
-        scrollPane.setBounds(sizes.getPanel_panelTableView_panelX(),sizes.getPanel_panelTableView_panelY() , sizes.getScreenWidth()-sizes.getJlist_panelTableSelection_jlistTableSelection_jlistWidth(), sizes.getScreenHeight());
+        scrollPane.setBounds(sizes.getPanel_panelTableView_panelX(),sizes.getPanel_panelTableView_panelY() , sizes.getScreenWidth()-sizes.getJlist_panelTableSelection_jlistTableSelection_jlistWidth(), sizes.getScreenHeight()-50);
 
         return scrollPane;
     }
