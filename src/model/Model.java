@@ -274,7 +274,8 @@ public class Model {
                     inputFields[i].setBackground(Color.YELLOW);
                     inputFields[i].setToolTipText("Mind that the data from this row comes from another table (foreign key).");
                 }
-
+            } else {
+                inputFields[i] = new JTextField();
             }
             int index = i;
 
