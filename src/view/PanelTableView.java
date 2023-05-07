@@ -24,6 +24,7 @@ public class PanelTableView {
     JMenuItem menuItemDelete;
     JMenuItem menuItemAdd;
     JMenuItem menuItemImport;
+    JMenuItem menuItemClearTable;
 
     public JScrollPane PanelTableView(Connection connection, int index) throws SQLException {
         sizes.init();
@@ -41,11 +42,14 @@ public class PanelTableView {
                     menuItemDelete = new JMenuItem("Delete row");
                     menuItemAdd = new JMenuItem("Add row");
                     menuItemImport = new JMenuItem("Import from .csv");
+                    menuItemClearTable = new JMenuItem("Clear table");
+                    menuItemClearTable.setForeground(Color.RED);
                     //creating popupmenu with (1) edit (2) delete (3) add (4) import from .csv
                     popupMenu.add(menuItemEdit);
                     popupMenu.add(menuItemDelete);
                     popupMenu.add(menuItemAdd);
                     popupMenu.add(menuItemImport);
+                    popupMenu.add(menuItemClearTable);
                     //Display the popup menu at the location of the mouse click
                     popupMenu.show(e.getComponent(), e.getX(), e.getY());
                     //----Editing----
@@ -136,8 +140,22 @@ public class PanelTableView {
                             }
                         }
                     });
+                    //----Importing----
 
-                    //----Adding----
+                    //----clear table----
+                    menuItemClearTable.addMouseListener(new MouseAdapter() {
+                        @Override
+                        public void mousePressed(MouseEvent e) {
+                            int option = JOptionPane.showConfirmDialog(null, "Are you sure about deleting this all data from this table? Data can't be restored after deleting!");
+                            if(option == JOptionPane.OK_OPTION) {
+                                try {
+                                    dbConnection.clearTable(connection,  dbConnection.getAllTablesFromDB(connection)[index]);
+                                } catch (SQLException ex) {
+                                    throw new RuntimeException(ex);
+                                }
+                            }
+                        }
+                    });
                 }
             }
         });
