@@ -24,6 +24,7 @@ public class ImportFilesGetter {
         FileNameExtensionFilter filter = new FileNameExtensionFilter(
                 "CSV files", "csv");
         fileChooser.setFileFilter(filter);
+        fileChooser.setAcceptAllFileFilterUsed(false);
         int userSelection = fileChooser.showOpenDialog(null);
         if (userSelection == JFileChooser.APPROVE_OPTION) {
             csvFile = fileChooser.getSelectedFile().getPath();

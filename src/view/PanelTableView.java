@@ -154,6 +154,7 @@ public class PanelTableView {
                                 int option = JOptionPane.showConfirmDialog(null, "Has your CSV the correct syntax? In first line:\n" + csvColumnTemplate + "\nIn lines below the data for every cell with ';' separated?");
                                 if (option == JOptionPane.OK_OPTION) {
                                     dbConnection.addImportedRows(connection, dbConnection.getAllTablesFromDB(connection)[index]);
+                                    JOptionPane.showMessageDialog(null, "Imported CSV");
                                 }
 
                             } catch (SQLException ex) {
