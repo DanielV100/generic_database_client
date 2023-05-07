@@ -306,7 +306,6 @@ public class Model {
         return container;
     }
     public void getAllKeys(Connection connection) throws SQLException {
-
         String foreignKey = "";
         String primaryKeys = "";
         DatabaseMetaData databaseMetaData = connection.getMetaData();
@@ -323,5 +322,11 @@ public class Model {
         this.foreignKeys = foreignKey;
         System.out.println(primaryKeys);
         System.out.println(foreignKey);
+    }
+    public void clearTable(Connection connection, String table) throws SQLException {
+        String deleteQuery = "DELETE FROM " + table;
+        PreparedStatement st = connection.prepareStatement(deleteQuery);
+        st.executeUpdate();
+        JOptionPane.showMessageDialog(null, "Cleared table");
     }
 }

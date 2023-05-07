@@ -4,6 +4,10 @@ import controller.DBConnection;
 import resources.Sizes;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableModel;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
@@ -24,13 +28,24 @@ public class PanelTableView {
     JMenuItem menuItemDelete;
     JMenuItem menuItemAdd;
     JMenuItem menuItemImport;
+    JMenuItem menuItemClearTable;
 
     public JScrollPane PanelTableView(Connection connection, int index) throws SQLException {
         sizes.init();
 
         String[] columns = dbConnection.getColumnsFromTable(connection, index);
         //Table height is extremly high --> show all data
-        tableFromDB = uiHelpers.createJTable(tableFromDB, columns, dbConnection.getRowsFromTable(connection, columns, index), sizes.getTable_panelTableView_tableFromDB_tableX(), sizes.getTable_panelTableView_tableFromDB_tableY(), sizes.getScreenWidth()-sizes.getJlist_panelTableSelection_jlistTableSelection_jlistWidth(), sizes.getScreenHeight() + 1000);
+        //tableFromDB = uiHelpers.createJTable(tableFromDB, columns, dbConnection.getRowsFromTable(connection, columns, index), sizes.getTable_panelTableView_tableFromDB_tableX(), sizes.getTable_panelTableView_tableFromDB_tableY(), sizes.getScreenWidth()-sizes.getJlist_panelTableSelection_jlistTableSelection_jlistWidth(), sizes.getScreenHeight() + 1000);
+       //makes cells non editable
+        DefaultTableModel model = new DefaultTableModel(dbConnection.getRowsFromTable(connection, columns, index), columns) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; //make the first column non-editable
+            }
+        };
+        tableFromDB = new JTable(model);
+        tableFromDB.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        tableFromDB.getTableHeader().setBackground(Color.YELLOW);
         tableFromDB.addMouseListener(new MouseAdapter() {
 
             @Override
@@ -41,11 +56,14 @@ public class PanelTableView {
                     menuItemDelete = new JMenuItem("Delete row");
                     menuItemAdd = new JMenuItem("Add row");
                     menuItemImport = new JMenuItem("Import from .csv");
+                    menuItemClearTable = new JMenuItem("Clear table");
+                    menuItemClearTable.setForeground(Color.RED);
                     //creating popupmenu with (1) edit (2) delete (3) add (4) import from .csv
                     popupMenu.add(menuItemEdit);
                     popupMenu.add(menuItemDelete);
                     popupMenu.add(menuItemAdd);
                     popupMenu.add(menuItemImport);
+                    popupMenu.add(menuItemClearTable);
                     //Display the popup menu at the location of the mouse click
                     popupMenu.show(e.getComponent(), e.getX(), e.getY());
                     //----Editing----
@@ -136,13 +154,27 @@ public class PanelTableView {
                             }
                         }
                     });
+                    //----Importing----
 
-                    //----Adding----
+                    //----clear table----
+                    menuItemClearTable.addMouseListener(new MouseAdapter() {
+                        @Override
+                        public void mousePressed(MouseEvent e) {
+                            int option = JOptionPane.showConfirmDialog(null, "Are you sure about deleting this all data from this table? Data can't be restored after deleting!");
+                            if(option == JOptionPane.OK_OPTION) {
+                                try {
+                                    dbConnection.clearTable(connection,  dbConnection.getAllTablesFromDB(connection)[index]);
+                                } catch (SQLException ex) {
+                                    throw new RuntimeException(ex);
+                                }
+                            }
+                        }
+                    });
                 }
             }
         });
         scrollPane = new JScrollPane(tableFromDB);
-        scrollPane.setBounds(sizes.getPanel_panelTableView_panelX(),sizes.getPanel_panelTableView_panelY() , sizes.getScreenWidth()-sizes.getJlist_panelTableSelection_jlistTableSelection_jlistWidth(), sizes.getScreenHeight());
+        scrollPane.setBounds(sizes.getPanel_panelTableView_panelX(),sizes.getPanel_panelTableView_panelY() , sizes.getScreenWidth()-sizes.getJlist_panelTableSelection_jlistTableSelection_jlistWidth(), sizes.getScreenHeight()-50);
 
         return scrollPane;
     }
