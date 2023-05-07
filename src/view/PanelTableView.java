@@ -146,7 +146,16 @@ public class PanelTableView {
                         @Override
                         public void mousePressed(MouseEvent e) {
                             try {
-                                dbConnection.addImportedRows(connection, dbConnection.getAllTablesFromDB(connection)[index]);
+                                String[] columns = dbConnection.getColumnsFromTable(connection, index);
+                                String csvColumnTemplate = "";
+                                for(int i = 0; i < columns.length; i++) {
+                                    csvColumnTemplate += columns[i] + "; ";
+                                }
+                                int option = JOptionPane.showConfirmDialog(null, "Has your CSV the correct syntax? In first line:\n" + csvColumnTemplate + "\nIn lines below the data for every cell with ';' separated?");
+                                if (option == JOptionPane.OK_OPTION) {
+                                    dbConnection.addImportedRows(connection, dbConnection.getAllTablesFromDB(connection)[index]);
+                                }
+
                             } catch (SQLException ex) {
                                 throw new RuntimeException(ex);
                             } catch (IOException ex) {
@@ -170,6 +179,7 @@ public class PanelTableView {
                             }
                         }
                     });
+
                 }
             }
         });
