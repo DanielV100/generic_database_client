@@ -45,25 +45,29 @@ public class PanelTableView {
         };
         tableFromDB = new JTable(model);
         tableFromDB.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        tableFromDB.getTableHeader().setBackground(Color.YELLOW);
+        tableFromDB.getTableHeader().setBackground(new Color(238, 220, 130));
         tableFromDB.getTableHeader().setFont(new Font("Arial",Font.BOLD, 14));
+        tableFromDB.setRowHeight(30);
         tableFromDB.addMouseListener(new MouseAdapter() {
 
             @Override
             public void mousePressed(MouseEvent e) {
                 if (SwingUtilities.isRightMouseButton(e) || (System.getProperty("os.name").contains("Mac OS X") && e.isControlDown())){
                     popupMenu = new JPopupMenu();
-                    menuItemEdit = new JMenuItem("Edit row");
-                    menuItemDelete = new JMenuItem("Delete row");
                     menuItemAdd = new JMenuItem("Add row");
+                    menuItemEdit = new JMenuItem("Edit row");
                     menuItemImport = new JMenuItem("Import from .csv");
+                    menuItemDelete = new JMenuItem("Delete row");
                     menuItemClearTable = new JMenuItem("Clear table");
                     menuItemClearTable.setForeground(Color.RED);
                     //creating popupmenu with (1) edit (2) delete (3) add (4) import from .csv
+
                     popupMenu.add(menuItemEdit);
-                    popupMenu.add(menuItemDelete);
+                    popupMenu.addSeparator();
                     popupMenu.add(menuItemAdd);
                     popupMenu.add(menuItemImport);
+                    popupMenu.addSeparator();
+                    popupMenu.add(menuItemDelete);
                     popupMenu.add(menuItemClearTable);
                     //Display the popup menu at the location of the mouse click
                     popupMenu.show(e.getComponent(), e.getX(), e.getY());
