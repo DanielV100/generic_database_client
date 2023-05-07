@@ -47,7 +47,7 @@ public class PanelTableView {
         tableFromDB.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         tableFromDB.getTableHeader().setBackground(new Color(238, 220, 130));
         tableFromDB.getTableHeader().setFont(new Font("Arial",Font.BOLD, 14));
-        tableFromDB.setRowHeight(30);
+        tableFromDB.setRowHeight(50);
         tableFromDB.setGridColor(new Color(211, 211, 211));
         tableFromDB.setDefaultRenderer(Object.class, new AlternateRowColorRenderer());
         tableFromDB.setSelectionBackground(Color.BLUE);
