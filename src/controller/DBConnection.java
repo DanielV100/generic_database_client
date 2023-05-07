@@ -3,9 +3,14 @@ package controller;
 import model.Model;
 import view.View;
 
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.sql.*;
 import java.util.List;
+
+import static view.PanelDatabaseConnection.selectedDB;
 
 public class DBConnection {
     Model model = new Model();
@@ -30,7 +35,8 @@ public class DBConnection {
         return port;
     }
     public String createConnectionString(String hostname, String port, String databaseName) {
-        return "jdbc:mysql://" + hostname + ":" + port + "/" + databaseName;
+
+        return "jdbc:"+ selectedDB +"://" + hostname + ":" + port + "/" + databaseName;
     }
 
     //trying to connect to db via jdbc - driver is needed!
@@ -62,5 +68,11 @@ public class DBConnection {
     }
     public void addImportedRows(Connection connection, String table) throws SQLException, IOException {
         model.addImportedRows(connection, table);
+    }
+    public void getAllKeys(Connection connection) throws SQLException {
+        model.getAllKeys(connection);
+    }
+    public void clearTable(Connection connection, String table) throws SQLException {
+       model.clearTable(connection, table);
     }
 }

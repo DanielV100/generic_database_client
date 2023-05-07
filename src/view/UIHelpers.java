@@ -15,6 +15,19 @@ public class UIHelpers {
         frame.setVisible(frameVisibility);
         return frame;
     }
+    // Checkboxes can be created by calling this method
+    protected static JCheckBox createJCheckBox(JCheckBox checkBox, int checkboxX, int checkboxY, int checkboxWidth, int checkboxHeight, String checkboxLabel) {
+        checkBox = new JCheckBox(checkboxLabel);
+        checkBox.setBounds(checkboxX, checkboxY, checkboxWidth, checkboxHeight);
+        return checkBox;
+    }
+
+    // Radiobuttons can be created by calling this method
+    protected static JRadioButton createJRadioButton(JRadioButton radioButton, int radioButtonX, int radioButtonY, int radioButtonWidth, int radioButtonHeight, String radioButtonLabel) {
+        radioButton = new JRadioButton(radioButtonLabel);
+        radioButton.setBounds(radioButtonX, radioButtonY, radioButtonWidth, radioButtonHeight);
+        return radioButton;
+    }
 
     //Buttons can be created by calling this method
     protected static JButton createJButton(JButton button, int buttonX, int buttonY, int buttonWidth, int buttonHeight, String buttonLabel, Color buttonColor){
@@ -41,6 +54,11 @@ public class UIHelpers {
         textField = new JTextField(textFieldText);
         textField.setBounds(textFieldX, textFieldY, textFieldWidth, textFieldHeight);
         return textField;
+    }
+    protected static JPasswordField createJPasswordField(JPasswordField PasswordField, String textFieldText, int textFieldX, int textFieldY, int textFieldWidth, int textFieldHeight) {
+        PasswordField = new JPasswordField(textFieldText);
+        PasswordField.setBounds(textFieldX, textFieldY, textFieldWidth, textFieldHeight);
+        return PasswordField;
     }
 
     protected static JList createJList(JList jlist, String[] dataToDisplay, int listX, int listY, int listWidth, int listHeight) {

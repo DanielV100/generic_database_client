@@ -35,6 +35,50 @@ public class Sizes {
     int panel_panelTableView_panelX = 400;
     int panel_panelTableView_panelY = 0;
 
+    // Checkboxes
+
+        // MySQL Checkbox
+        /*int checkBox_panelDatabaseConnection_checkBoxMySql_checkBoxX = (screenWidth/2) + 150;
+        int checkBox_panelDatabaseConnection_checkBoxMySql_checkBoxY = 150;
+        int checkBox_panelDatabaseConnection_checkBoxMySql_checkBoxWidth = 74;
+        int checkBox_panelDatabaseConnection_checkBoxMySql_checkBoxHeight = 20;
+        String checkBox_panelDatabaseConnection_checkBoxMySql_checkBoxLabel = "MySQL";*/
+
+        // MariaDB Checkbox
+        /*int checkBox_panelDatabaseConnection_checkBoxMariaDB_checkBoxX = (screenWidth/2) + 50;
+        int checkBox_panelDatabaseConnection_checkBoxMariaDB_checkBoxY = 150;
+        int checkBox_panelDatabaseConnection_checkBoxMariaDB_checkBoxWidth = 83;
+        int checkBox_panelDatabaseConnection_checkBoxMariaDB_checkBoxHeight = 20;
+        String checkBox_panelDatabaseConnection_checkBoxMariaDB_checkBoxLabel = "MariaDB";*/
+
+        // PostgreSQL Checkbox
+        /*int checkBox_panelDatabaseConnection_checkBoxPostgreSQL_checkBoxX = (screenWidth/2) - 100;
+        int checkBox_panelDatabaseConnection_checkBoxPostgreSQL_checkBoxY = 150;
+        int checkBox_panelDatabaseConnection_checkBoxPostgreSQL_checkBoxWidth = 90;
+        int checkBox_panelDatabaseConnection_checkBoxPostgreSQL_checkBoxHeight = 20;
+        String checkBox_panelDatabaseConnection_checkBoxPostgreSQL_checkBoxLabel = "PostgreSQL";*/
+
+    // RadioButtons
+        // MySQL RadioButton
+        int radioButton_panelDatabaseConnection_radioButtonMySql_radioButtonX = (screenWidth/2) + 150;
+        int radioButton_panelDatabaseConnection_radioButtonMySql_radioButtonY = 150;
+        int radioButton_panelDatabaseConnection_radioButtonMySql_radioButtonWidth = 74;
+        int radioButton_panelDatabaseConnection_radioButtonMySql_radioButtonHeight = 20;
+        String radioButton_panelDatabaseConnection_radioButtonMySql_radioButtonLabel = "MySQL";
+
+        // MariaDB RadioButton
+        int radioButton_panelDatabaseConnection_radioButtonMariaDB_radioButtonX = (screenWidth/2) + 50;
+        int radioButton_panelDatabaseConnection_radioButtonMariaDB_radioButtonY = 150;
+        int radioButton_panelDatabaseConnection_radioButtonMariaDB_radioButtonWidth = 83;
+        int radioButton_panelDatabaseConnection_radioButtonMariaDB_radioButtonHeight = 20;
+        String radioButton_panelDatabaseConnection_radioButtonMariaDB_radioButtonLabel = "MariaDB";
+
+        // PostgreSQL RadioButton
+        int radioButton_panelDatabaseConnection_radioButtonPostgreSQL_radioButtonX = (screenWidth/2) -50;
+        int radioButton_panelDatabaseConnection_radioButtonPostgreSQL_radioButtonY = 150;
+        int radioButton_panelDatabaseConnection_radioButtonPostgreSQL_radioButtonWidth = 105;
+        int radioButton_panelDatabaseConnection_radioButtonPostgreSQL_radioButtonHeight = 20;
+        String radioButton_panelDatabaseConnection_radioButtonPostgreSQL_radioButtonLabel = "PostgreSQL";
 
     //Buttons
         //Connection button
@@ -197,7 +241,110 @@ public class Sizes {
     public int getTextField_panelDatabaseConnection_textFieldDatabaseName_textFieldY() {
         return textField_panelDatabaseConnection_textFieldDatabaseName_textFieldY;
     }
+    // Checkboxes
+        // MySQL Checkbox
+        /*public int getCheckBox_panelDatabaseConnection_checkBoxMySql_checkBoxX() {
+            return checkBox_panelDatabaseConnection_checkBoxMySql_checkBoxX;
+        }
+        public int getCheckBox_panelDatabaseConnection_checkBoxMySql_checkBoxY() {
+            return checkBox_panelDatabaseConnection_checkBoxMySql_checkBoxY;
+        }
+        public int getCheckBox_panelDatabaseConnection_checkBoxMySql_checkBoxWidth() {
+            return checkBox_panelDatabaseConnection_checkBoxMySql_checkBoxWidth;
+        }
+        public int getCheckBox_panelDatabaseConnection_checkBoxMySql_checkBoxHeight() {
+            return checkBox_panelDatabaseConnection_checkBoxMySql_checkBoxHeight;
+        }
+        public String getCheckBox_panelDatabaseConnection_checkBoxMySql_checkBoxLabel() {
+            return checkBox_panelDatabaseConnection_checkBoxMySql_checkBoxLabel;
+        }*/
 
+        // MariaDB Checkbox
+        /*public int getCheckBox_panelDatabaseConnection_checkBoxMariaDB_checkBoxX() {
+            return checkBox_panelDatabaseConnection_checkBoxMariaDB_checkBoxX;
+        }
+        public int getCheckBox_panelDatabaseConnection_checkBoxMariaDB_checkBoxY() {
+            return checkBox_panelDatabaseConnection_checkBoxMariaDB_checkBoxY;
+        }
+        public int getCheckBox_panelDatabaseConnection_checkBoxMariaDB_checkBoxWidth() {
+            return checkBox_panelDatabaseConnection_checkBoxMariaDB_checkBoxWidth;
+        }
+        public int getCheckBox_panelDatabaseConnection_checkBoxMariaDB_checkBoxHeight() {
+            return checkBox_panelDatabaseConnection_checkBoxMariaDB_checkBoxHeight;
+        }
+        public String getCheckBox_panelDatabaseConnection_checkBoxMariaDB_checkBoxLabel() {
+            return checkBox_panelDatabaseConnection_checkBoxMariaDB_checkBoxLabel;
+        }*/
+
+        // PostgreSQL
+        /*public int getCheckBox_panelDatabaseConnection_checkBoxPostgreSQL_checkBoxX() {
+            return checkBox_panelDatabaseConnection_checkBoxPostgreSQL_checkBoxX;
+        }
+        public int getCheckBox_panelDatabaseConnection_checkBoxPostgreSQL_checkBoxY() {
+            return checkBox_panelDatabaseConnection_checkBoxPostgreSQL_checkBoxY;
+        }
+        public int getCheckBox_panelDatabaseConnection_checkBoxPostgreSQL_checkBoxWidth() {
+            return checkBox_panelDatabaseConnection_checkBoxPostgreSQL_checkBoxWidth;
+        }
+        public int getCheckBox_panelDatabaseConnection_checkBoxPostgreSQL_checkBoxHeight() {
+            return checkBox_panelDatabaseConnection_checkBoxPostgreSQL_checkBoxHeight;
+        }
+        public String getCheckBox_panelDatabaseConnection_checkBoxPostgreSQL_checkBoxLabel() {
+            return checkBox_panelDatabaseConnection_checkBoxPostgreSQL_checkBoxLabel;
+        }*/
+
+    // RadioButtons
+        // MySQL
+        public int getRadioButton_panelDatabaseConnection_radioButtonMySql_radioButtonX() {
+            return radioButton_panelDatabaseConnection_radioButtonMySql_radioButtonX;
+        }
+        public int getRadioButton_panelDatabaseConnection_radioButtonMySql_radioButtonY() {
+            return radioButton_panelDatabaseConnection_radioButtonMySql_radioButtonY;
+        }
+        public int getRadioButton_panelDatabaseConnection_radioButtonMySql_radioButtonWidth() {
+            return radioButton_panelDatabaseConnection_radioButtonMySql_radioButtonWidth;
+        }
+        public int getRadioButton_panelDatabaseConnection_radioButtonMySql_radioButtonHeight() {
+            return radioButton_panelDatabaseConnection_radioButtonMySql_radioButtonHeight;
+        }
+        public String getRadioButton_panelDatabaseConnection_radioButtonMySql_radioButtonLabel() {
+            return radioButton_panelDatabaseConnection_radioButtonMySql_radioButtonLabel;
+        }
+
+        // MariaDB
+        public int getRadioButton_panelDatabaseConnection_radioButtonMariaDB_radioButtonX() {
+            return radioButton_panelDatabaseConnection_radioButtonMariaDB_radioButtonX;
+        }
+        public int getRadioButton_panelDatabaseConnection_radioButtonMariaDB_radioButtonY() {
+            return radioButton_panelDatabaseConnection_radioButtonMariaDB_radioButtonY;
+        }
+        public int getRadioButton_panelDatabaseConnection_radioButtonMariaDB_radioButtonWidth() {
+            return radioButton_panelDatabaseConnection_radioButtonMariaDB_radioButtonWidth;
+        }
+        public int getRadioButton_panelDatabaseConnection_radioButtonMariaDB_radioButtonHeight() {
+            return radioButton_panelDatabaseConnection_radioButtonMariaDB_radioButtonHeight;
+        }
+        public String getRadioButton_panelDatabaseConnection_radioButtonMariaDB_radioButtonLabel() {
+            return radioButton_panelDatabaseConnection_radioButtonMariaDB_radioButtonLabel;
+        }
+
+        // PostgreSQL
+        public int getRadioButton_panelDatabaseConnection_radioButtonPostgreSQL_radioButtonX() {
+            return radioButton_panelDatabaseConnection_radioButtonPostgreSQL_radioButtonX;
+        }
+        public int getRadioButton_panelDatabaseConnection_radioButtonPostgreSQL_radioButtonY() {
+            return radioButton_panelDatabaseConnection_radioButtonPostgreSQL_radioButtonY;
+        }
+        public int getRadioButton_panelDatabaseConnection_radioButtonPostgreSQL_radioButtonWidth() {
+            return radioButton_panelDatabaseConnection_radioButtonPostgreSQL_radioButtonWidth;
+        }
+        public int getRadioButton_panelDatabaseConnection_radioButtonPostgreSQL_radioButtonHeight() {
+            return radioButton_panelDatabaseConnection_radioButtonPostgreSQL_radioButtonHeight;
+        }
+        public String getRadioButton_panelDatabaseConnection_radioButtonPostgreSQL_radioButtonLabel() {
+            return radioButton_panelDatabaseConnection_radioButtonPostgreSQL_radioButtonLabel;
+        }
+    // Buttons
     public int getButton_panelDatabaseConnection_buttonConnect_buttonWidth() {
         return button_panelDatabaseConnection_buttonConnect_buttonWidth;
     }
@@ -218,6 +365,7 @@ public class Sizes {
         return textField_panelDatabaseConnection_textFieldPort_textFieldWidth;
     }
 
+    // Textfields
     public int getTextField_panelDatabaseConnection_textFieldPort_textFieldHeight() {
         return textField_panelDatabaseConnection_textFieldPort_textFieldHeight;
     }
@@ -245,6 +393,8 @@ public class Sizes {
     public int getTextField_panelDatabaseConnection_textFieldHostname_textFieldY() {
         return textField_panelDatabaseConnection_textFieldHostname_textFieldY;
     }
+
+    // Frames
     public int getFrame_view_mainFrame_frameHeight() {
         return frame_view_mainFrame_frameHeight;
     }
@@ -253,6 +403,7 @@ public class Sizes {
         return frame_view_mainFrame_frameWidth;
     }
 
+    // Panels
     public int getPanel_view_panelDatabaseConnection_panelWidth() {
         return panel_view_panelDatabaseConnection_panelWidth;
     }
@@ -269,6 +420,7 @@ public class Sizes {
         return panel_view_panelDatabaseConnection_panelY;
     }
 
+    // Screen
     public int getScreenHeight() {
         return screenHeight;
     }

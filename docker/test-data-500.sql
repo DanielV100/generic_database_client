@@ -1,6 +1,4 @@
-DROP TABLE IF EXISTS `myTable`;
-
-CREATE TABLE `myTable` (
+CREATE TABLE `test_table` (
   `id` mediumint(8) unsigned NOT NULL auto_increment,
   `name` varchar(255) default NULL,
   `email` varchar(255) default NULL,
