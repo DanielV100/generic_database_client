@@ -28,11 +28,9 @@ public class UserCredentials {
     public String getUsername() {
         return username;
     }
-
     public String getSelectedDB() {
         return selectedDB;
     }
-
     public String getPassword() {
         return password;
     }

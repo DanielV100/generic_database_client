@@ -46,8 +46,9 @@ public class PanelDatabaseConnection {
     private JTextField textFieldUsername = new JTextField();
     private JPasswordField textFieldPassword = new JPasswordField();
     private JButton buttonConnect = new JButton();
-    String filePathtext = "credentials.txt";
+    String filePathtext = "Credentials/credentials.txt";
     File filetext = new File(filePathtext);
+
     JFrame test = new JFrame();
 
     int result = 0;
@@ -102,9 +103,15 @@ public class PanelDatabaseConnection {
         textFieldUsername = uiHelpers.createJTextField(textFieldHostname, controller.getAppPropertiesWithKey("textField.panelDatabaseConnection.textFieldUsername"), (sizes.getScreenWidth()/2)-(sizes.getButton_panelDatabaseConnection_buttonConnect_buttonWidth()/2), sizes.getTextField_panelDatabaseConnection_textFieldUsername_textFieldY(), sizes.getTextField_panelDatabaseConnection_textFieldUsername_textFieldWidth(), sizes.getTextField_panelDatabaseConnection_textFieldUsername_textFieldHeight());
         textFieldPassword = uiHelpers.createJPasswordField(textFieldPassword, controller.getAppPropertiesWithKey("textField.panelDatabaseConnection.textFieldPassword"), (sizes.getScreenWidth()/2)-(sizes.getButton_panelDatabaseConnection_buttonConnect_buttonWidth()/2), sizes.getTextField_panelDatabaseConnection_textFieldPassword_textFieldY(), sizes.getTextField_panelDatabaseConnection_textFieldPassword_textFieldWidth(), sizes.getTextField_panelDatabaseConnection_textFieldPassword_textFieldHeight());
 
+        File directory = new File("Credentials");
+        if (!directory.exists()) {
+            directory.mkdir();
+        }
+
         //Speichern der Daten soll nicht beim ersten Start erfolgen
         if (filetext.exists()) {
-            int result = JOptionPane.showConfirmDialog(null, "Möchten Sie die gespeicherten Anmeldeinformationen laden?", "Bestätigen", JOptionPane.YES_NO_OPTION);
+            result = JOptionPane.showConfirmDialog(null, "Möchten Sie gespeicherte Anmeldeinformationen laden?", "Bestätigen", JOptionPane.YES_NO_OPTION);
+
         }
         //creating button for building the connection
         buttonConnect = uiHelpers.createJButton(buttonConnect, (sizes.getScreenWidth()/2)-(sizes.getButton_panelDatabaseConnection_buttonConnect_buttonWidth()/2), sizes.getButton_panelDatabaseConnection_buttonConnect_buttonY(), sizes.getButton_panelDatabaseConnection_buttonConnect_buttonWidth(), sizes.getButton_panelDatabaseConnection_buttonConnect_buttonHeight(), controller.getAppPropertiesWithKey("button.panelDatabaseConnection.buttonConnect"), Color.GREEN);
@@ -215,7 +222,8 @@ public class PanelDatabaseConnection {
         panelDatabaseConnection.add(buttonConnect);
 
         //laden von gespeicherten Nutzerdaten
-        UserCredentials credentials = CredentialManager.loadCredentials(filePathtext);
+        int verbindung = 0;
+        UserCredentials credentials = CredentialManager.loadCredentials(filePathtext, verbindung);
         if (credentials != null) {
             // do something with the loaded credentials
             if (result == JOptionPane.YES_OPTION) {
