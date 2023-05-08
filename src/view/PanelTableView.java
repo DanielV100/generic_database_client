@@ -1,6 +1,7 @@
 package view;
 
 import controller.DBConnection;
+import model.CSVExporter;
 import resources.Sizes;
 
 import javax.swing.*;
@@ -29,6 +30,8 @@ public class PanelTableView {
     JMenuItem menuItemAdd;
     JMenuItem menuItemImport;
     JMenuItem menuItemClearTable;
+    JMenuItem menuItemExportToCSV;
+    CSVExporter csvExporter = new CSVExporter();
 
     public JScrollPane PanelTableView(Connection connection, int index) throws SQLException {
         sizes.init();
@@ -60,6 +63,7 @@ public class PanelTableView {
                     menuItemAdd = new JMenuItem("Add row");
                     menuItemEdit = new JMenuItem("Edit row");
                     menuItemImport = new JMenuItem("Import from .csv");
+                    menuItemExportToCSV = new JMenuItem("Export to .csv");
                     menuItemDelete = new JMenuItem("Delete row");
                     menuItemClearTable = new JMenuItem("Clear table");
                     menuItemClearTable.setForeground(Color.RED);
@@ -69,6 +73,7 @@ public class PanelTableView {
                     popupMenu.addSeparator();
                     popupMenu.add(menuItemAdd);
                     popupMenu.add(menuItemImport);
+                    popupMenu.add(menuItemExportToCSV);
                     popupMenu.addSeparator();
                     popupMenu.add(menuItemDelete);
                     popupMenu.add(menuItemClearTable);
@@ -185,6 +190,17 @@ public class PanelTableView {
                                 } catch (SQLException ex) {
                                     throw new RuntimeException(ex);
                                 }
+                            }
+                        }
+                    });
+                    menuItemExportToCSV.addMouseListener(new MouseAdapter() {
+                        @Override
+                        public void mousePressed(MouseEvent mouseEvent) {
+                            try {
+                                JTable test = (JTable) e.getSource();
+                                CSVExporter.exportToCSV(test);
+                            } catch (IOException ex) {
+                                throw new RuntimeException(ex);
                             }
                         }
                     });
