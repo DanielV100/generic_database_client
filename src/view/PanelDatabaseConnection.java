@@ -160,9 +160,7 @@ public class PanelDatabaseConnection {
                     UserCredentials credentials = new UserCredentials(hostname, portname, dbname, username, password, selecteddb);
                     CredentialManager.saveCredentials(credentials, filePathtext);
                     test.add(panelTableSelection.PanelTableSelection(connection));
-                    //test.requestFocus();
                     test.setVisible(true);
-                    //frameMain.setVisible(false);
                     //close db connection while closing application
                     test.addWindowListener(new WindowAdapter() {
                         @Override
