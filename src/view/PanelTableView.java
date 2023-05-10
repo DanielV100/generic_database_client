@@ -51,11 +51,16 @@ public class PanelTableView {
         tableFromDB.setGridColor(new Color(211, 211, 211));
         tableFromDB.setDefaultRenderer(Object.class, new AlternateRowColorRenderer());
         tableFromDB.setSelectionBackground(Color.BLUE);
-        tableFromDB.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        if (tableFromDB.getColumnCount() > 5) {
+            tableFromDB.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        } else  {
+            tableFromDB.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+        }
+
         TableColumnModel columnModel = tableFromDB.getColumnModel();
         for (int i = 0; i < tableFromDB.getColumnCount(); i++) {
             TableColumn column = tableFromDB.getColumnModel().getColumn(i);
-            column.setMinWidth(100);
+            column.setMinWidth(200);
         }
 
         tableFromDB.addMouseListener(new MouseAdapter() {
