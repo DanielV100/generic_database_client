@@ -16,6 +16,9 @@ import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import static view.CredentialManager.loadCredentials;
 
 public class PanelDatabaseConnection {
     DBConnection dbConnection = new DBConnection();
@@ -46,11 +49,9 @@ public class PanelDatabaseConnection {
     private JTextField textFieldUsername = new JTextField();
     private JPasswordField textFieldPassword = new JPasswordField();
     private JButton buttonConnect = new JButton();
-    String filePathtext = "Credentials/credentials.txt";
-    File filetext = new File(filePathtext);
-
     JFrame test = new JFrame();
-
+    String filePathtext = "Credentials/credentials.txt";
+    File directory = new File("Credentials");
     int result = 0;
 
     PanelTableSelection panelTableSelection = new PanelTableSelection();
@@ -103,16 +104,6 @@ public class PanelDatabaseConnection {
         textFieldUsername = uiHelpers.createJTextField(textFieldHostname, controller.getAppPropertiesWithKey("textField.panelDatabaseConnection.textFieldUsername"), (sizes.getScreenWidth()/2)-(sizes.getButton_panelDatabaseConnection_buttonConnect_buttonWidth()/2), sizes.getTextField_panelDatabaseConnection_textFieldUsername_textFieldY(), sizes.getTextField_panelDatabaseConnection_textFieldUsername_textFieldWidth(), sizes.getTextField_panelDatabaseConnection_textFieldUsername_textFieldHeight());
         textFieldPassword = uiHelpers.createJPasswordField(textFieldPassword, controller.getAppPropertiesWithKey("textField.panelDatabaseConnection.textFieldPassword"), (sizes.getScreenWidth()/2)-(sizes.getButton_panelDatabaseConnection_buttonConnect_buttonWidth()/2), sizes.getTextField_panelDatabaseConnection_textFieldPassword_textFieldY(), sizes.getTextField_panelDatabaseConnection_textFieldPassword_textFieldWidth(), sizes.getTextField_panelDatabaseConnection_textFieldPassword_textFieldHeight());
 
-        File directory = new File("Credentials");
-        if (!directory.exists()) {
-            directory.mkdir();
-        }
-
-        //Speichern der Daten soll nicht beim ersten Start erfolgen
-        if (filetext.exists()) {
-            result = JOptionPane.showConfirmDialog(null, "Möchten Sie gespeicherte Anmeldeinformationen laden?", "Bestätigen", JOptionPane.YES_NO_OPTION);
-
-        }
         //creating button for building the connection
         buttonConnect = uiHelpers.createJButton(buttonConnect, (sizes.getScreenWidth()/2)-(sizes.getButton_panelDatabaseConnection_buttonConnect_buttonWidth()/2), sizes.getButton_panelDatabaseConnection_buttonConnect_buttonY(), sizes.getButton_panelDatabaseConnection_buttonConnect_buttonWidth(), sizes.getButton_panelDatabaseConnection_buttonConnect_buttonHeight(), controller.getAppPropertiesWithKey("button.panelDatabaseConnection.buttonConnect"), Color.GREEN);
         //Textfeld-Inhalte nach Click entfernen
@@ -222,36 +213,45 @@ public class PanelDatabaseConnection {
         panelDatabaseConnection.add(buttonConnect);
 
         //laden von gespeicherten Nutzerdaten
-        int verbindung = 0;
-        UserCredentials credentials = CredentialManager.loadCredentials(filePathtext, verbindung);
-        if (credentials != null) {
-            // do something with the loaded credentials
-            if (result == JOptionPane.YES_OPTION) {
-                // Anmeldeinformationen laden und in Textfelder anzeigen
-                String hostnameload = credentials.getHostname();
-                String portnameload = credentials.getPortname();
-                String dbnameload = credentials.getDbname();
-                String usernameload = credentials.getUsername();
-                String passwordload = credentials.getPassword();
-                String selecteddbload = credentials.getSelectedDB();
-                textFieldHostname.setText(hostnameload);
-                textFieldPort.setText(portnameload);
-                textFieldDatabaseName.setText(dbnameload);
-                textFieldUsername.setText(usernameload);
-                textFieldPassword.setText(passwordload);
-                if(selecteddbload.toLowerCase().equals("mysql")) {
-                    selectedDB = selecteddbload;
-                    radioButtonMySql.setSelected(true);
-                } else if(selecteddbload.toLowerCase().equals("mariadb")) {
-                    selectedDB = selecteddbload;
-                    radioButtonMariaDB.setSelected(true);
-                } else if(selecteddbload.toLowerCase().equals("postgresql")) {
-                    selectedDB = selecteddbload;
-                    radioButtonPostgreSQL.setSelected(true);
-                }
-            } else {
-                // handle case where no credentials were loaded
+        if (!directory.exists()) {
+            directory.mkdir();
+        }
+        else {
+        List<UserCredentials> credentialsList = loadCredentials(filePathtext);
+        String[] options = new String[credentialsList.size() + 1];
+        options[0] = "Nein";
+        for (int i = 0; i < credentialsList.size(); i++) {
+            options[i+1] = credentialsList.get(i).getDbname();
+        }
+        int result = JOptionPane.showOptionDialog(null, "Möchten Sie gespeicherte Anmeldeinformationen laden?", "Bestätigen", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+        if (result >= 1) {
+            UserCredentials selectedCredentials = credentialsList.get(result - 1);
+            String hostnameload = selectedCredentials.getHostname();
+            String portnameload = selectedCredentials.getPortname();
+            String dbnameload = selectedCredentials.getDbname();
+            String usernameload = selectedCredentials.getUsername();
+            String passwordload = selectedCredentials.getPassword();
+            String selecteddbload = selectedCredentials.getSelectedDB();
+            textFieldHostname.setText(hostnameload);
+            textFieldPort.setText(portnameload);
+            textFieldDatabaseName.setText(dbnameload);
+            textFieldUsername.setText(usernameload);
+            textFieldPassword.setText(passwordload);
+            if(selecteddbload.toLowerCase().equals("mysql")) {
+                selectedDB = selecteddbload;
+                radioButtonMySql.setSelected(true);
+            } else if(selecteddbload.toLowerCase().equals("mariadb")) {
+                selectedDB = selecteddbload;
+                radioButtonMariaDB.setSelected(true);
+            } else if(selecteddbload.toLowerCase().equals("postgresql")) {
+                selectedDB = selecteddbload;
+                radioButtonPostgreSQL.setSelected(true);
             }
+            // Use the selected credentials to establish a database connection
+        } else {
+            // User selected "Nein"
+        }
+                // Anmeldeinformationen laden und in Textfelder anzeigen
         }
 
         File file = new File(getClass().getClassLoader().getResource("resources/test.jpg").getFile());

@@ -4,6 +4,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class CredentialManager {
@@ -17,28 +19,31 @@ public class CredentialManager {
                 e.printStackTrace();
             }
         }
-    public static UserCredentials loadCredentials(String filePath, int index) {
+    public static List<UserCredentials> loadCredentials(String filePath) {
+        List<UserCredentials> credentialsList = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-            String line = null;
-            int count = 0;
-            while ((line = reader.readLine()) != null) {
-                if (count == index) {
-                    String[] tokens = line.split(",");
+            String line = reader.readLine();
+            while (line != null) {
+                String[] tokens = line.split(",");
+                if (tokens.length >= 6) {
                     String hostname = tokens[0];
                     String portname = tokens[1];
-                    String dbname = tokens[2];
+                    String dbname   = tokens[2];
                     String username = tokens[3];
                     String password = tokens[4];
                     String selecteddb = tokens[5];
 
-                    return new UserCredentials(hostname, portname, dbname, username, password, selecteddb);
+                    UserCredentials credentials = new UserCredentials(hostname, portname, dbname, username, password, selecteddb);
+                    credentialsList.add(credentials);
+                } else {
+                    // Handle invalid line
                 }
-                count++;
+                line = reader.readLine();
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return null;
+        return credentialsList;
     }
 
 }
