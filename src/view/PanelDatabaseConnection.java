@@ -129,9 +129,7 @@ public class PanelDatabaseConnection {
         textFieldPassword.setOpaque(false);
         textFieldPassword.setFont(new Font("Arial", Font.PLAIN, 20));
         //Speichern der Daten soll nicht beim ersten Start erfolgen
-        if (filetext.exists()) {
-            int result = JOptionPane.showConfirmDialog(null, "Möchten Sie die gespeicherten Anmeldeinformationen laden?", "Bestätigen", JOptionPane.YES_NO_OPTION);
-        }
+
         //creating button for building the connection
         buttonConnect = uiHelpers.createJButton(buttonConnect, (sizes.getScreenWidth()/2)-(sizes.getButton_panelDatabaseConnection_buttonConnect_buttonWidth()/2), sizes.getButton_panelDatabaseConnection_buttonConnect_buttonY(), sizes.getButton_panelDatabaseConnection_buttonConnect_buttonWidth(), sizes.getButton_panelDatabaseConnection_buttonConnect_buttonHeight(), controller.getAppPropertiesWithKey("button.panelDatabaseConnection.buttonConnect"),Color.lightGray);
 
