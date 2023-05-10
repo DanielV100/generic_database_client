@@ -24,7 +24,9 @@ public class PanelTableSelection {
         sizes.init();
         //creating list which shows the tables
         jlistTableSelection = uiHelpers.createJList(jlistTableSelection, dbConnection.getAllTablesFromDB(connection), sizes.getJlist_panelTableSelection_jlistTableSelection_jlistX(), sizes.getJlist_panelTableSelection_jlistTableSelection_jlisty(), sizes.getJlist_panelTableSelection_jlistTableSelection_jlistWidth(), sizes.getScreenHeight());
-
+        jlistTableSelection.setBackground(new Color(211, 211, 211));
+        jlistTableSelection.setFont(new Font("Arial",Font.PLAIN, 14));
+        jlistTableSelection.setFixedCellHeight(30);
         jlistTableSelection.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {

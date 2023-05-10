@@ -97,22 +97,22 @@ public class Sizes {
     int textField_panelDatabaseConnection_textFieldPort_textFieldWidth = 300;
     int textField_panelDatabaseConnection_textFieldPort_textFieldHeight = 50;
     int textField_panelDatabaseConnection_textFieldPort_textFieldX = 200;
-    int textField_panelDatabaseConnection_textFieldPort_textFieldY = 260;
+    int textField_panelDatabaseConnection_textFieldPort_textFieldY = 270;
      //Database name
     int textField_panelDatabaseConnection_textFieldDatabaseName_textFieldWidth = 300;
     int textField_panelDatabaseConnection_textFieldDatabaseName_textFieldHeight = 50;
     int textField_panelDatabaseConnection_textFieldDatabaseName_textFieldX = 200;
-    int textField_panelDatabaseConnection_textFieldDatabaseName_textFieldY = 320;
+    int textField_panelDatabaseConnection_textFieldDatabaseName_textFieldY = 330;
      //Username
     int textField_panelDatabaseConnection_textFieldUsername_textFieldWidth = 300;
     int textField_panelDatabaseConnection_textFieldUsername_textFieldHeight = 50;
     int textField_panelDatabaseConnection_textFieldUsername_textFieldX = 200;
-    int textField_panelDatabaseConnection_textFieldUsername_textFieldY = 380;
+    int textField_panelDatabaseConnection_textFieldUsername_textFieldY = 390;
         //Password
     int textField_panelDatabaseConnection_textFieldPassword_textFieldWidth = 300;
     int textField_panelDatabaseConnection_textFieldPassword_textFieldHeight = 50;
     int textField_panelDatabaseConnection_textFieldPassword_textFieldX = 200;
-    int textField_panelDatabaseConnection_textFieldPassword_textFieldY = 440;
+    int textField_panelDatabaseConnection_textFieldPassword_textFieldY = 450;
 
     //----JLists----
         //list with all tables in it

@@ -3,6 +3,7 @@ package controller;
 import model.Model;
 import view.View;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -67,5 +68,11 @@ public class DBConnection {
     }
     public void addImportedRows(Connection connection, String table) throws SQLException, IOException {
         model.addImportedRows(connection, table);
+    }
+    public void getAllKeys(Connection connection) throws SQLException {
+        model.getAllKeys(connection);
+    }
+    public void clearTable(Connection connection, String table) throws SQLException {
+       model.clearTable(connection, table);
     }
 }

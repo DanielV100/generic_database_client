@@ -7,6 +7,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
@@ -15,6 +17,8 @@ import java.util.List;
 public class Model {
     ImportFilesGetter importFilesGetter = new ImportFilesGetter();
     Sizes sizes = new Sizes();
+    String foreignKeys = "";
+    String primaryKeys = "";
     //create connection to db
     public Connection connectToDB(String connectionString, String username, String password) throws SQLException {
         return DriverManager.getConnection(connectionString, username, password);
@@ -85,7 +89,7 @@ public class Model {
         public void addRow(Connection connection, String table) throws SQLException {
         String addQuery = "INSERT INTO " + table + "(";
         List<String> columns = getAllWriteableColumns(connection, table);
-        String[] input = getInputDialogForCreatingNewRow(columns);
+        String[] input = getInputDialogForCreatingNewRow(connection, table, columns);
         if(input != null) {
             for(int i = 0; i < columns.size(); i++) {
                 if(i == columns.size() - 1) {
@@ -106,6 +110,7 @@ public class Model {
                 preparedStatement.setString(y, input[y-1]);
             }
             preparedStatement.executeUpdate();
+            System.out.println(preparedStatement);
             JOptionPane.showMessageDialog(null, "Added row!");
         }
 
@@ -114,7 +119,7 @@ public class Model {
         //if a column isn't writable it will shown anyways - but its not editable - this list is needed to compare columns with the writable columns to find out which is readonly
         List<String> writableColumns = getAllWriteableColumns(connection, table);
         String editQuery = "UPDATE " + table + " SET ";
-        String[] input = getInputDialogForEditingRow(columns, rows, writableColumns);
+        String[] input = getInputDialogForEditingRow(connection, table, columns, rows, writableColumns);
         for (int i = 0; i < columns.size(); i++) {
             if(i == columns.size() - 1) {
                 editQuery += columns.get(i) + "=" + "?" + " WHERE ";
@@ -180,7 +185,7 @@ public class Model {
         return columnsWriteable;
     }
     //needed for adding row
-    private String[] getInputDialogForCreatingNewRow(List<String> columns) {
+    private String[] getInputDialogForCreatingNewRow(Connection connection, String table, List<String> columns) throws SQLException {
         JTextField[] inputFields = new JTextField[columns.size()];
         JLabel[] labels = new JLabel[columns.size()];
         String input[] = new String[columns.size()];
@@ -189,7 +194,7 @@ public class Model {
         List<String> writableColumns = new ArrayList<>();
         JOptionPane pane = new JOptionPane();
         pane.setBounds(sizes.getScreenWidth()/2, sizes.getScreenHeight()/2, sizes.getScreenWidth()/2,sizes.getScreenHeight()/2);
-        int option = pane.showConfirmDialog(null, createContainerForJOptionPane(columns, labels, inputFields, columnsType, columnsTypeLength, false, rows, writableColumns), "Add rows", JOptionPane.OK_CANCEL_OPTION);
+        int option = pane.showConfirmDialog(null, createContainerForJOptionPane(connection, table, columns, labels, inputFields, columnsType, columnsTypeLength, false, rows, writableColumns), "Add rows", JOptionPane.OK_CANCEL_OPTION);
         if(option == JOptionPane.OK_OPTION) {
             for(int x = 0; x < columns.size(); x++) {
                 input[x] = inputFields[x].getText();
@@ -199,14 +204,14 @@ public class Model {
         }
         return input;
     }
-    private String[] getInputDialogForEditingRow(List<String> columns, List<String> rows, List<String> writableColumns) {
+    private String[] getInputDialogForEditingRow(Connection connection, String table, List<String> columns, List<String> rows, List<String> writableColumns) throws SQLException {
         String input[] = new String[columns.size()];
         JPanel container = new JPanel(new GridLayout(columns.size(), 2));
         JLabel[] labelForColumns = new JLabel[columns.size()];
         JTextField[] inputFields = new JTextField[columns.size()];
         JOptionPane pane = new JOptionPane();
         pane.setBounds(sizes.getScreenWidth()/2, sizes.getScreenHeight()/2, sizes.getScreenWidth()/2,sizes.getScreenHeight()/2);
-        int option = pane.showConfirmDialog(null, createContainerForJOptionPane(columns, labelForColumns, inputFields, columnsType, columnsTypeLength, true, rows, writableColumns), "Edit rows", JOptionPane.OK_CANCEL_OPTION);
+        int option = pane.showConfirmDialog(null, createContainerForJOptionPane(connection, table, columns, labelForColumns, inputFields, columnsType, columnsTypeLength, true, rows, writableColumns), "Edit rows", JOptionPane.OK_CANCEL_OPTION);
         if(option == JOptionPane.OK_OPTION) {
             for(int x = 0; x < columns.size(); x++) {
                 input[x] = inputFields[x].getText();
@@ -220,14 +225,17 @@ public class Model {
         System.out.println(table);
         //Insert into table(n, x, y...) Values(
         String addQueryMeta = "INSERT INTO " + table + "(";
+        //String addQueryMeta = "INSERT INTO `" + table + " VALUES(";
         String addQueryValues = "";
+        String columns = "";
         List<List<String>> data = importFilesGetter.getColumnsAndRowsFromCSV();
         for (int i = 0; i < data.get(0).size(); i++) {
             if(i == data.get(0).size() - 1) {
-                addQueryMeta += data.get(0).get(i) + ") VALUES(";
+                addQueryMeta += data.get(0).get(i) +") VALUES(";
             } else {
-                addQueryMeta += data.get(0).get(i) + ", ";
+                addQueryMeta +=data.get(0).get(i) + ", ";
             }
+            columns += data.get(0).get(i) + ";";
         }
         //x --> rows; y --> columns in rows
         for(int x = 1; x < data.size(); x++) {
@@ -237,17 +245,23 @@ public class Model {
                 } else {
                     addQueryValues += "?" + ", ";
                 }
+
             }
+            addQueryMeta = addQueryMeta.replace("\uFEFF", "");
+            addQueryValues = addQueryValues.replace("\uFEFF", "");
+            System.out.println("Pre Prepared statement: " + addQueryMeta + addQueryValues);
             PreparedStatement preparedStatement = connection.prepareStatement(addQueryMeta + addQueryValues);
             for(int n = 1; n <= data.get(x).size(); n++) {
                 preparedStatement.setString(n, data.get(x).get(n-1));
             }
-            System.out.println(preparedStatement);
+            System.out.println("Prepared statement: " + preparedStatement);
             preparedStatement.executeUpdate();
+            addQueryValues = "";
         }
 
     }
-    private JPanel createContainerForJOptionPane(List<String> columns, JLabel[] labelForColumns, JTextField[] inputFields, List<String> columnsType, List<Integer> columnsTypeLength, Boolean isEdit, List<String> rows, List<String> writableColumns) {
+    private JPanel createContainerForJOptionPane(Connection connection, String table, List<String> columns, JLabel[] labelForColumns, JTextField[] inputFields, List<String> columnsType, List<Integer> columnsTypeLength, Boolean isEdit, List<String> rows, List<String> writableColumns) throws SQLException {
+        getAllKeys(connection);
         String numbers = "123456789";
         String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         String specialChars = ";,+*#'_^^´`;";
@@ -258,10 +272,17 @@ public class Model {
             container.add(labelForColumns[i]);
             //on the right-handed side: textfields
             if(isEdit) {
-                if(!(writableColumns.contains(columns.get(i)))) {
-                    inputFields[i].setEditable(false);
-                }
+                System.out.println("Foreign Keys: " + foreignKeys);
+                System.out.println(table.toLowerCase() + "." + columns.get(i));
                 inputFields[i] = new JTextField(rows.get(i));
+                if((!(writableColumns.contains(columns.get(i))))  || primaryKeys.contains(table.toLowerCase() + "." + columns.get(i))) {
+                    inputFields[i].setEditable(false);
+                    inputFields[i].setBackground(Color.LIGHT_GRAY);
+                    inputFields[i].setToolTipText("This field is a primary key and can't be changed because it's used in other tables.");
+                } else if (foreignKeys.contains(table.toLowerCase() + "." + columns.get(i))) {
+                    inputFields[i].setBackground(Color.YELLOW);
+                    inputFields[i].setToolTipText("Mind that the data from this row comes from another table (foreign key).");
+                }
             } else {
                 inputFields[i] = new JTextField();
             }
@@ -292,5 +313,29 @@ public class Model {
             container.add(inputFields[i]);
         }
         return container;
+    }
+    public void getAllKeys(Connection connection) throws SQLException {
+        String foreignKey = "";
+        String primaryKeys = "";
+        DatabaseMetaData databaseMetaData = connection.getMetaData();
+        ResultSet tableResultSet = databaseMetaData.getTables(null, null, "%", new String[]{"TABLE"});
+        while(tableResultSet.next()) {
+            String tableName = tableResultSet.getString("TABLE_NAME");
+            ResultSet keyResultSet = databaseMetaData.getImportedKeys(null, null, tableName);
+            while(keyResultSet.next()) {
+                foreignKey += keyResultSet.getString("FKTABLE_NAME") + "." + keyResultSet.getString("FKCOLUMN_NAME") + " ";
+                primaryKeys += keyResultSet.getString("PKTABLE_NAME") + "." + keyResultSet.getString("PKCOLUMN_NAME") + " ";
+            }
+        }
+        this.primaryKeys = primaryKeys;
+        this.foreignKeys = foreignKey;
+        System.out.println(primaryKeys);
+        System.out.println(foreignKey);
+    }
+    public void clearTable(Connection connection, String table) throws SQLException {
+        String deleteQuery = "DELETE FROM " + table;
+        PreparedStatement st = connection.prepareStatement(deleteQuery);
+        st.executeUpdate();
+        JOptionPane.showMessageDialog(null, "Cleared table");
     }
 }

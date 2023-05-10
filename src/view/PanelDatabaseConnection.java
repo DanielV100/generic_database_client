@@ -5,14 +5,10 @@ import controller.DBConnection;
 import resources.Sizes;
 
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicButtonUI;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.io.File;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -58,6 +54,9 @@ public class PanelDatabaseConnection {
 
     //"/Users/lorenz.lederer/Downloads/5g-networking-technology-background-with-blue-digital-line/rm373batch2-08.jpg"));
     public JPanel PanelDatabaseConnection() throws IOException {
+
+
+
         sizes.init();
         test.setLayout(null);
         test.setBounds(0, 0, sizes.getScreenWidth(), sizes.getScreenHeight());
@@ -65,6 +64,12 @@ public class PanelDatabaseConnection {
         test.setExtendedState(JFrame.MAXIMIZED_BOTH);
         test.setUndecorated(false);
         test.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+        JLabel headingLabel = new JLabel("Generic Database Client");
+        headingLabel.setFont(new Font("Arial", Font.BOLD, 48));
+        headingLabel.setForeground(Color.DARK_GRAY);
+        headingLabel.setBounds((sizes.getScreenWidth() / 2) - 280, 10, 600, 200);
+
 
         //creating checkboxes for (1) MySQL (2) mariaDB (3) PostgreSQL
         /*checkBoxMySql = uiHelpers.createJCheckBox(checkBoxMySql, ((sizes.getScreenWidth()/2)-(sizes.getCheckBox_panelDatabaseConnection_checkBoxMySql_checkBoxX())), (sizes.getCheckBox_panelDatabaseConnection_checkBoxMySql_checkBoxY()), sizes.getCheckBox_panelDatabaseConnection_checkBoxMySql_checkBoxWidth(), sizes.getCheckBox_panelDatabaseConnection_checkBoxMySql_checkBoxHeight(), sizes.getCheckBox_panelDatabaseConnection_checkBoxMySql_checkBoxLabel());
@@ -99,15 +104,67 @@ public class PanelDatabaseConnection {
         //creating text fields for (1) hostname (2) port (3) Database name (4) username (5) password
 
         textFieldHostname = uiHelpers.createJTextField(textFieldHostname, controller.getAppPropertiesWithKey("textField.panelDatabaseConnection.textFieldHostname"), (sizes.getScreenWidth()/2)-(sizes.getButton_panelDatabaseConnection_buttonConnect_buttonWidth()/2), sizes.getTextField_panelDatabaseConnection_textFieldHostname_textFieldY(), sizes.getTextField_panelDatabaseConnection_textFieldHostname_textFieldWidth(), sizes.getTextField_panelDatabaseConnection_textFieldHostname_textFieldHeight());
+        textFieldHostname.setToolTipText("Hostname (localhost, ip)");
+        textFieldHostname.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.lightGray)); // set the border
+        textFieldHostname.setOpaque(false);
+        textFieldHostname.setFont(new Font("Arial", Font.PLAIN, 20));
         textFieldPort = uiHelpers.createJTextField(textFieldPort, controller.getAppPropertiesWithKey("textField.panelDatabaseConnection.textFieldPort"), (sizes.getScreenWidth()/2)-(sizes.getButton_panelDatabaseConnection_buttonConnect_buttonWidth()/2), sizes.getTextField_panelDatabaseConnection_textFieldPort_textFieldY(), sizes.getTextField_panelDatabaseConnection_textFieldPort_textFieldWidth(), sizes.getTextField_panelDatabaseConnection_textFieldPort_textFieldHeight());
+        textFieldPort.setToolTipText("Port number (3306 is standard)");
+        textFieldPort.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.lightGray)); // set the border
+        textFieldPort.setOpaque(false);
+        textFieldPort.setFont(new Font("Arial", Font.PLAIN, 20));
         textFieldDatabaseName = uiHelpers.createJTextField(textFieldDatabaseName, controller.getAppPropertiesWithKey("textField.panelDatabaseConnection.textFieldDatabaseName"), (sizes.getScreenWidth()/2)-(sizes.getButton_panelDatabaseConnection_buttonConnect_buttonWidth()/2), sizes.getTextField_panelDatabaseConnection_textFieldDatabaseName_textFieldY(), sizes.getTextField_panelDatabaseConnection_textFieldDatabaseName_textFieldWidth(), sizes.getTextField_panelDatabaseConnection_textFieldDatabaseName_textFieldHeight());
+        textFieldDatabaseName.setToolTipText("Database name");
+        textFieldDatabaseName.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.lightGray)); // set the border
+        textFieldDatabaseName.setOpaque(false);
+        textFieldDatabaseName.setFont(new Font("Arial", Font.PLAIN, 20));
         textFieldUsername = uiHelpers.createJTextField(textFieldHostname, controller.getAppPropertiesWithKey("textField.panelDatabaseConnection.textFieldUsername"), (sizes.getScreenWidth()/2)-(sizes.getButton_panelDatabaseConnection_buttonConnect_buttonWidth()/2), sizes.getTextField_panelDatabaseConnection_textFieldUsername_textFieldY(), sizes.getTextField_panelDatabaseConnection_textFieldUsername_textFieldWidth(), sizes.getTextField_panelDatabaseConnection_textFieldUsername_textFieldHeight());
+        textFieldUsername.setToolTipText("Username");
+        textFieldUsername.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.lightGray)); // set the border
+        textFieldUsername.setOpaque(false);
+        textFieldUsername.setFont(new Font("Arial", Font.PLAIN, 20));
         textFieldPassword = uiHelpers.createJPasswordField(textFieldPassword, controller.getAppPropertiesWithKey("textField.panelDatabaseConnection.textFieldPassword"), (sizes.getScreenWidth()/2)-(sizes.getButton_panelDatabaseConnection_buttonConnect_buttonWidth()/2), sizes.getTextField_panelDatabaseConnection_textFieldPassword_textFieldY(), sizes.getTextField_panelDatabaseConnection_textFieldPassword_textFieldWidth(), sizes.getTextField_panelDatabaseConnection_textFieldPassword_textFieldHeight());
-
+        textFieldPassword.setToolTipText("Password");
+        textFieldPassword.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.lightGray)); // set the border
+        textFieldPassword.setOpaque(false);
+        textFieldPassword.setFont(new Font("Arial", Font.PLAIN, 20));
+        //Speichern der Daten soll nicht beim ersten Start erfolgen
+        if (filetext.exists()) {
+            int result = JOptionPane.showConfirmDialog(null, "Möchten Sie die gespeicherten Anmeldeinformationen laden?", "Bestätigen", JOptionPane.YES_NO_OPTION);
+        }
         //creating button for building the connection
-        buttonConnect = uiHelpers.createJButton(buttonConnect, (sizes.getScreenWidth()/2)-(sizes.getButton_panelDatabaseConnection_buttonConnect_buttonWidth()/2), sizes.getButton_panelDatabaseConnection_buttonConnect_buttonY(), sizes.getButton_panelDatabaseConnection_buttonConnect_buttonWidth(), sizes.getButton_panelDatabaseConnection_buttonConnect_buttonHeight(), controller.getAppPropertiesWithKey("button.panelDatabaseConnection.buttonConnect"), Color.GREEN);
-        //Textfeld-Inhalte nach Click entfernen
+        buttonConnect = uiHelpers.createJButton(buttonConnect, (sizes.getScreenWidth()/2)-(sizes.getButton_panelDatabaseConnection_buttonConnect_buttonWidth()/2), sizes.getButton_panelDatabaseConnection_buttonConnect_buttonY(), sizes.getButton_panelDatabaseConnection_buttonConnect_buttonWidth(), sizes.getButton_panelDatabaseConnection_buttonConnect_buttonHeight(), controller.getAppPropertiesWithKey("button.panelDatabaseConnection.buttonConnect"),Color.lightGray);
 
+        buttonConnect.setUI(new BasicButtonUI() {
+            @Override
+            protected void paintButtonPressed(Graphics g, AbstractButton b) {
+                // Override the paintButtonPressed method to change the border color
+                g.setColor(Color.lightGray);
+                g.drawRect(0, 0, b.getWidth()-1, b.getHeight()-1);
+            }
+        });
+        buttonConnect.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                // Change the background color when the mouse enters the button
+                buttonConnect.setBackground(Color.BLACK);
+                buttonConnect.setForeground(Color.WHITE);
+                Font font = buttonConnect.getFont().deriveFont(Font.BOLD, 16f);
+                buttonConnect.setFont(font);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                // Change the background color back to the default when the mouse exits the button
+                buttonConnect.setBackground(Color.lightGray);
+                buttonConnect.setForeground(Color.BLACK);
+                Font font = buttonConnect.getFont().deriveFont(Font.PLAIN, 14f);
+                buttonConnect.setFont(font);
+
+            }
+        });
+
+        //Textfeld-Inhalte nach Click entfernen
         textFieldPassword.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -137,6 +194,61 @@ public class PanelDatabaseConnection {
                 textFieldHostname.setText("");
             }
 
+        });
+        textFieldHostname.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                textFieldHostname.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.black)); // set the border
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                textFieldHostname.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.lightGray)); // set the border
+            }
+        });
+        textFieldPassword.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                textFieldPassword.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.BLACK)); // set the border
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                textFieldPassword.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.lightGray)); // set the border
+            }
+        });
+        textFieldUsername.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                textFieldUsername.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.BLACK)); // set the border
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                textFieldUsername.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.lightGray)); // set the border
+            }
+        });
+        textFieldPort.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                textFieldPort.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.BLACK)); // set the border
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                textFieldPort.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.lightGray)); // set the border
+            }
+        });
+        textFieldDatabaseName.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                textFieldDatabaseName.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.BLACK)); // set the border
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                textFieldDatabaseName.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.lightGray)); // set the border
+            }
         });
 
         buttonConnect.addActionListener(new ActionListener() {
@@ -203,6 +315,7 @@ public class PanelDatabaseConnection {
         panelDatabaseConnection.add(radioButtonMariaDB);
         panelDatabaseConnection.add(radioButtonPostgreSQL);
 
+        panelDatabaseConnection.add(headingLabel);
         panelDatabaseConnection.add(textFieldHostname,Component.CENTER_ALIGNMENT);
         panelDatabaseConnection.add(textFieldPort,BorderLayout.CENTER);
         panelDatabaseConnection.add(textFieldDatabaseName);
