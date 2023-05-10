@@ -20,7 +20,6 @@ public class ImportFilesGetter {
     public List<List<String>> getColumnsAndRowsFromCSV() throws IOException {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Choose CSV file");
-
         FileNameExtensionFilter filter = new FileNameExtensionFilter(
                 "CSV files", "csv");
         fileChooser.setFileFilter(filter);
