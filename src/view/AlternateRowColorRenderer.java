@@ -2,6 +2,7 @@ package view;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableColumn;
 import java.awt.*;
 
 public class AlternateRowColorRenderer extends DefaultTableCellRenderer {
@@ -21,7 +22,6 @@ public class AlternateRowColorRenderer extends DefaultTableCellRenderer {
         } else {
             c.setForeground(Color.BLACK);
         }
-
 
         return c;
     }

@@ -5,10 +5,7 @@ import model.CSVExporter;
 import resources.Sizes;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
-import javax.swing.table.TableModel;
+import javax.swing.table.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
@@ -54,6 +51,13 @@ public class PanelTableView {
         tableFromDB.setGridColor(new Color(211, 211, 211));
         tableFromDB.setDefaultRenderer(Object.class, new AlternateRowColorRenderer());
         tableFromDB.setSelectionBackground(Color.BLUE);
+        tableFromDB.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        TableColumnModel columnModel = tableFromDB.getColumnModel();
+        for (int i = 0; i < tableFromDB.getColumnCount(); i++) {
+            TableColumn column = tableFromDB.getColumnModel().getColumn(i);
+            column.setMinWidth(100);
+        }
+
         tableFromDB.addMouseListener(new MouseAdapter() {
 
             @Override
@@ -208,9 +212,9 @@ public class PanelTableView {
                 }
             }
         });
-        scrollPane = new JScrollPane(tableFromDB);
+        scrollPane = new JScrollPane(tableFromDB,  JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         scrollPane.setBounds(sizes.getPanel_panelTableView_panelX(),sizes.getPanel_panelTableView_panelY() , sizes.getScreenWidth()-sizes.getJlist_panelTableSelection_jlistTableSelection_jlistWidth(), sizes.getScreenHeight()-50);
-
+        scrollPane.setViewportView(tableFromDB);
         return scrollPane;
     }
 }
