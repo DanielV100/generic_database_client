@@ -30,10 +30,9 @@ public class UIHelpers {
     }
 
     //Buttons can be created by calling this method
-    protected static JButton createJButton(JButton button, int buttonX, int buttonY, int buttonWidth, int buttonHeight, String buttonLabel, Color buttonColor){
+    protected static JButton createJButton(JButton button, int buttonX, int buttonY, int buttonWidth, int buttonHeight, String buttonLabel){
         button = new JButton(buttonLabel);
         button.setBounds(buttonX, buttonY, buttonWidth, buttonHeight);
-        button.setBackground(buttonColor);
         return button;
     }
     //Labels can be created by calling this method

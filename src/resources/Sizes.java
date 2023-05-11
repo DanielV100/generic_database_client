@@ -80,19 +80,28 @@ public class Sizes {
         int radioButton_panelDatabaseConnection_radioButtonPostgreSQL_radioButtonHeight = 20;
         String radioButton_panelDatabaseConnection_radioButtonPostgreSQL_radioButtonLabel = "PostgreSQL";
 
+        // Speichern RadioButton
+        int radioButton_panelDatabaseConnection_radioButtonspeichern_radioButtonX = (screenWidth/2) +150;
+        int radioButton_panelDatabaseConnection_radioButtonspeichern_radioButtonY = 550;
+        int radioButton_panelDatabaseConnection_radioButtonspeichern_radioButtonWidth = 250;
+        int radioButton_panelDatabaseConnection_radioButtonspeichern_radioButtonHeight = 20;
+        String radioButton_panelDatabaseConnection_radioButtonspeichern_radioButtonLabel = "Anmeldeinformationen speichern";
+
+
+
     //Buttons
         //Connection button
     int button_panelDatabaseConnection_buttonConnect_buttonWidth = 300;
     int button_panelDatabaseConnection_buttonConnect_buttonHeight = 40;
     int button_panelDatabaseConnection_buttonConnect_buttonX = (screenWidth/2);
-    int button_panelDatabaseConnection_buttonConnect_buttonY= 520;
+    int button_panelDatabaseConnection_buttonConnect_buttonY= 630;
 
     //----Text Fields----
         //Hostname
     int textField_panelDatabaseConnection_textFieldHostname_textFieldWidth = 300;
     int textField_panelDatabaseConnection_textFieldHostname_textFieldHeight = 50;
     int textField_panelDatabaseConnection_textFieldHostname_textFieldX = 200;
-    int textField_panelDatabaseConnection_textFieldHostname_textFieldY = 200;
+    int textField_panelDatabaseConnection_textFieldHostname_textFieldY = 210;
         //Port
     int textField_panelDatabaseConnection_textFieldPort_textFieldWidth = 300;
     int textField_panelDatabaseConnection_textFieldPort_textFieldHeight = 50;
@@ -113,6 +122,11 @@ public class Sizes {
     int textField_panelDatabaseConnection_textFieldPassword_textFieldHeight = 50;
     int textField_panelDatabaseConnection_textFieldPassword_textFieldX = 200;
     int textField_panelDatabaseConnection_textFieldPassword_textFieldY = 450;
+    //Speichern
+    int textField_panelDatabaseConnection_textFieldspeichern_textFieldWidth = 300;
+    int textField_panelDatabaseConnection_textFieldspeichern_textFieldHeight = 50;
+    int textField_panelDatabaseConnection_textFieldspeichern_textFieldX = 200;
+    int textField_panelDatabaseConnection_textFieldspeichern_textFieldY = 570;
 
     //----JLists----
         //list with all tables in it
@@ -344,6 +358,25 @@ public class Sizes {
         public String getRadioButton_panelDatabaseConnection_radioButtonPostgreSQL_radioButtonLabel() {
             return radioButton_panelDatabaseConnection_radioButtonPostgreSQL_radioButtonLabel;
         }
+
+        // Speichern
+        public int getRadioButton_panelDatabaseConnection_radioButtonspeichern_radioButtonX() {
+        return radioButton_panelDatabaseConnection_radioButtonspeichern_radioButtonX;
+        }
+        public int getRadioButton_panelDatabaseConnection_radioButtonspeichern_radioButtonY() {
+        return radioButton_panelDatabaseConnection_radioButtonspeichern_radioButtonY;
+        }
+        public int getRadioButton_panelDatabaseConnection_radioButtonspeichern_radioButtonWidth() {
+        return radioButton_panelDatabaseConnection_radioButtonspeichern_radioButtonWidth;
+        }
+        public int getRadioButton_panelDatabaseConnection_radioButtonspeichern_radioButtonHeight() {
+        return radioButton_panelDatabaseConnection_radioButtonspeichern_radioButtonHeight;
+        }
+        public String getRadioButton_panelDatabaseConnection_radioButtonspeichern_radioButtonLabel() {
+        return radioButton_panelDatabaseConnection_radioButtonspeichern_radioButtonLabel;
+        }
+
+
     // Buttons
     public int getButton_panelDatabaseConnection_buttonConnect_buttonWidth() {
         return button_panelDatabaseConnection_buttonConnect_buttonWidth;
@@ -384,6 +417,22 @@ public class Sizes {
 
     public int getTextField_panelDatabaseConnection_textFieldHostname_textFieldHeight() {
         return textField_panelDatabaseConnection_textFieldHostname_textFieldHeight;
+    }
+
+    public int getTextField_panelDatabaseConnection_textFieldspeichern_textFieldX() {
+        return textField_panelDatabaseConnection_textFieldspeichern_textFieldX;
+    }
+
+    public int getTextField_panelDatabaseConnection_textFieldspeichern_textFieldY() {
+        return textField_panelDatabaseConnection_textFieldspeichern_textFieldY;
+    }
+
+    public int getTextField_panelDatabaseConnection_textFieldspeichern_textFieldWidth() {
+        return textField_panelDatabaseConnection_textFieldspeichern_textFieldWidth;
+    }
+
+    public int getTextField_panelDatabaseConnection_textFieldspeichern_textFieldHeight() {
+        return textField_panelDatabaseConnection_textFieldspeichern_textFieldHeight;
     }
 
     public int getTextField_panelDatabaseConnection_textFieldHostname_textFieldX() {
