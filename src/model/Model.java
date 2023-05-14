@@ -88,7 +88,7 @@ public class Model {
         for(int i = 0; i < columns.size(); i++){
 
             if(i == columns.size() - 1 ){
-                deleteQuery += columns.get(i) + " = ?" + ";";
+                deleteQuery += columns.get(i) + " = ? ;";
                 System.out.println("Delete Quary: "+ deleteQuery);
             } else {
                 deleteQuery += columns.get(i) + " = ?" + " AND ";
@@ -117,14 +117,14 @@ public class Model {
         ResultSet resultSet = databaseStatement.executeQuery("SELECT * FROM " + table);
         ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
         for (int x = 1; x <= rows.size(); x++){
-            if(resultSetMetaData.getColumnTypeName(x).contains("int")) {
+            if(resultSetMetaData.getColumnTypeName(x).contains("int") || resultSetMetaData.getColumnTypeName(x).contains("serial")) {
                 st.setInt(x, Integer.parseInt(rows.get(x-1)));
             } else {
                 st.setString(x, rows.get(x-1));
             }
         }
         System.out.println("Fertiger String: " + st);
-        st.executeUpdate();
+        st.execute();
         JOptionPane.showMessageDialog(null, "Row deleted!");
     }
         public void addRow(Connection connection, String table) throws SQLException {
