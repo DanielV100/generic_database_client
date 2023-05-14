@@ -15,7 +15,7 @@ import static view.PanelDatabaseConnection.selectedDB;
 public class DBConnection {
     Model model = new Model();
     String hostname;
-    String databaseName;
+    public static String databaseName;
     String port;
     String username;
     String password;

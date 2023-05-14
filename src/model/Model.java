@@ -14,11 +14,17 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import view.PanelDatabaseConnection;
+import controller.DBConnection;
+
 public class Model {
     ImportFilesGetter importFilesGetter = new ImportFilesGetter();
     Sizes sizes = new Sizes();
     String foreignKeys = "";
     String primaryKeys = "";
+    // In use for different SQL-Queries in PostgreSQL
+    String selectedDBValue = PanelDatabaseConnection.selectedDB;
+    String databaseNameValue = DBConnection.databaseName;
     //create connection to db
     public Connection connectToDB(String connectionString, String username, String password) throws SQLException {
         return DriverManager.getConnection(connectionString, username, password);
@@ -27,7 +33,14 @@ public class Model {
     public List<String> getAllTablesFromDB(Connection connection) throws SQLException {
         List<String> allTables = new ArrayList<>();
         Statement databaseStatement = connection.createStatement();
-        ResultSet resultSet = databaseStatement.executeQuery("Show tables");
+        ResultSet resultSet;
+        if (selectedDBValue == "postgresql") {
+            System.out.println("Hier sind wir");
+            resultSet = databaseStatement.executeQuery("SELECT tablename FROM pg_catalog.pg_tables WHERE schemaname='public';");
+
+        } else {
+            resultSet = databaseStatement.executeQuery("Show tables");
+        }
         while (resultSet.next()) {
             allTables.add(resultSet.getString(1));
         }
@@ -72,12 +85,19 @@ public class Model {
     public void deleteRows(Connection connection, String table, List<String> columns, List<String> rows) throws SQLException {
         String deleteQuery = "DELETE FROM " + table + " WHERE ";
         for(int i = 0; i < columns.size(); i++){
-            if(i == columns.size() - 1 ){
-                deleteQuery += columns.get(i) + " = ?" + ";";
+            if (selectedDBValue == "postgresql") {
+                if(i == columns.size() - 1 ){
+                    deleteQuery += columns.get(i) + " column_name = ?" + ";";
+                } else {
+                    deleteQuery += columns.get(i) + " = ?" + " AND ";
+                }
             } else {
-                deleteQuery += columns.get(i) + " = ?" + " AND ";
+                if(i == columns.size() - 1 ){
+                    deleteQuery += columns.get(i) + " = ?" + ";";
+                } else {
+                    deleteQuery += columns.get(i) + " = ?" + " AND ";
+                }
             }
-
         }
         PreparedStatement st = connection.prepareStatement(deleteQuery);
         for (int x = 1; x <= rows.size(); x++){
