@@ -112,9 +112,12 @@ public class Model {
             }*/
         }
         PreparedStatement st = connection.prepareStatement(deleteQuery);
-
+        //Test getting type
+        Statement databaseStatement = connection.createStatement();
+        ResultSet resultSet = databaseStatement.executeQuery("SELECT * FROM " + table);
+        ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
         for (int x = 1; x <= rows.size(); x++){
-            if(st.getMetaData().getColumnTypeName(x).contains("int")) {
+            if(resultSetMetaData.getColumnTypeName(x).contains("int")) {
                 st.setInt(x, Integer.parseInt(rows.get(x-1)));
             } else {
                 st.setString(x, rows.get(x-1));
