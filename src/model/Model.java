@@ -88,7 +88,7 @@ public class Model {
         for(int i = 0; i < columns.size(); i++){
 
             if(i == columns.size() - 1 ){
-                deleteQuery += columns.get(i) + " = ?" + ";";
+                deleteQuery += columns.get(i) + " = ? ;";
                 System.out.println("Delete Quary: "+ deleteQuery);
             } else {
                 deleteQuery += columns.get(i) + " = ?" + " AND ";
@@ -124,7 +124,7 @@ public class Model {
             }
         }
         System.out.println("Fertiger String: " + st);
-        st.executeUpdate();
+        st.execute();
         JOptionPane.showMessageDialog(null, "Row deleted!");
     }
         public void addRow(Connection connection, String table) throws SQLException {
