@@ -16,6 +16,7 @@ import java.util.List;
 
 import view.PanelDatabaseConnection;
 import controller.DBConnection;
+import static view.PanelDatabaseConnection.selectedDB;
 
 public class Model {
     ImportFilesGetter importFilesGetter = new ImportFilesGetter();
@@ -23,7 +24,7 @@ public class Model {
     String foreignKeys = "";
     String primaryKeys = "";
     // In use for different SQL-Queries in PostgreSQL
-    String selectedDBValue = PanelDatabaseConnection.selectedDB;
+//    String selectedDBValue = PanelDatabaseConnection.selectedDB;
     String databaseNameValue = DBConnection.databaseName;
     //create connection to db
     public Connection connectToDB(String connectionString, String username, String password) throws SQLException {
@@ -34,8 +35,7 @@ public class Model {
         List<String> allTables = new ArrayList<>();
         Statement databaseStatement = connection.createStatement();
         ResultSet resultSet;
-        if (selectedDBValue == "postgresql") {
-            System.out.println("Hier sind wir");
+        if (selectedDB == "postgresql") {
             resultSet = databaseStatement.executeQuery("SELECT tablename FROM pg_catalog.pg_tables WHERE schemaname='public';");
 
         } else {
@@ -85,7 +85,7 @@ public class Model {
     public void deleteRows(Connection connection, String table, List<String> columns, List<String> rows) throws SQLException {
         String deleteQuery = "DELETE FROM " + table + " WHERE ";
         for(int i = 0; i < columns.size(); i++){
-            if (selectedDBValue == "postgresql") {
+            if (selectedDB.toLowerCase() == "postgresql") {
                 if(i == columns.size() - 1 ){
                     deleteQuery += columns.get(i) + " column_name = ?" + ";";
                 } else {
