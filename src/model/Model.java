@@ -191,9 +191,9 @@ public class Model {
 
         for (int y = 1; y <= input.length; y++) {
             if(resultSetMetaData.getColumnTypeName(y).contains("int") || resultSetMetaData.getColumnTypeName(y).contains("serial")) {
-                preparedStatement.setInt(y, Integer.parseInt(rows.get(y-1)));
+                preparedStatement.setInt(y, Integer.parseInt(input[y-1]));
             } else {
-                preparedStatement.setString(y, rows.get(y-1));
+                preparedStatement.setString(y, input[y-1]);
             }
         }
         //remove empty rows from row
@@ -204,14 +204,15 @@ public class Model {
         }
         int test = 0;
         for (int xy = input.length+1; xy <= input.length + rows.size(); xy++) {
-            if(resultSetMetaData.getColumnTypeName(xy).contains("int") || resultSetMetaData.getColumnTypeName(xy).contains("serial")) {
+            if(resultSetMetaData.getColumnTypeName(test+1).contains("int") || resultSetMetaData.getColumnTypeName(test+1).contains("serial")) {
                 preparedStatement.setInt(xy, Integer.parseInt(rows.get(test)));
             } else {
                 preparedStatement.setString(xy, rows.get(test));
             }
             test++;
+            System.out.println("Ich bin hier");
         }
-        preparedStatement.setString(input.length+1, rows.get(0));
+        //preparedStatement.setString(input.length+1, rows.get(0));
         System.out.println(preparedStatement);
         preparedStatement.executeUpdate();
         JOptionPane.showMessageDialog(null, "Edited row!");
