@@ -28,6 +28,7 @@ public class PanelTableSelection {
         jlistTableSelection.setBackground(new Color(211, 211, 211));
         jlistTableSelection.setFont(new Font("Arial",Font.PLAIN, 14));
         jlistTableSelection.setFixedCellHeight(30);
+        jlistTableSelection.setToolTipText("Tables");
         jlistTableSelection.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
