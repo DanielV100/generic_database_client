@@ -338,4 +338,16 @@ public class Model {
         st.executeUpdate();
         JOptionPane.showMessageDialog(null, "Cleared table");
     }
+    public String getDatatypesFromDB(Connection connection, String table) throws SQLException {
+        String datatypesFromDB = "";
+        Statement databaseStatement = connection.createStatement();
+        ResultSet resultSet = databaseStatement.executeQuery("SELECT * FROM " + table);
+        ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
+        for (int i = 1; i <= resultSetMetaData.getColumnCount(); i++) {
+            if(!(resultSetMetaData.isReadOnly(i))) {
+                datatypesFromDB += resultSetMetaData.getColumnName(i) + ": " + resultSetMetaData.getColumnTypeName(i) + "(" + resultSetMetaData.getColumnDisplaySize(i) + ")" + "\n";
+            }
+        }
+        return datatypesFromDB;
+    }
 }

@@ -28,10 +28,13 @@ public class PanelTableView {
     JMenuItem menuItemImport;
     JMenuItem menuItemClearTable;
     JMenuItem menuItemExportToCSV;
+    JMenuItem menuItemShowDBTypes;
+    ErrorMessages errorMessages = new ErrorMessages();
     CSVExporter csvExporter = new CSVExporter();
 
     public JScrollPane PanelTableView(Connection connection, int index) throws SQLException {
         sizes.init();
+
 
         String[] columns = dbConnection.getColumnsFromTable(connection, index);
         //Table height is extremly high --> show all data
@@ -69,6 +72,7 @@ public class PanelTableView {
             public void mousePressed(MouseEvent e) {
                 if (SwingUtilities.isRightMouseButton(e) || (System.getProperty("os.name").contains("Mac OS X") && e.isControlDown())){
                     popupMenu = new JPopupMenu();
+                    menuItemShowDBTypes = new JMenuItem("Show column datatypes");
                     menuItemAdd = new JMenuItem("Add row");
                     menuItemEdit = new JMenuItem("Edit row");
                     menuItemImport = new JMenuItem("Import from .csv");
@@ -77,7 +81,7 @@ public class PanelTableView {
                     menuItemClearTable = new JMenuItem("Clear table");
                     menuItemClearTable.setForeground(Color.RED);
                     //creating popupmenu with (1) edit (2) delete (3) add (4) import from .csv
-
+                    popupMenu.add(menuItemShowDBTypes);
                     popupMenu.add(menuItemEdit);
                     popupMenu.addSeparator();
                     popupMenu.add(menuItemAdd);
@@ -112,9 +116,9 @@ public class PanelTableView {
                             try {
                                 dbConnection.editRow(connection,dbConnection.getAllTablesFromDB(connection)[index], columns, rows);
                             } catch (SQLException ex) {
-                                if(ex.toString().contains("java.sql.SQLIntegrityConstraintViolationException")) {
-                                    JOptionPane.showMessageDialog(null, "This row can't be changed because it's referenced in an other table.");
-                                }
+                                errorMessages.showErrorMessage(ex);
+                            } catch (NullPointerException nullPointerException) {
+                                System.out.println(nullPointerException);
                             }
                         }
                     });
@@ -144,7 +148,7 @@ public class PanelTableView {
                             try {
                                 dbConnection.deleteRow(connection, dbConnection.getAllTablesFromDB(connection)[index], columns, rows);
                             } catch (SQLException ex) {
-                                JOptionPane.showMessageDialog(null, "Something went wrong.");
+                                errorMessages.showErrorMessage(ex);
                             }
                         }
                     });
@@ -180,9 +184,9 @@ public class PanelTableView {
                                 }
 
                             } catch (SQLException ex) {
-                                throw new RuntimeException(ex);
+                                errorMessages.showErrorMessage(ex);
                             } catch (IOException ex) {
-                                throw new RuntimeException(ex);
+                                errorMessages.showErrorMessage(ex);
                             }
                         }
                     });
@@ -197,11 +201,12 @@ public class PanelTableView {
                                 try {
                                     dbConnection.clearTable(connection,  dbConnection.getAllTablesFromDB(connection)[index]);
                                 } catch (SQLException ex) {
-                                    throw new RuntimeException(ex);
+                                    errorMessages.showErrorMessage(ex);
                                 }
                             }
                         }
                     });
+                    //---- Export ----
                     menuItemExportToCSV.addMouseListener(new MouseAdapter() {
                         @Override
                         public void mousePressed(MouseEvent mouseEvent) {
@@ -209,11 +214,23 @@ public class PanelTableView {
                                 JTable test = (JTable) e.getSource();
                                 CSVExporter.exportToCSV(test);
                             } catch (IOException ex) {
-                                throw new RuntimeException(ex);
+                                errorMessages.showErrorMessage(ex);
                             }
                         }
                     });
+                    //---- Export ----
 
+                    //---- Datatypes ----
+                    menuItemShowDBTypes.addMouseListener(new MouseAdapter() {
+                        @Override
+                        public void mousePressed(MouseEvent e) {
+                            try {
+                                JOptionPane.showMessageDialog(null, dbConnection.getDatatypesFromDB(connection,  dbConnection.getAllTablesFromDB(connection)[index]));
+                            } catch (SQLException ex) {
+                                errorMessages.showErrorMessage(ex);
+                            }
+                        }
+                    });
                 }
             }
         });

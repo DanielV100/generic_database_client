@@ -22,7 +22,11 @@ public class AlternateRowColorRenderer extends DefaultTableCellRenderer {
         } else {
             c.setForeground(Color.BLACK);
         }
-
+        //get last row and set it yellow
+        if (table.getRowCount()-1 == row) {
+            c.setBackground(new Color(238, 220, 130));
+        }
+        setToolTipText("Right click to see what you can do");
         return c;
     }
 }
