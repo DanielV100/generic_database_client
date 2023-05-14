@@ -93,23 +93,6 @@ public class Model {
             } else {
                 deleteQuery += columns.get(i) + " = ?" + " AND ";
             }
-
-            /*if (selectedDB == "postgresql") {
-                System.out.println("Delete Query für PostgreSQL");
-                if(i == columns.size() - 1 ){
-                    // column_name muss durch den Namen der Spalte augetauscht werden
-                    deleteQuery += columns.get(i) + " column_name = ?" + ";";
-                } else {
-                    deleteQuery += columns.get(i) + " = ?" + " AND ";
-                }
-            } else {
-                if(i == columns.size() - 1 ){
-                    deleteQuery += columns.get(i) + " = ?" + ";";
-                    System.out.println("Delete Quary: "+ deleteQuery);
-                } else {
-                    deleteQuery += columns.get(i) + " = ?" + " AND ";
-                }
-            }*/
         }
         PreparedStatement st = connection.prepareStatement(deleteQuery);
         //Test getting type
@@ -147,8 +130,16 @@ public class Model {
                 }
             }
             PreparedStatement preparedStatement = connection.prepareStatement(addQuery);
+            Statement databaseStatement = connection.createStatement();
+            ResultSet resultSet = databaseStatement.executeQuery("SELECT * FROM " + table);
+            ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
             for(int y = 1; y <= input.length; y++) {
-                preparedStatement.setString(y, input[y-1]);
+                if (resultSetMetaData.getColumnTypeName(y).contains("int") || resultSetMetaData.getColumnTypeName(y).contains("serial")) {
+                    preparedStatement.setInt(y, Integer.parseInt(input[y-1]));
+                } else {
+                    preparedStatement.setString(y, (input[y-1]));
+                }
+                //preparedStatement.setString(y, input[y-1]);
             }
             preparedStatement.executeUpdate();
             System.out.println(preparedStatement);
