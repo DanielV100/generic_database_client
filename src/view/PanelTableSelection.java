@@ -13,6 +13,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public class PanelTableSelection {
+    ErrorMessages errorMessages = new ErrorMessages();
     UIHelpers uiHelpers = new UIHelpers();
     DBConnection dbConnection = new DBConnection();
     PanelTableView panelTableView = new PanelTableView();
@@ -40,7 +41,7 @@ public class PanelTableSelection {
                     JScrollPane scrollPaneWithTable = panelTableView.PanelTableView(connection, jlistTableSelection.getSelectedIndex());
                     panelTableSelection.add(scrollPaneWithTable);
                 } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
+                    errorMessages.showErrorMessage(ex);
                 }
             }
         });

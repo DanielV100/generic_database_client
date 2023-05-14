@@ -17,6 +17,7 @@ import java.util.List;
 import static view.CredentialManager.loadCredentials;
 
 public class PanelDatabaseConnection {
+    ErrorMessages errorMessages = new ErrorMessages();
     DBConnection dbConnection = new DBConnection();
     Controller controller = new Controller();
     Sizes sizes = new Sizes();
@@ -279,7 +280,7 @@ public class PanelDatabaseConnection {
                                 System.out.println("DB connection closed");
                                 connection.close();
                             } catch (SQLException ex) {
-                                throw new RuntimeException(ex);
+                                errorMessages.showErrorMessage(ex);
                             }
                         }
                     });
@@ -287,14 +288,10 @@ public class PanelDatabaseConnection {
                 } catch (SQLException ex) {
                     //Fehlermeldung
                     if(ex.toString().startsWith("Unknown database")) {
-                        System.out.println(ex.toString());
-                        JOptionPane.showMessageDialog(null, "Verbindung nicht möglich. Die Datenbank wurde nicht gefunden...");
+                        errorMessages.showErrorMessage(ex);
                     } else {
-                        JOptionPane.showMessageDialog(null, "Verbindung nicht möglich");
+                        errorMessages.showErrorMessage(ex);
                     }
-
-
-                    throw new RuntimeException(ex);
                 }
             }
         });
