@@ -201,7 +201,7 @@ public class PanelDatabaseConnection {
             @Override
             public void mouseExited(MouseEvent e) {
                 // Change the background color back to the default when the mouse exits the button
-                buttonConnect.setBackground(Color.BLUE);
+                buttonConnect.setBackground(SetColor);
                 buttonConnect.setForeground(Color.WHITE);
                 Font font = buttonConnect.getFont().deriveFont(Font.PLAIN, 14f);
                 buttonConnect.setFont(font);
