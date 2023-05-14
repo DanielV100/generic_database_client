@@ -157,7 +157,8 @@ public class Model {
             preparedStatement.setString(xy, rows.get(test));
             test++;
         }
-        preparedStatement.setString(input.length+1, rows.get(0));
+        //what is this needed for?
+        //preparedStatement.setString(input.length+1, rows.get(0));
         System.out.println(preparedStatement);
         preparedStatement.executeUpdate();
         JOptionPane.showMessageDialog(null, "Edited row!");
