@@ -112,8 +112,13 @@ public class Model {
             }*/
         }
         PreparedStatement st = connection.prepareStatement(deleteQuery);
+
         for (int x = 1; x <= rows.size(); x++){
-            st.setString(x, rows.get(x-1));
+            if(st.getMetaData().getColumnTypeName(x).contains("int")) {
+                st.setInt(x, Integer.parseInt(rows.get(x-1)));
+            } else {
+                st.setString(x, rows.get(x-1));
+            }
         }
         System.out.println("Fertiger String: " + st);
         st.executeUpdate();
