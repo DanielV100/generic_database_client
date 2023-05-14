@@ -117,7 +117,7 @@ public class Model {
         ResultSet resultSet = databaseStatement.executeQuery("SELECT * FROM " + table);
         ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
         for (int x = 1; x <= rows.size(); x++){
-            if(resultSetMetaData.getColumnTypeName(x).contains("int")) {
+            if(resultSetMetaData.getColumnTypeName(x).contains("int") || resultSetMetaData.getColumnTypeName(x).contains("serial")) {
                 st.setInt(x, Integer.parseInt(rows.get(x-1)));
             } else {
                 st.setString(x, rows.get(x-1));
@@ -184,8 +184,17 @@ public class Model {
         }
 
         PreparedStatement preparedStatement = connection.prepareStatement(editQuery);
+        //Test getting type
+        Statement databaseStatement = connection.createStatement();
+        ResultSet resultSet = databaseStatement.executeQuery("SELECT * FROM " + table);
+        ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
+
         for (int y = 1; y <= input.length; y++) {
-            preparedStatement.setString(y, input[y-1]);
+            if(resultSetMetaData.getColumnTypeName(y).contains("int") || resultSetMetaData.getColumnTypeName(y).contains("serial")) {
+                preparedStatement.setInt(y, Integer.parseInt(rows.get(y-1)));
+            } else {
+                preparedStatement.setString(y, rows.get(y-1));
+            }
         }
         //remove empty rows from row
         for (int z = rows.size() - 1; z >= 0; z--) {
@@ -195,7 +204,11 @@ public class Model {
         }
         int test = 0;
         for (int xy = input.length+1; xy <= input.length + rows.size(); xy++) {
-            preparedStatement.setString(xy, rows.get(test));
+            if(resultSetMetaData.getColumnTypeName(xy).contains("int") || resultSetMetaData.getColumnTypeName(xy).contains("serial")) {
+                preparedStatement.setInt(xy, Integer.parseInt(rows.get(test)));
+            } else {
+                preparedStatement.setString(xy, rows.get(test));
+            }
             test++;
         }
         preparedStatement.setString(input.length+1, rows.get(0));
