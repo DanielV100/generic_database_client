@@ -84,9 +84,20 @@ public class Model {
 
     public void deleteRows(Connection connection, String table, List<String> columns, List<String> rows) throws SQLException {
         String deleteQuery = "DELETE FROM " + table + " WHERE ";
+        System.out.println("Test");
         for(int i = 0; i < columns.size(); i++){
-            if (selectedDB.toLowerCase() == "postgresql") {
+
+            if(i == columns.size() - 1 ){
+                deleteQuery += columns.get(i) + " = ?" + ";";
+                System.out.println("Delete Quary: "+ deleteQuery);
+            } else {
+                deleteQuery += columns.get(i) + " = ?" + " AND ";
+            }
+
+            /*if (selectedDB == "postgresql") {
+                System.out.println("Delete Query für PostgreSQL");
                 if(i == columns.size() - 1 ){
+                    // column_name muss durch den Namen der Spalte augetauscht werden
                     deleteQuery += columns.get(i) + " column_name = ?" + ";";
                 } else {
                     deleteQuery += columns.get(i) + " = ?" + " AND ";
@@ -94,15 +105,17 @@ public class Model {
             } else {
                 if(i == columns.size() - 1 ){
                     deleteQuery += columns.get(i) + " = ?" + ";";
+                    System.out.println("Delete Quary: "+ deleteQuery);
                 } else {
                     deleteQuery += columns.get(i) + " = ?" + " AND ";
                 }
-            }
+            }*/
         }
         PreparedStatement st = connection.prepareStatement(deleteQuery);
         for (int x = 1; x <= rows.size(); x++){
             st.setString(x, rows.get(x-1));
         }
+        System.out.println("Fertiger String: " + st);
         st.executeUpdate();
         JOptionPane.showMessageDialog(null, "Row deleted!");
     }
