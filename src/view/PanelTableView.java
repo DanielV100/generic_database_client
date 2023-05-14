@@ -136,6 +136,7 @@ public class PanelTableView {
                                 dbConnection.deleteRow(connection, dbConnection.getAllTablesFromDB(connection)[index], columns, rows);
                             } catch (SQLException ex) {
                                 JOptionPane.showMessageDialog(null, "Something went wrong.");
+                                System.out.println(ex);
                             }
                         }
                     });
