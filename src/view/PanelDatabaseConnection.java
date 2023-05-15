@@ -85,6 +85,7 @@ public class PanelDatabaseConnection {
 
         // crating radioButtons for (1) MySQL (2) mariaDB (3) PostgreSQL
         radioButtonMySql = uiHelpers.createJRadioButton(radioButtonMySql, ((sizes.getScreenWidth()/2)-(sizes.getRadioButton_panelDatabaseConnection_radioButtonMySql_radioButtonX())), (sizes.getRadioButton_panelDatabaseConnection_radioButtonMySql_radioButtonY()), sizes.getRadioButton_panelDatabaseConnection_radioButtonMySql_radioButtonWidth(), sizes.getRadioButton_panelDatabaseConnection_radioButtonMySql_radioButtonHeight(), sizes.getRadioButton_panelDatabaseConnection_radioButtonMySql_radioButtonLabel());
+        radioButtonMySql.setBackground(SetColor);
         radioButtonMariaDB = uiHelpers.createJRadioButton(radioButtonMariaDB, ((sizes.getScreenWidth()/2)-(sizes.getRadioButton_panelDatabaseConnection_radioButtonMariaDB_radioButtonX())), (sizes.getRadioButton_panelDatabaseConnection_radioButtonMariaDB_radioButtonY()), sizes.getRadioButton_panelDatabaseConnection_radioButtonMariaDB_radioButtonWidth(), sizes.getRadioButton_panelDatabaseConnection_radioButtonMariaDB_radioButtonHeight(), sizes.getRadioButton_panelDatabaseConnection_radioButtonMariaDB_radioButtonLabel());
         radioButtonPostgreSQL = uiHelpers.createJRadioButton(radioButtonPostgreSQL, ((sizes.getScreenWidth()/2)-(sizes.getRadioButton_panelDatabaseConnection_radioButtonPostgreSQL_radioButtonX())), (sizes.getRadioButton_panelDatabaseConnection_radioButtonPostgreSQL_radioButtonY()), sizes.getRadioButton_panelDatabaseConnection_radioButtonPostgreSQL_radioButtonWidth(), sizes.getRadioButton_panelDatabaseConnection_radioButtonPostgreSQL_radioButtonHeight(), sizes.getRadioButton_panelDatabaseConnection_radioButtonPostgreSQL_radioButtonLabel());
         radioButtonspeichern = uiHelpers.createJRadioButton(radioButtonspeichern, ((sizes.getScreenWidth()/2)-(sizes.getRadioButton_panelDatabaseConnection_radioButtonspeichern_radioButtonX())), (sizes.getRadioButton_panelDatabaseConnection_radioButtonspeichern_radioButtonY()), sizes.getRadioButton_panelDatabaseConnection_radioButtonspeichern_radioButtonWidth(), sizes.getRadioButton_panelDatabaseConnection_radioButtonspeichern_radioButtonHeight(), sizes.getRadioButton_panelDatabaseConnection_radioButtonspeichern_radioButtonLabel());
@@ -102,6 +103,7 @@ public class PanelDatabaseConnection {
                 textFieldUsername.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, SetColor));
                 textFieldPassword.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, SetColor));
                 textFieldspeichern.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, SetColor));
+                radioButtonMySql.setBackground(SetColor);
             }
         });
         radioButtonMariaDB.addActionListener(new ActionListener() {
@@ -180,6 +182,7 @@ public class PanelDatabaseConnection {
         //creating button for building the connection
         buttonConnect = uiHelpers.createJButton(buttonConnect, (sizes.getScreenWidth()/2)-(sizes.getButton_panelDatabaseConnection_buttonConnect_buttonWidth()/2), sizes.getButton_panelDatabaseConnection_buttonConnect_buttonY(), sizes.getButton_panelDatabaseConnection_buttonConnect_buttonWidth(), sizes.getButton_panelDatabaseConnection_buttonConnect_buttonHeight(), controller.getAppPropertiesWithKey("button.panelDatabaseConnection.buttonConnect"));
         buttonConnect.setBackground(SetColor);
+        buttonConnect.setForeground(Color.WHITE);
         buttonConnect.setUI(new BasicButtonUI() {
             @Override
             protected void paintButtonPressed(Graphics g, AbstractButton b) {
@@ -255,7 +258,7 @@ public class PanelDatabaseConnection {
 
             @Override
             public void focusLost(FocusEvent e) {
-                textFieldHostname.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.lightGray)); // set the border
+                textFieldHostname.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, SetColor)); // set the border
             }
         });
         textFieldPassword.addFocusListener(new FocusListener() {
@@ -266,7 +269,7 @@ public class PanelDatabaseConnection {
 
             @Override
             public void focusLost(FocusEvent e) {
-                textFieldPassword.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.lightGray)); // set the border
+                textFieldPassword.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, SetColor)); // set the border
             }
         });
         textFieldUsername.addFocusListener(new FocusListener() {
@@ -277,7 +280,7 @@ public class PanelDatabaseConnection {
 
             @Override
             public void focusLost(FocusEvent e) {
-                textFieldUsername.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.lightGray)); // set the border
+                textFieldUsername.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, SetColor)); // set the border
             }
         });
         textFieldPort.addFocusListener(new FocusListener() {
@@ -288,7 +291,7 @@ public class PanelDatabaseConnection {
 
             @Override
             public void focusLost(FocusEvent e) {
-                textFieldPort.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.lightGray)); // set the border
+                textFieldPort.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, SetColor)); // set the border
             }
         });
         textFieldDatabaseName.addFocusListener(new FocusListener() {
@@ -299,7 +302,7 @@ public class PanelDatabaseConnection {
 
             @Override
             public void focusLost(FocusEvent e) {
-                textFieldDatabaseName.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.lightGray)); // set the border
+                textFieldDatabaseName.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, SetColor)); // set the border
             }
         });
         textFieldspeichern.addFocusListener(new FocusListener() {
@@ -310,7 +313,7 @@ public class PanelDatabaseConnection {
 
             @Override
             public void focusLost(FocusEvent e) {
-                textFieldspeichern.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, Color.lightGray)); // set the border
+                textFieldspeichern.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, SetColor)); // set the border
             }
         });
 
