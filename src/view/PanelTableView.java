@@ -29,7 +29,7 @@ public class PanelTableView {
     JMenuItem menuItemClearTable;
     JMenuItem menuItemExportToCSV;
     JMenuItem menuItemShowDBTypes;
-    ErrorMessages errorMessages = new ErrorMessages();
+    PopupMessages popupMessages = new PopupMessages();
     CSVExporter csvExporter = new CSVExporter();
 
     public JScrollPane PanelTableView(Connection connection, int index) throws SQLException {
@@ -116,7 +116,7 @@ public class PanelTableView {
                             try {
                                 dbConnection.editRow(connection,dbConnection.getAllTablesFromDB(connection)[index], columns, rows);
                             } catch (SQLException ex) {
-                                errorMessages.showErrorMessage(ex);
+                                popupMessages.showErrorMessage(ex);
                             } catch (NullPointerException nullPointerException) {
                                 System.out.println(nullPointerException);
                             }
@@ -148,7 +148,7 @@ public class PanelTableView {
                             try {
                                 dbConnection.deleteRow(connection, dbConnection.getAllTablesFromDB(connection)[index], columns, rows);
                             } catch (SQLException ex) {
-                                errorMessages.showErrorMessage(ex);
+                                popupMessages.showErrorMessage(ex);
                             }
                         }
                     });
@@ -180,13 +180,12 @@ public class PanelTableView {
                                 int option = JOptionPane.showConfirmDialog(null, "Has your CSV the correct syntax? In first line:\n" + csvColumnTemplate + "\nIn lines below the data for every cell with ';' separated?");
                                 if (option == JOptionPane.OK_OPTION) {
                                     dbConnection.addImportedRows(connection, dbConnection.getAllTablesFromDB(connection)[index]);
-                                    JOptionPane.showMessageDialog(null, "Imported CSV");
+                                    popupMessages.showSuccessMessage("Successfully imported CSV");
                                 }
-
                             } catch (SQLException ex) {
-                                errorMessages.showErrorMessage(ex);
+                                popupMessages.showErrorMessage(ex);
                             } catch (IOException ex) {
-                                errorMessages.showErrorMessage(ex);
+                                popupMessages.showErrorMessage(ex);
                             }
                         }
                     });
@@ -201,7 +200,7 @@ public class PanelTableView {
                                 try {
                                     dbConnection.clearTable(connection,  dbConnection.getAllTablesFromDB(connection)[index]);
                                 } catch (SQLException ex) {
-                                    errorMessages.showErrorMessage(ex);
+                                    popupMessages.showErrorMessage(ex);
                                 }
                             }
                         }
@@ -214,7 +213,7 @@ public class PanelTableView {
                                 JTable test = (JTable) e.getSource();
                                 CSVExporter.exportToCSV(test);
                             } catch (IOException ex) {
-                                errorMessages.showErrorMessage(ex);
+                                popupMessages.showErrorMessage(ex);
                             }
                         }
                     });
@@ -227,7 +226,7 @@ public class PanelTableView {
                             try {
                                 JOptionPane.showMessageDialog(null, dbConnection.getDatatypesFromDB(connection,  dbConnection.getAllTablesFromDB(connection)[index]));
                             } catch (SQLException ex) {
-                                errorMessages.showErrorMessage(ex);
+                                popupMessages.showErrorMessage(ex);
                             }
                         }
                     });

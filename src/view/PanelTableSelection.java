@@ -3,17 +3,14 @@ import controller.DBConnection;
 import resources.Sizes;
 
 import javax.swing.*;
-import javax.swing.table.JTableHeader;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
 public class PanelTableSelection {
-    ErrorMessages errorMessages = new ErrorMessages();
+    PopupMessages popupMessages = new PopupMessages();
     UIHelpers uiHelpers = new UIHelpers();
     DBConnection dbConnection = new DBConnection();
     PanelTableView panelTableView = new PanelTableView();
@@ -42,7 +39,7 @@ public class PanelTableSelection {
                     JScrollPane scrollPaneWithTable = panelTableView.PanelTableView(connection, jlistTableSelection.getSelectedIndex());
                     panelTableSelection.add(scrollPaneWithTable);
                 } catch (SQLException ex) {
-                    errorMessages.showErrorMessage(ex);
+                    popupMessages.showErrorMessage(ex);
                 }
             }
         });

@@ -12,12 +12,11 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import static view.CredentialManager.loadCredentials;
 
 public class PanelDatabaseConnection {
-    ErrorMessages errorMessages = new ErrorMessages();
+    PopupMessages popupMessages = new PopupMessages();
     DBConnection dbConnection = new DBConnection();
     Controller controller = new Controller();
     Sizes sizes = new Sizes();
@@ -256,7 +255,7 @@ public class PanelDatabaseConnection {
                 try {
                     Connection connection = dbConnection.initDBConnection(textFieldHostname.getText(), textFieldPort.getText(), textFieldDatabaseName.getText(), textFieldUsername.getText(), textFieldPassword.getText());
                     //Erfolgsmeldung
-                    JOptionPane.showMessageDialog(null, "Verbindung erfolgreich");
+                    popupMessages.showSuccessMessage("Successfully connected to database server");
 
                     int passwordspeichern = JOptionPane.showConfirmDialog(null, "Möchten Sie die das Password speichern?", "Bestätigen", JOptionPane.YES_NO_OPTION);
                     String hostname = textFieldHostname.getText();
@@ -280,7 +279,7 @@ public class PanelDatabaseConnection {
                                 System.out.println("DB connection closed");
                                 connection.close();
                             } catch (SQLException ex) {
-                                errorMessages.showErrorMessage(ex);
+                                popupMessages.showErrorMessage(ex);
                             }
                         }
                     });
@@ -288,9 +287,9 @@ public class PanelDatabaseConnection {
                 } catch (SQLException ex) {
                     //Fehlermeldung
                     if(ex.toString().startsWith("Unknown database")) {
-                        errorMessages.showErrorMessage(ex);
+                        popupMessages.showErrorMessage(ex);
                     } else {
-                        errorMessages.showErrorMessage(ex);
+                        popupMessages.showErrorMessage(ex);
                     }
                 }
             }
