@@ -15,12 +15,19 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import view.PanelDatabaseConnection;
+import controller.DBConnection;
+import static view.PanelDatabaseConnection.selectedDB;
+
 public class Model {
     PopupMessages popupMessages = new PopupMessages();
     ImportFilesGetter importFilesGetter = new ImportFilesGetter();
     Sizes sizes = new Sizes();
     String foreignKeys = "";
     String primaryKeys = "";
+    // In use for different SQL-Queries in PostgreSQL
+//    String selectedDBValue = PanelDatabaseConnection.selectedDB;
+    String databaseNameValue = DBConnection.databaseName;
     //create connection to db
     public Connection connectToDB(String connectionString, String username, String password) throws SQLException {
         return DriverManager.getConnection(connectionString, username, password);
@@ -29,7 +36,13 @@ public class Model {
     public List<String> getAllTablesFromDB(Connection connection) throws SQLException {
         List<String> allTables = new ArrayList<>();
         Statement databaseStatement = connection.createStatement();
-        ResultSet resultSet = databaseStatement.executeQuery("Show tables");
+        ResultSet resultSet;
+        if (selectedDB == "postgresql") {
+            resultSet = databaseStatement.executeQuery("SELECT tablename FROM pg_catalog.pg_tables WHERE schemaname='public';");
+
+        } else {
+            resultSet = databaseStatement.executeQuery("Show tables");
+        }
         while (resultSet.next()) {
             allTables.add(resultSet.getString(1));
         }
@@ -73,19 +86,30 @@ public class Model {
 
     public void deleteRows(Connection connection, String table, List<String> columns, List<String> rows) throws SQLException {
         String deleteQuery = "DELETE FROM " + table + " WHERE ";
+        System.out.println("Test");
         for(int i = 0; i < columns.size(); i++){
+
             if(i == columns.size() - 1 ){
-                deleteQuery += columns.get(i) + " = ?" + ";";
+                deleteQuery += columns.get(i) + " = ? ;";
+                System.out.println("Delete Quary: "+ deleteQuery);
             } else {
                 deleteQuery += columns.get(i) + " = ?" + " AND ";
             }
-
         }
         PreparedStatement st = connection.prepareStatement(deleteQuery);
+        //Test getting type
+        Statement databaseStatement = connection.createStatement();
+        ResultSet resultSet = databaseStatement.executeQuery("SELECT * FROM " + table);
+        ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
         for (int x = 1; x <= rows.size(); x++){
-            st.setString(x, rows.get(x-1));
+            if(resultSetMetaData.getColumnTypeName(x).contains("int") || resultSetMetaData.getColumnTypeName(x).contains("serial")) {
+                st.setInt(x, Integer.parseInt(rows.get(x-1)));
+            } else {
+                st.setString(x, rows.get(x-1));
+            }
         }
-        st.executeUpdate();
+        System.out.println("Fertiger String: " + st);
+        st.execute();
         popupMessages.showSuccessMessage("Successfully deleted row");
     }
         public void addRow(Connection connection, String table) throws SQLException {
@@ -108,8 +132,16 @@ public class Model {
                 }
             }
             PreparedStatement preparedStatement = connection.prepareStatement(addQuery);
+            Statement databaseStatement = connection.createStatement();
+            ResultSet resultSet = databaseStatement.executeQuery("SELECT * FROM " + table);
+            ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
             for(int y = 1; y <= input.length; y++) {
-                preparedStatement.setString(y, input[y-1]);
+                if (resultSetMetaData.getColumnTypeName(y).contains("int") || resultSetMetaData.getColumnTypeName(y).contains("serial")) {
+                    preparedStatement.setInt(y, Integer.parseInt(input[y-1]));
+                } else {
+                    preparedStatement.setString(y, (input[y-1]));
+                }
+                //preparedStatement.setString(y, input[y-1]);
             }
             preparedStatement.executeUpdate();
             popupMessages.showSuccessMessage("Successfully added row");
@@ -144,8 +176,17 @@ public class Model {
         }
 
         PreparedStatement preparedStatement = connection.prepareStatement(editQuery);
+        //Test getting type
+        Statement databaseStatement = connection.createStatement();
+        ResultSet resultSet = databaseStatement.executeQuery("SELECT * FROM " + table);
+        ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
+
         for (int y = 1; y <= input.length; y++) {
-            preparedStatement.setString(y, input[y-1]);
+            if(resultSetMetaData.getColumnTypeName(y).contains("int") || resultSetMetaData.getColumnTypeName(y).contains("serial")) {
+                preparedStatement.setInt(y, Integer.parseInt(input[y-1]));
+            } else {
+                preparedStatement.setString(y, input[y-1]);
+            }
         }
         //remove empty rows from row
         for (int z = rows.size() - 1; z >= 0; z--) {
@@ -155,8 +196,13 @@ public class Model {
         }
         int test = 0;
         for (int xy = input.length+1; xy <= input.length + rows.size(); xy++) {
-            preparedStatement.setString(xy, rows.get(test));
+            if(resultSetMetaData.getColumnTypeName(test+1).contains("int") || resultSetMetaData.getColumnTypeName(test+1).contains("serial")) {
+                preparedStatement.setInt(xy, Integer.parseInt(rows.get(test)));
+            } else {
+                preparedStatement.setString(xy, rows.get(test));
+            }
             test++;
+            System.out.println("Ich bin hier");
         }
         //what is this needed for?
         //preparedStatement.setString(input.length+1, rows.get(0));

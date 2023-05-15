@@ -24,11 +24,6 @@ public class PanelDatabaseConnection {
 
     private JPanel panelDatabaseConnection = new JPanel();
 
-    // Choose your DB with a Checkbox
-    private JCheckBox checkBoxMySql = new JCheckBox();
-    private JCheckBox checkBoxMariaDB = new JCheckBox();
-    private JCheckBox checkBoxPostgreSQL = new JCheckBox();
-    private JCheckBox checkBoxspeichern = new JCheckBox();
 
     // Choose your DB with a RadioButton
     private JRadioButton radioButtonMySql = new JRadioButton();
@@ -76,12 +71,6 @@ public class PanelDatabaseConnection {
         headingLabel.setForeground(Color.DARK_GRAY);
         headingLabel.setBounds((sizes.getScreenWidth() / 2) - 280, 10, 600, 200);
 
-
-        //creating checkboxes for (1) MySQL (2) mariaDB (3) PostgreSQL
-        /*checkBoxMySql = uiHelpers.createJCheckBox(checkBoxMySql, ((sizes.getScreenWidth()/2)-(sizes.getCheckBox_panelDatabaseConnection_checkBoxMySql_checkBoxX())), (sizes.getCheckBox_panelDatabaseConnection_checkBoxMySql_checkBoxY()), sizes.getCheckBox_panelDatabaseConnection_checkBoxMySql_checkBoxWidth(), sizes.getCheckBox_panelDatabaseConnection_checkBoxMySql_checkBoxHeight(), sizes.getCheckBox_panelDatabaseConnection_checkBoxMySql_checkBoxLabel());
-        checkBoxMariaDB = uiHelpers.createJCheckBox(checkBoxMariaDB, ((sizes.getScreenWidth()/2)-(sizes.getCheckBox_panelDatabaseConnection_checkBoxMariaDB_checkBoxX())), (sizes.getCheckBox_panelDatabaseConnection_checkBoxMariaDB_checkBoxY()), sizes.getCheckBox_panelDatabaseConnection_checkBoxMariaDB_checkBoxWidth(), sizes.getCheckBox_panelDatabaseConnection_checkBoxMariaDB_checkBoxHeight(), sizes.getCheckBox_panelDatabaseConnection_checkBoxMariaDB_checkBoxLabel());
-        checkBoxPostgreSQL = uiHelpers.createJCheckBox(checkBoxPostgreSQL, ((sizes.getScreenWidth()/2)-(sizes.getCheckBox_panelDatabaseConnection_checkBoxPostgreSQL_checkBoxX())), (sizes.getCheckBox_panelDatabaseConnection_checkBoxPostgreSQL_checkBoxY()), sizes.getCheckBox_panelDatabaseConnection_checkBoxPostgreSQL_checkBoxWidth(), sizes.getCheckBox_panelDatabaseConnection_checkBoxPostgreSQL_checkBoxHeight(), sizes.getCheckBox_panelDatabaseConnection_checkBoxPostgreSQL_checkBoxLabel());
-        */
 
         // crating radioButtons for (1) MySQL (2) mariaDB (3) PostgreSQL
         radioButtonMySql = uiHelpers.createJRadioButton(radioButtonMySql, ((sizes.getScreenWidth()/2)-(sizes.getRadioButton_panelDatabaseConnection_radioButtonMySql_radioButtonX())), (sizes.getRadioButton_panelDatabaseConnection_radioButtonMySql_radioButtonY()), sizes.getRadioButton_panelDatabaseConnection_radioButtonMySql_radioButtonWidth(), sizes.getRadioButton_panelDatabaseConnection_radioButtonMySql_radioButtonHeight(), sizes.getRadioButton_panelDatabaseConnection_radioButtonMySql_radioButtonLabel());
