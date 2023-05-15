@@ -3,16 +3,14 @@ import controller.DBConnection;
 import resources.Sizes;
 
 import javax.swing.*;
-import javax.swing.table.JTableHeader;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
 public class PanelTableSelection {
+    PopupMessages popupMessages = new PopupMessages();
     UIHelpers uiHelpers = new UIHelpers();
     DBConnection dbConnection = new DBConnection();
     PanelTableView panelTableView = new PanelTableView();
@@ -27,6 +25,7 @@ public class PanelTableSelection {
         jlistTableSelection.setBackground(new Color(211, 211, 211));
         jlistTableSelection.setFont(new Font("Arial",Font.PLAIN, 14));
         jlistTableSelection.setFixedCellHeight(30);
+        jlistTableSelection.setToolTipText("Tables");
         jlistTableSelection.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -40,7 +39,7 @@ public class PanelTableSelection {
                     JScrollPane scrollPaneWithTable = panelTableView.PanelTableView(connection, jlistTableSelection.getSelectedIndex());
                     panelTableSelection.add(scrollPaneWithTable);
                 } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
+                    popupMessages.showErrorMessage(ex);
                 }
             }
         });

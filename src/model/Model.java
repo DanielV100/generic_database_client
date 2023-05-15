@@ -2,6 +2,7 @@ package model;
 
 import controller.DBConnection;
 import resources.Sizes;
+import view.PopupMessages;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,6 +20,7 @@ import controller.DBConnection;
 import static view.PanelDatabaseConnection.selectedDB;
 
 public class Model {
+    PopupMessages popupMessages = new PopupMessages();
     ImportFilesGetter importFilesGetter = new ImportFilesGetter();
     Sizes sizes = new Sizes();
     String foreignKeys = "";
@@ -108,7 +110,7 @@ public class Model {
         }
         System.out.println("Fertiger String: " + st);
         st.execute();
-        JOptionPane.showMessageDialog(null, "Row deleted!");
+        popupMessages.showSuccessMessage("Successfully deleted row");
     }
         public void addRow(Connection connection, String table) throws SQLException {
         String addQuery = "INSERT INTO " + table + "(";
@@ -142,8 +144,7 @@ public class Model {
                 //preparedStatement.setString(y, input[y-1]);
             }
             preparedStatement.executeUpdate();
-            System.out.println(preparedStatement);
-            JOptionPane.showMessageDialog(null, "Added row!");
+            popupMessages.showSuccessMessage("Successfully added row");
         }
 
     }
@@ -203,10 +204,11 @@ public class Model {
             test++;
             System.out.println("Ich bin hier");
         }
+        //what is this needed for?
         //preparedStatement.setString(input.length+1, rows.get(0));
         System.out.println(preparedStatement);
         preparedStatement.executeUpdate();
-        JOptionPane.showMessageDialog(null, "Edited row!");
+        popupMessages.showSuccessMessage("Successfully edited row");
 
     }
     private List<String> columnsType = new ArrayList<>();
@@ -382,6 +384,18 @@ public class Model {
         String deleteQuery = "DELETE FROM " + table;
         PreparedStatement st = connection.prepareStatement(deleteQuery);
         st.executeUpdate();
-        JOptionPane.showMessageDialog(null, "Cleared table");
+        popupMessages.showSuccessMessage("Successfully cleared table");
+    }
+    public String getDatatypesFromDB(Connection connection, String table) throws SQLException {
+        String datatypesFromDB = "";
+        Statement databaseStatement = connection.createStatement();
+        ResultSet resultSet = databaseStatement.executeQuery("SELECT * FROM " + table);
+        ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
+        for (int i = 1; i <= resultSetMetaData.getColumnCount(); i++) {
+            if(!(resultSetMetaData.isReadOnly(i))) {
+                datatypesFromDB += resultSetMetaData.getColumnName(i) + ": " + resultSetMetaData.getColumnTypeName(i) + "(" + resultSetMetaData.getColumnDisplaySize(i) + ")" + "\n";
+            }
+        }
+        return datatypesFromDB;
     }
 }
