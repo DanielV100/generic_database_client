@@ -6,14 +6,16 @@ public class UserCredentials {
     private String username;
     private String password;
     private String selectedDB;
+    private String speichern;
 
-    public UserCredentials(String hostname, String portname, String dbname, String username, String password, String selcetedDB) {
+    public UserCredentials(String hostname, String portname, String dbname, String username, String password, String selcetedDB,String speichern) {
         this.hostname = hostname;
         this.portname = portname;
         this.dbname = dbname;
         this.username = username;
         this.password = password;
         this.selectedDB = selcetedDB;
+        this.speichern = speichern;
     }
 
     public String getHostname() {
@@ -33,5 +35,8 @@ public class UserCredentials {
     }
     public String getPassword() {
         return password;
+    }
+    public String getspeichern() {
+        return speichern;
     }
 }
