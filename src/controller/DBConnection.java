@@ -75,4 +75,7 @@ public class DBConnection {
     public void clearTable(Connection connection, String table) throws SQLException {
        model.clearTable(connection, table);
     }
+    public String getDatatypesFromDB(Connection connection, String table) throws SQLException {
+        return model.getDatatypesFromDB(connection, table);
+    }
 }

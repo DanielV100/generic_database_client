@@ -5,10 +5,7 @@ import model.CSVExporter;
 import resources.Sizes;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
-import javax.swing.table.TableModel;
+import javax.swing.table.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
@@ -31,10 +28,13 @@ public class PanelTableView {
     JMenuItem menuItemImport;
     JMenuItem menuItemClearTable;
     JMenuItem menuItemExportToCSV;
+    JMenuItem menuItemShowDBTypes;
+    PopupMessages popupMessages = new PopupMessages();
     CSVExporter csvExporter = new CSVExporter();
 
     public JScrollPane PanelTableView(Connection connection, int index) throws SQLException {
         sizes.init();
+
 
         String[] columns = dbConnection.getColumnsFromTable(connection, index);
         //Table height is extremly high --> show all data
@@ -54,12 +54,25 @@ public class PanelTableView {
         tableFromDB.setGridColor(new Color(211, 211, 211));
         tableFromDB.setDefaultRenderer(Object.class, new AlternateRowColorRenderer());
         tableFromDB.setSelectionBackground(Color.BLUE);
+        if (tableFromDB.getColumnCount() > 5) {
+            tableFromDB.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        } else  {
+            tableFromDB.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+        }
+
+        TableColumnModel columnModel = tableFromDB.getColumnModel();
+        for (int i = 0; i < tableFromDB.getColumnCount(); i++) {
+            TableColumn column = tableFromDB.getColumnModel().getColumn(i);
+            column.setMinWidth(200);
+        }
+
         tableFromDB.addMouseListener(new MouseAdapter() {
 
             @Override
             public void mousePressed(MouseEvent e) {
                 if (SwingUtilities.isRightMouseButton(e) || (System.getProperty("os.name").contains("Mac OS X") && e.isControlDown())){
                     popupMenu = new JPopupMenu();
+                    menuItemShowDBTypes = new JMenuItem("Show column datatypes");
                     menuItemAdd = new JMenuItem("Add row");
                     menuItemEdit = new JMenuItem("Edit row");
                     menuItemImport = new JMenuItem("Import from .csv");
@@ -68,7 +81,7 @@ public class PanelTableView {
                     menuItemClearTable = new JMenuItem("Clear table");
                     menuItemClearTable.setForeground(Color.RED);
                     //creating popupmenu with (1) edit (2) delete (3) add (4) import from .csv
-
+                    popupMenu.add(menuItemShowDBTypes);
                     popupMenu.add(menuItemEdit);
                     popupMenu.addSeparator();
                     popupMenu.add(menuItemAdd);
@@ -103,9 +116,9 @@ public class PanelTableView {
                             try {
                                 dbConnection.editRow(connection,dbConnection.getAllTablesFromDB(connection)[index], columns, rows);
                             } catch (SQLException ex) {
-                                if(ex.toString().contains("java.sql.SQLIntegrityConstraintViolationException")) {
-                                    JOptionPane.showMessageDialog(null, "This row can't be changed because it's referenced in an other table.");
-                                }
+                                popupMessages.showErrorMessage(ex);
+                            } catch (NullPointerException nullPointerException) {
+                                System.out.println(nullPointerException);
                             }
                         }
                     });
@@ -135,7 +148,7 @@ public class PanelTableView {
                             try {
                                 dbConnection.deleteRow(connection, dbConnection.getAllTablesFromDB(connection)[index], columns, rows);
                             } catch (SQLException ex) {
-                                JOptionPane.showMessageDialog(null, "Something went wrong.");
+                                popupMessages.showErrorMessage(ex);
                             }
                         }
                     });
@@ -167,13 +180,12 @@ public class PanelTableView {
                                 int option = JOptionPane.showConfirmDialog(null, "Has your CSV the correct syntax? In first line:\n" + csvColumnTemplate + "\nIn lines below the data for every cell with ';' separated?");
                                 if (option == JOptionPane.OK_OPTION) {
                                     dbConnection.addImportedRows(connection, dbConnection.getAllTablesFromDB(connection)[index]);
-                                    JOptionPane.showMessageDialog(null, "Imported CSV");
+                                    popupMessages.showSuccessMessage("Successfully imported CSV");
                                 }
-
                             } catch (SQLException ex) {
-                                throw new RuntimeException(ex);
+                                popupMessages.showErrorMessage(ex);
                             } catch (IOException ex) {
-                                throw new RuntimeException(ex);
+                                popupMessages.showErrorMessage(ex);
                             }
                         }
                     });
@@ -188,11 +200,12 @@ public class PanelTableView {
                                 try {
                                     dbConnection.clearTable(connection,  dbConnection.getAllTablesFromDB(connection)[index]);
                                 } catch (SQLException ex) {
-                                    throw new RuntimeException(ex);
+                                    popupMessages.showErrorMessage(ex);
                                 }
                             }
                         }
                     });
+                    //---- Export ----
                     menuItemExportToCSV.addMouseListener(new MouseAdapter() {
                         @Override
                         public void mousePressed(MouseEvent mouseEvent) {
@@ -200,17 +213,29 @@ public class PanelTableView {
                                 JTable test = (JTable) e.getSource();
                                 CSVExporter.exportToCSV(test);
                             } catch (IOException ex) {
-                                throw new RuntimeException(ex);
+                                popupMessages.showErrorMessage(ex);
                             }
                         }
                     });
+                    //---- Export ----
 
+                    //---- Datatypes ----
+                    menuItemShowDBTypes.addMouseListener(new MouseAdapter() {
+                        @Override
+                        public void mousePressed(MouseEvent e) {
+                            try {
+                                JOptionPane.showMessageDialog(null, dbConnection.getDatatypesFromDB(connection,  dbConnection.getAllTablesFromDB(connection)[index]));
+                            } catch (SQLException ex) {
+                                popupMessages.showErrorMessage(ex);
+                            }
+                        }
+                    });
                 }
             }
         });
-        scrollPane = new JScrollPane(tableFromDB);
+        scrollPane = new JScrollPane(tableFromDB,  JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         scrollPane.setBounds(sizes.getPanel_panelTableView_panelX(),sizes.getPanel_panelTableView_panelY() , sizes.getScreenWidth()-sizes.getJlist_panelTableSelection_jlistTableSelection_jlistWidth(), sizes.getScreenHeight()-50);
-
+        scrollPane.setViewportView(tableFromDB);
         return scrollPane;
     }
 }

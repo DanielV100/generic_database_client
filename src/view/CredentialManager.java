@@ -9,6 +9,7 @@ import java.util.List;
 
 
 public class CredentialManager {
+    static PopupMessages popupMessages = new PopupMessages();
 
         public static void saveCredentials(UserCredentials credentials, String filePath) {
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true))) {
@@ -16,7 +17,7 @@ public class CredentialManager {
                 writer.write(line);
                 writer.newLine(); // Eine neue Zeile hinzufügen, um den nächsten Eintrag von dem vorherigen zu trennen
             } catch (IOException e) {
-                e.printStackTrace();
+                popupMessages.showErrorMessage(e);
             }
         }
     public static List<UserCredentials> loadCredentials(String filePath) {
@@ -42,7 +43,7 @@ public class CredentialManager {
                 line = reader.readLine();
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            popupMessages.showErrorMessage(e);
         }
         return credentialsList;
     }
