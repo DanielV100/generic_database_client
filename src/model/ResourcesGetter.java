@@ -32,5 +32,4 @@ public class ResourcesGetter {
     public String getAppPropertiesWithKey(String key) throws IOException {
         return getAppProperties().getProperty(key);
     }
-
 }

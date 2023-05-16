@@ -2,7 +2,10 @@ package resources;
 
 import java.awt.*;
 
-//Here you can define all sizes and coordinates for all kind of components
+/**
+ * All sizes from UI-Components are defined here.
+ * @author Marius
+ */
 public class Sizes {
     private Dimension size;
     private Toolkit tool;
