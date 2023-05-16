@@ -11,6 +11,11 @@ public class Sizes {
     private Toolkit tool;
     int screenHeight;
     int screenWidth;
+
+    /**
+     * Getting and setting screenHeight and screenWidth
+     * @author Lorenz
+     */
     public void init() {
         size = tool.getDefaultToolkit().getScreenSize();
         screenHeight = (int) size.getHeight();
@@ -84,11 +89,11 @@ public class Sizes {
         String radioButton_panelDatabaseConnection_radioButtonPostgreSQL_radioButtonLabel = "PostgreSQL";
 
         // Speichern RadioButton
-        int radioButton_panelDatabaseConnection_radioButtonspeichern_radioButtonX = (screenWidth/2) +150;
-        int radioButton_panelDatabaseConnection_radioButtonspeichern_radioButtonY = 550;
-        int radioButton_panelDatabaseConnection_radioButtonspeichern_radioButtonWidth = 250;
-        int radioButton_panelDatabaseConnection_radioButtonspeichern_radioButtonHeight = 20;
-        String radioButton_panelDatabaseConnection_radioButtonspeichern_radioButtonLabel = "Anmeldeinformationen speichern";
+        int radioButton_panelDatabaseConnection_radioButtonSave_radioButtonX = (screenWidth/2) +150;
+        int radioButton_panelDatabaseConnection_radioButtonSave_radioButtonY = 550;
+        int radioButton_panelDatabaseConnection_radioButtonSave_radioButtonWidth = 250;
+        int radioButton_panelDatabaseConnection_radioButtonSave_radioButtonHeight = 20;
+        String radioButton_panelDatabaseConnection_radioButtonSave_radioButtonLabel = "Anmeldeinformationen speichern";
 
 
 
@@ -363,20 +368,20 @@ public class Sizes {
         }
 
         // Speichern
-        public int getRadioButton_panelDatabaseConnection_radioButtonspeichern_radioButtonX() {
-        return radioButton_panelDatabaseConnection_radioButtonspeichern_radioButtonX;
+        public int getRadioButton_panelDatabaseConnection_radioButtonSave_radioButtonX() {
+        return radioButton_panelDatabaseConnection_radioButtonSave_radioButtonX;
         }
-        public int getRadioButton_panelDatabaseConnection_radioButtonspeichern_radioButtonY() {
-        return radioButton_panelDatabaseConnection_radioButtonspeichern_radioButtonY;
+        public int getRadioButton_panelDatabaseConnection_radioButtonSave_radioButtonY() {
+        return radioButton_panelDatabaseConnection_radioButtonSave_radioButtonY;
         }
-        public int getRadioButton_panelDatabaseConnection_radioButtonspeichern_radioButtonWidth() {
-        return radioButton_panelDatabaseConnection_radioButtonspeichern_radioButtonWidth;
+        public int getRadioButton_panelDatabaseConnection_radioButtonSave_radioButtonWidth() {
+        return radioButton_panelDatabaseConnection_radioButtonSave_radioButtonWidth;
         }
-        public int getRadioButton_panelDatabaseConnection_radioButtonspeichern_radioButtonHeight() {
-        return radioButton_panelDatabaseConnection_radioButtonspeichern_radioButtonHeight;
+        public int getRadioButton_panelDatabaseConnection_radioButtonSave_radioButtonHeight() {
+        return radioButton_panelDatabaseConnection_radioButtonSave_radioButtonHeight;
         }
-        public String getRadioButton_panelDatabaseConnection_radioButtonspeichern_radioButtonLabel() {
-        return radioButton_panelDatabaseConnection_radioButtonspeichern_radioButtonLabel;
+        public String getRadioButton_panelDatabaseConnection_radioButtonSave_radioButtonLabel() {
+        return radioButton_panelDatabaseConnection_radioButtonSave_radioButtonLabel;
         }
 
 

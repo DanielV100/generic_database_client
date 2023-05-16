@@ -7,7 +7,6 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class CredentialManager {
     static PopupMessages popupMessages = new PopupMessages();
 

@@ -1,6 +1,7 @@
 package view;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 
 /**
@@ -48,10 +49,24 @@ public class UIHelpers {
         return radioButton;
     }
 
-    //Buttons can be created by calling this method
-    protected static JButton createJButton(JButton button, int buttonX, int buttonY, int buttonWidth, int buttonHeight, String buttonLabel){
+    /**
+     * Method for creating buttons
+     * @param button
+     * @param buttonX
+     * @param buttonY
+     * @param buttonWidth
+     * @param buttonHeight
+     * @param buttonLabel
+     * @param background
+     * @param foreground
+     * @return
+     * @author Marius
+     */
+    protected static JButton createJButton(JButton button, int buttonX, int buttonY, int buttonWidth, int buttonHeight, String buttonLabel, Color background, Color foreground){
         button = new JButton(buttonLabel);
         button.setBounds(buttonX, buttonY, buttonWidth, buttonHeight);
+        button.setBackground(background);
+        button.setForeground(foreground);
         return button;
     }
     //Labels can be created by calling this method
@@ -67,16 +82,34 @@ public class UIHelpers {
         panel.setLayout(panelLayout);
         return panel;
     }
-    //Text fields can be created by calling this method
-    protected static JTextField createJTextField(JTextField textField, String textFieldText, int textFieldX, int textFieldY, int textFieldWidth, int textFieldHeight) {
-        textField = new JTextField(textFieldText);
+
+    /**
+     * Method for creating text-field or password-field.
+     * @param textField
+     * @param textFieldText
+     * @param textFieldX
+     * @param textFieldY
+     * @param textFieldWidth
+     * @param textFieldHeight
+     * @param tooltip
+     * @param border
+     * @param opaque
+     * @param font
+     * @return full functional JTextField
+     * @author Marius
+     */
+    protected static JTextField createTextField(JTextField textField, String textFieldText, int textFieldX, int textFieldY, int textFieldWidth, int textFieldHeight, String tooltip, Border border, boolean opaque, Font font, boolean isPassword) {
+        if(isPassword) {
+            textField = new JPasswordField(textFieldText);
+        } else {
+            textField = new JTextField(textFieldText);
+        }
         textField.setBounds(textFieldX, textFieldY, textFieldWidth, textFieldHeight);
+        textField.setToolTipText(tooltip);
+        textField.setBorder(border);
+        textField.setOpaque(opaque);
+        textField.setFont(font);
         return textField;
-    }
-    protected static JPasswordField createJPasswordField(JPasswordField PasswordField, String textFieldText, int textFieldX, int textFieldY, int textFieldWidth, int textFieldHeight) {
-        PasswordField = new JPasswordField(textFieldText);
-        PasswordField.setBounds(textFieldX, textFieldY, textFieldWidth, textFieldHeight);
-        return PasswordField;
     }
 
     protected static JList createJList(JList jlist, String[] dataToDisplay, int listX, int listY, int listWidth, int listHeight) {
