@@ -1,15 +1,9 @@
 package controller;
 
 import model.Model;
-import view.View;
-
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.sql.*;
 import java.util.List;
-
 import static view.PanelDatabaseConnection.selectedDB;
 
 public class DBConnection {

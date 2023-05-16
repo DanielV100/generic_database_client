@@ -11,7 +11,7 @@ import java.io.InputStream;
 
 /**
  * This controller class  is the communicator between view and model. So the view never interacts with the model directly.
- * @author Luca
+ * @author Luca, Daniel
  */
 public class Controller {
     ImageFileGetter imageFileGetter = new ImageFileGetter();

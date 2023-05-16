@@ -16,8 +16,7 @@ import static view.CredentialManager.loadCredentials;
 
 /**
  * Creating components for the start-screen and initializing the frame for the table view.
- *
- * @author Daniel, Lorenz, Luca, Valentin
+ * @author Daniel, Lorenz, Luca, Valentin, Marius
  */
 public class PanelDatabaseConnection {
     PopupMessages popupMessages = new PopupMessages();
@@ -53,7 +52,6 @@ public class PanelDatabaseConnection {
     PanelTableSelection panelTableSelection = new PanelTableSelection();
 
     /**
-     *
      * @return JPanel with start-screen on it
      * @throws IOException
      * @author Valentin
