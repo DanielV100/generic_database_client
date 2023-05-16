@@ -18,7 +18,7 @@ public class PanelTableSelection {
     JPanel panelTableSelection = new JPanel();
     JList jlistTableSelection = new JList();
 
-    public JPanel PanelTableSelection(Connection connection) throws SQLException {
+    public JPanel PanelTableSelection(Connection connection, String selectedDB) throws SQLException {
         sizes.init();
         //creating list which shows the tables
         jlistTableSelection = uiHelpers.createJList(jlistTableSelection, dbConnection.getAllTablesFromDB(connection), sizes.getJlist_panelTableSelection_jlistTableSelection_jlistX(), sizes.getJlist_panelTableSelection_jlistTableSelection_jlisty(), sizes.getJlist_panelTableSelection_jlistTableSelection_jlistWidth(), sizes.getScreenHeight());
@@ -36,7 +36,7 @@ public class PanelTableSelection {
                     } catch (ArrayIndexOutOfBoundsException arrayIndexOutOfBoundsException) {
 
                     }
-                    JScrollPane scrollPaneWithTable = panelTableView.PanelTableView(connection, jlistTableSelection.getSelectedIndex());
+                    JScrollPane scrollPaneWithTable = panelTableView.PanelTableView(connection, jlistTableSelection.getSelectedIndex(), selectedDB);
                     panelTableSelection.add(scrollPaneWithTable);
                 } catch (SQLException ex) {
                     popupMessages.showErrorMessage(ex);

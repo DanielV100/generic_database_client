@@ -330,7 +330,7 @@ public class PanelDatabaseConnection {
                     UserCredentials credentials = new UserCredentials(hostname, portname, dbname, username, password, selecteddb, speichern);
                     CredentialManager.saveCredentials(credentials, filePathtext);
                     }
-                    test.add(panelTableSelection.PanelTableSelection(connection));
+                    test.add(panelTableSelection.PanelTableSelection(connection, selectedDB));
                     test.setVisible(true);
                     //close db connection while closing application
                     test.addWindowListener(new WindowAdapter() {

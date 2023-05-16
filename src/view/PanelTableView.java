@@ -32,7 +32,7 @@ public class PanelTableView {
     PopupMessages popupMessages = new PopupMessages();
     CSVExporter csvExporter = new CSVExporter();
 
-    public JScrollPane PanelTableView(Connection connection, int index) throws SQLException {
+    public JScrollPane PanelTableView(Connection connection, int index, String selectedDB) throws SQLException {
         sizes.init();
 
 
@@ -90,6 +90,12 @@ public class PanelTableView {
                     popupMenu.addSeparator();
                     popupMenu.add(menuItemDelete);
                     popupMenu.add(menuItemClearTable);
+                    /*if(selectedDB.equals("postgresql")) {
+                        menuItemDelete.setEnabled(false);
+                        menuItemImport.setEnabled(false);
+                        menuItemAdd.setEnabled(false);
+                        menuItemEdit.setEnabled(false);
+                    }*/
                     //Display the popup menu at the location of the mouse click
                     popupMenu.show(e.getComponent(), e.getX(), e.getY());
                     //----Editing----

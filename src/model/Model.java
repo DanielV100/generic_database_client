@@ -116,6 +116,9 @@ public class Model {
         String addQuery = "INSERT INTO " + table + "(";
         List<String> columns = getAllWriteableColumns(connection, table);
         String[] input = getInputDialogForCreatingNewRow(connection, table, columns);
+        Statement databaseStatement = connection.createStatement();
+        ResultSet resultSet = databaseStatement.executeQuery("SELECT * FROM " + table);
+        ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
         if(input != null) {
             for(int i = 0; i < columns.size(); i++) {
                 if(i == columns.size() - 1) {
@@ -126,23 +129,34 @@ public class Model {
             }
             for(int x = 0; x < columns.size(); x++) {
                 if(x == columns.size() - 1) {
-                    addQuery += "?" + ");";
+                    if(selectedDB.equals("postgresql")) {
+                        addQuery += "?::" + resultSetMetaData.getColumnTypeName(x+1) + ");";
+
+                    } else {
+                        addQuery += "?" + ");";
+                    }
+
                 } else {
-                    addQuery += "?" + ", ";
+                    if(selectedDB.equals("postgresql")) {
+                        addQuery += "?::" + resultSetMetaData.getColumnTypeName(x+1) + ", ";
+
+                    } else {
+                        addQuery += "?" + ", ";
+                    }
+
                 }
             }
             PreparedStatement preparedStatement = connection.prepareStatement(addQuery);
-            Statement databaseStatement = connection.createStatement();
-            ResultSet resultSet = databaseStatement.executeQuery("SELECT * FROM " + table);
-            ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
+
             for(int y = 1; y <= input.length; y++) {
-                if (resultSetMetaData.getColumnTypeName(y).contains("int") || resultSetMetaData.getColumnTypeName(y).contains("serial")) {
-                    preparedStatement.setInt(y, Integer.parseInt(input[y-1]));
+                if(input[y-1].equals("")) {
+                    preparedStatement.setNull(y, java.sql.Types.NULL);
                 } else {
-                    preparedStatement.setString(y, (input[y-1]));
+                    preparedStatement.setObject(y, input[y-1]);
                 }
-                //preparedStatement.setString(y, input[y-1]);
+
             }
+            System.out.println(preparedStatement);
             preparedStatement.executeUpdate();
             popupMessages.showSuccessMessage("Successfully added row");
         }
