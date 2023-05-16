@@ -9,6 +9,7 @@ import javax.swing.*;
 import javax.swing.plaf.basic.BasicButtonUI;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -58,8 +59,6 @@ public class PanelDatabaseConnection {
     //"/Users/lorenz.lederer/Downloads/5g-networking-technology-background-with-blue-digital-line/rm373batch2-08.jpg"));
     public JPanel PanelDatabaseConnection() throws IOException {
 
-
-
         sizes.init();
         test.setLayout(null);
         test.setBounds(0, 0, sizes.getScreenWidth(), sizes.getScreenHeight());
@@ -68,10 +67,10 @@ public class PanelDatabaseConnection {
         test.setUndecorated(false);
         test.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        JLabel headingLabel = new JLabel("Generic Database Client");
+        /*JLabel headingLabel = new JLabel("Generic Database Client");
         headingLabel.setFont(new Font("Arial", Font.BOLD, 48));
         headingLabel.setForeground(Color.DARK_GRAY);
-        headingLabel.setBounds((sizes.getScreenWidth() / 2) - 280, 10, 600, 200);
+        headingLabel.setBounds((sizes.getScreenWidth() / 2) - 280, 10, 600, 200);*/
 
 
         // crating radioButtons for (1) MySQL (2) mariaDB (3) PostgreSQL
@@ -158,18 +157,6 @@ public class PanelDatabaseConnection {
         textFieldspeichern.setOpaque(false);
         //textFieldspeichern.setFont(new Font("Arial", Font.PLAIN, 20));
         //Speichern der Daten soll nicht beim ersten Start erfolgen
-
-        /*Colorscheme für die unterschiedlichen DBs
-        if (radioButtonMySql.isSelected()) {
-            SetColor = colors.getSqlColor();
-            if (radioButtonMariaDB.isSelected()) {
-                SetColor = colors.getMariaColor();
-                if (radioButtonPostgreSQL.isSelected()) {
-                    SetColor = colors.getPostColor();
-                }
-            }
-        } else SetColor = colors.getStandardColor();*/
-
         //creating button for building the connection
         buttonConnect = uiHelpers.createJButton(buttonConnect, (sizes.getScreenWidth()/2)-(sizes.getButton_panelDatabaseConnection_buttonConnect_buttonWidth()/2), sizes.getButton_panelDatabaseConnection_buttonConnect_buttonY(), sizes.getButton_panelDatabaseConnection_buttonConnect_buttonWidth(), sizes.getButton_panelDatabaseConnection_buttonConnect_buttonHeight(), controller.getAppPropertiesWithKey("button.panelDatabaseConnection.buttonConnect"));
         buttonConnect.setBackground(SetColor);
@@ -374,7 +361,7 @@ public class PanelDatabaseConnection {
         panelDatabaseConnection.add(radioButtonMariaDB);
         panelDatabaseConnection.add(radioButtonPostgreSQL);
 
-        panelDatabaseConnection.add(headingLabel);
+        //panelDatabaseConnection.add(headingLabel);
         panelDatabaseConnection.add(textFieldHostname,Component.CENTER_ALIGNMENT);
         panelDatabaseConnection.add(textFieldPort,BorderLayout.CENTER);
         panelDatabaseConnection.add(textFieldDatabaseName);
@@ -384,6 +371,9 @@ public class PanelDatabaseConnection {
 
         panelDatabaseConnection.add(textFieldspeichern);
         panelDatabaseConnection.add(radioButtonspeichern);
+
+
+
 
         //laden von gespeicherten Nutzerdaten
         if (!directory.exists()) {
@@ -449,8 +439,14 @@ public class PanelDatabaseConnection {
         backgroundIcon = new ImageIcon(newimg);
         JLabel backgroundLabel = new JLabel(backgroundIcon);
         backgroundLabel.setBounds(0, 0, panelDatabaseConnection.getWidth(), panelDatabaseConnection.getHeight());
+        //backgroundLabel.setOpaque(true);
+        ImageIcon icon = new ImageIcon(ImageIO.read(new File("src/resources/logo.png")));
+        JLabel imgLabel = new JLabel(icon);
+        imgLabel.setBounds(sizes.getScreenWidth()/2-75, 0, 150, 150);
+        Image imagelabel = icon.getImage().getScaledInstance(imgLabel.getWidth(), imgLabel.getHeight(), Image.SCALE_SMOOTH);
+        imgLabel.setIcon(new ImageIcon(imagelabel));
+        backgroundLabel.add(imgLabel);
         panelDatabaseConnection.add(backgroundLabel);
-
         return panelDatabaseConnection;
 
     }
