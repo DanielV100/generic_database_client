@@ -4,6 +4,7 @@ import view.View;
 import javax.swing.*;
 import java.io.IOException;
 
+
 /*
 Here is just the start of the application - no more or less!
  */

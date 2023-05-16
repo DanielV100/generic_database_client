@@ -4,12 +4,14 @@ import controller.Controller;
 import controller.DBConnection;
 import resources.Sizes;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicButtonUI;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
@@ -352,6 +354,8 @@ public class PanelDatabaseConnection {
                     } else {
                         popupMessages.showErrorMessage(ex);
                     }
+                } catch (ClassNotFoundException ex) {
+                    throw new RuntimeException(ex);
                 }
             }
         });
@@ -437,14 +441,12 @@ public class PanelDatabaseConnection {
                 // Anmeldeinformationen laden und in Textfelder anzeigen
         }
 
-        File file = new File(getClass().getClassLoader().getResource("resources/test.jpg").getFile());
-        String filePath = file.getAbsolutePath();
-        ImageIcon backgroundIcon = new ImageIcon(filePath);
+        InputStream imageStream = getClass().getClassLoader().getResourceAsStream("resources/test.jpg");
+        ImageIcon backgroundIcon = new ImageIcon(ImageIO.read(imageStream));
 
-        Image image = backgroundIcon.getImage(); // transform it
-        Image newimg = image.getScaledInstance(panelDatabaseConnection.getWidth(),panelDatabaseConnection.getHeight(), java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
-        backgroundIcon = new ImageIcon(newimg);  // transform it back
-
+        Image image = backgroundIcon.getImage();
+        Image newimg = image.getScaledInstance(panelDatabaseConnection.getWidth(), panelDatabaseConnection.getHeight(), java.awt.Image.SCALE_SMOOTH);
+        backgroundIcon = new ImageIcon(newimg);
         JLabel backgroundLabel = new JLabel(backgroundIcon);
         backgroundLabel.setBounds(0, 0, panelDatabaseConnection.getWidth(), panelDatabaseConnection.getHeight());
         panelDatabaseConnection.add(backgroundLabel);

@@ -13,7 +13,7 @@ import java.util.StringTokenizer;
 
 
 public class ImportFilesGetter {
-    String csvFile = "/Users/daniel/Desktop/generic_database_client/generic_database_client/src/resources/samp.csv";
+    String csvFile = "";
 
 
 //Importer Einfügen --> Ein Fenster mit großem Textfeld, was ; separierte Zeilen importiert
@@ -23,7 +23,7 @@ public class ImportFilesGetter {
         FileNameExtensionFilter filter = new FileNameExtensionFilter(
                 "CSV files", "csv");
         fileChooser.setFileFilter(filter);
-        fileChooser.setAcceptAllFileFilterUsed(false);
+        //fileChooser.setAcceptAllFileFilterUsed(false);
         int userSelection = fileChooser.showOpenDialog(null);
         if (userSelection == JFileChooser.APPROVE_OPTION) {
             csvFile = fileChooser.getSelectedFile().getPath();

@@ -90,12 +90,11 @@ public class PanelTableView {
                     popupMenu.addSeparator();
                     popupMenu.add(menuItemDelete);
                     popupMenu.add(menuItemClearTable);
-                    /*if(selectedDB.equals("postgresql")) {
+                    if(selectedDB.equals("postgresql")) {
                         menuItemDelete.setEnabled(false);
                         menuItemImport.setEnabled(false);
-                        menuItemAdd.setEnabled(false);
                         menuItemEdit.setEnabled(false);
-                    }*/
+                    }
                     //Display the popup menu at the location of the mouse click
                     popupMenu.show(e.getComponent(), e.getX(), e.getY());
                     //----Editing----
@@ -167,7 +166,7 @@ public class PanelTableView {
                             try {
                                 dbConnection.addRow(connection, dbConnection.getAllTablesFromDB(connection)[index]);
                             } catch (SQLException ex) {
-                                throw new RuntimeException(ex);
+                                popupMessages.showErrorMessage(ex);
                             }
                         }
                     });
@@ -218,6 +217,7 @@ public class PanelTableView {
                             try {
                                 JTable test = (JTable) e.getSource();
                                 CSVExporter.exportToCSV(test);
+                                popupMessages.showSuccessMessage("Successfully exported table");
                             } catch (IOException ex) {
                                 popupMessages.showErrorMessage(ex);
                             }

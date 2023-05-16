@@ -22,7 +22,7 @@ public class DBConnection {
     Connection dbConnection;
 
     //gets parameters and writes it into local variables + start building connection
-    public Connection initDBConnection(String hostname, String port, String databaseName, String username, String password) throws SQLException {
+    public Connection initDBConnection(String hostname, String port, String databaseName, String username, String password) throws SQLException, ClassNotFoundException {
         this.hostname = hostname;
         this.port = validatePort(port);
         this.databaseName = databaseName;
@@ -40,7 +40,7 @@ public class DBConnection {
     }
 
     //trying to connect to db via jdbc - driver is needed!
-    public Connection connect() throws SQLException {
+    public Connection connect() throws SQLException, ClassNotFoundException {
         return model.connectToDB(createConnectionString(hostname, port, databaseName), username, password);
     }
 

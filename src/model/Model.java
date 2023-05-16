@@ -29,7 +29,10 @@ public class Model {
 //    String selectedDBValue = PanelDatabaseConnection.selectedDB;
     String databaseNameValue = DBConnection.databaseName;
     //create connection to db
-    public Connection connectToDB(String connectionString, String username, String password) throws SQLException {
+    public Connection connectToDB(String connectionString, String username, String password) throws SQLException, ClassNotFoundException {
+        if(connectionString.contains("postgresql")) {
+            Class.forName("org.postgresql.Driver");
+        }
         return DriverManager.getConnection(connectionString, username, password);
     }
     //getting all tables in db and return it as a list
@@ -112,7 +115,7 @@ public class Model {
         st.execute();
         popupMessages.showSuccessMessage("Successfully deleted row");
     }
-        public void addRow(Connection connection, String table) throws SQLException {
+    public void addRow(Connection connection, String table) throws SQLException {
         String addQuery = "INSERT INTO " + table + "(";
         List<String> columns = getAllWriteableColumns(connection, table);
         String[] input = getInputDialogForCreatingNewRow(connection, table, columns);
@@ -149,7 +152,7 @@ public class Model {
             PreparedStatement preparedStatement = connection.prepareStatement(addQuery);
 
             for(int y = 1; y <= input.length; y++) {
-                if(input[y-1].equals("")) {
+                if(input[y-1].equals("") && selectedDB.equals("postgresql")) {
                     preparedStatement.setNull(y, java.sql.Types.NULL);
                 } else {
                     preparedStatement.setObject(y, input[y-1]);
@@ -334,12 +337,9 @@ public class Model {
             container.add(labelForColumns[i]);
             //on the right-handed side: textfields
             if(isEdit) {
-                System.out.println("Foreign Keys: " + foreignKeys);
-                System.out.println(table.toLowerCase() + "." + columns.get(i));
                 inputFields[i] = new JTextField(rows.get(i));
                 if((!(writableColumns.contains(columns.get(i))))  || primaryKeys.contains(table.toLowerCase() + "." + columns.get(i))) {
-                    inputFields[i].setEditable(false);
-                    inputFields[i].setBackground(Color.LIGHT_GRAY);
+                    inputFields[i].setBackground(Color.YELLOW);
                     inputFields[i].setToolTipText("This field is a primary key and can't be changed because it's used in other tables.");
                 } else if (foreignKeys.contains(table.toLowerCase() + "." + columns.get(i))) {
                     inputFields[i].setBackground(Color.YELLOW);
