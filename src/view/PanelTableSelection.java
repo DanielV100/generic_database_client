@@ -44,7 +44,7 @@ public class PanelTableSelection {
             }
         });
         //creating the panel
-        panelTableSelection = uiHelpers.createJPanel(panelTableSelection, sizes.getPanel_panelTableSelection_panelX(), sizes.getPanel_panelTableSelection_panelY(), sizes.getScreenWidth(), sizes.getScreenHeight(), null);
+        panelTableSelection = uiHelpers.createJPanel(panelTableSelection, sizes.getPanel_panelTableSelection_panelX(), sizes.getPanel_panelTableSelection_panelY(), sizes.getScreenWidth(), sizes.getScreenHeight(), null, sizes.getSize());
         panelTableSelection.add(jlistTableSelection);
         panelTableSelection.setPreferredSize(sizes.getSize());
         return panelTableSelection;

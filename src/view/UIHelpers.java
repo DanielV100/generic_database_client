@@ -75,12 +75,24 @@ public class UIHelpers {
         label.setBounds(labelX, labelY, labelWidth, labelHeight);
         return label;
     }
-    //JPanels can be created by calling this method - Panels should strictly be used as a container of components!
-    protected static JPanel createJPanel(JPanel panel, int panelX, int panelY, int panelWidth, int panelHeight, LayoutManager panelLayout, Dimension prferredSize){
+
+    /**
+     * Method for creating panels.
+     * @param panel
+     * @param panelX
+     * @param panelY
+     * @param panelWidth
+     * @param panelHeight
+     * @param panelLayout
+     * @param preferredSize
+     * @return JPanel
+     * @author Luca
+     */
+    protected static JPanel createJPanel(JPanel panel, int panelX, int panelY, int panelWidth, int panelHeight, LayoutManager panelLayout, Dimension preferredSize){
         panel = new JPanel();
         panel.setBounds(panelX, panelY, panelWidth, panelHeight);
         panel.setLayout(panelLayout);
-        panel.setPreferredSize(prferredSize);
+        panel.setPreferredSize(preferredSize);
         return panel;
     }
 
@@ -118,7 +130,6 @@ public class UIHelpers {
         jlist.setBounds(listX, listY, listWidth, listHeight);
         return jlist;
     }
-
     protected static JTable createJTable(JTable table, String[] columns, String[][] data, int tableX, int tableY, int tableWidth, int tableHeight) {
         table = new JTable(data, columns);
         table.setBounds(tableX, tableY, tableWidth, tableHeight);
