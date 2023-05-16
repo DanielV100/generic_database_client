@@ -3,19 +3,15 @@ package view;
 import controller.Controller;
 import controller.DBConnection;
 import resources.Sizes;
-
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicButtonUI;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
-
 import static view.CredentialManager.loadCredentials;
 
 /**
@@ -56,6 +52,12 @@ public class PanelDatabaseConnection {
 
     PanelTableSelection panelTableSelection = new PanelTableSelection();
 
+    /**
+     *
+     * @return JPanel with start-screen on it
+     * @throws IOException
+     * @author Valentin
+     */
     public JPanel PanelDatabaseConnection() throws IOException {
         sizes.init();
         frameTableView = uiHelpers.createJFrame(frameTableView, controller.getAppPropertiesWithKey("title.view.frameTableView"), sizes.getScreenWidth(), sizes.getScreenHeight(), null, false, WindowConstants.EXIT_ON_CLOSE, JFrame.MAXIMIZED_BOTH);
@@ -63,110 +65,32 @@ public class PanelDatabaseConnection {
         addRadioButtonsEventListener();
         createTextFields();
         setupButton();
-
-        buttonConnect.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                buttonConnectClicked();
-            }
-        });
-
+        loadUserCredentials();
         //initializing panel with the text fields and the button which later will be on the main frame
         panelDatabaseConnection = UIHelpers.createJPanel(panelDatabaseConnection, sizes.getPanel_view_panelDatabaseConnection_panelX(), sizes.getPanel_view_panelDatabaseConnection_panelY(), sizes.getScreenWidth(), sizes.getScreenHeight(), null);
         panelDatabaseConnection.setPreferredSize(sizes.getSize());
-
         // Buttongroup: only one DB can be selected
         panelDatabaseConnection_buttonGroupDB.add(radioButtonMySql);
         panelDatabaseConnection_buttonGroupDB.add(radioButtonMariaDB);
         panelDatabaseConnection_buttonGroupDB.add(radioButtonPostgreSQL);
-
         panelDatabaseConnection.add(radioButtonMySql);
         panelDatabaseConnection.add(radioButtonMariaDB);
         panelDatabaseConnection.add(radioButtonPostgreSQL);
-
         //panelDatabaseConnection.add(headingLabel);
-        panelDatabaseConnection.add(textFieldHostname, Component.CENTER_ALIGNMENT);
-        panelDatabaseConnection.add(textFieldPort, BorderLayout.CENTER);
+        panelDatabaseConnection.add(textFieldHostname);
+        panelDatabaseConnection.add(textFieldPort);
         panelDatabaseConnection.add(textFieldDatabaseName);
         panelDatabaseConnection.add(textFieldUsername);
         panelDatabaseConnection.add(textFieldPassword);
         panelDatabaseConnection.add(buttonConnect);
-
         panelDatabaseConnection.add(textFieldspeichern);
         panelDatabaseConnection.add(radioButtonSave);
-
-
-        //laden von gespeicherten Nutzerdaten
-        if (!directory.exists()) {
-            directory.mkdir();
-        } else {
-            List<UserCredentials> credentialsList = loadCredentials(filePathtext);
-            String[] options = new String[credentialsList.size() + 1];
-            options[0] = "Nein";
-            for (int i = 0; i < credentialsList.size(); i++) {
-                options[i + 1] = credentialsList.get(i).getspeichern();
-            }
-            int result = JOptionPane.showOptionDialog(null, "Möchten Sie gespeicherte Anmeldeinformationen laden?", "Bestätigen", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
-            if (result >= 1) {
-                UserCredentials selectedCredentials = credentialsList.get(result - 1);
-                String hostnameload = selectedCredentials.getHostname();
-                String portnameload = selectedCredentials.getPortname();
-                String dbnameload = selectedCredentials.getDbname();
-                String usernameload = selectedCredentials.getUsername();
-                String passwordload = selectedCredentials.getPassword();
-                String selecteddbload = selectedCredentials.getSelectedDB();
-
-                textFieldHostname.setText(hostnameload);
-                textFieldPort.setText(portnameload);
-                textFieldDatabaseName.setText(dbnameload);
-                textFieldUsername.setText(usernameload);
-                textFieldPassword.setText(passwordload);
-
-                if (selecteddbload.toLowerCase().equals("mysql")) {
-                    selectedDB = selecteddbload;
-                    radioButtonMySql.setSelected(true);
-                    SetColor = colors.getSqlColor();
-                    buttonConnect.setBackground(SetColor);
-                } else if (selecteddbload.toLowerCase().equals("mariadb")) {
-                    selectedDB = selecteddbload;
-                    radioButtonMariaDB.setSelected(true);
-                    SetColor = colors.getMariaColor();
-                    buttonConnect.setBackground(SetColor);
-                } else if (selecteddbload.toLowerCase().equals("postgresql")) {
-                    selectedDB = selecteddbload;
-                    radioButtonPostgreSQL.setSelected(true);
-                    SetColor = colors.getPostColor();
-                    buttonConnect.setBackground(SetColor);
-                }
-                textFieldHostname.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, SetColor));
-                textFieldPort.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, SetColor));
-                textFieldDatabaseName.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, SetColor));
-                textFieldUsername.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, SetColor));
-                textFieldPassword.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, SetColor));
-                textFieldspeichern.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, SetColor));
-                // Use the selected credentials to establish a database connection
-            } else {
-                // User selected "Nein"
-            }
-            // Anmeldeinformationen laden und in Textfelder anzeigen
-        }
-
-        InputStream imageStream = getClass().getClassLoader().getResourceAsStream("resources/test.jpg");
-        ImageIcon backgroundIcon = new ImageIcon(ImageIO.read(imageStream));
-
-        Image image = backgroundIcon.getImage();
-        Image newimg = image.getScaledInstance(panelDatabaseConnection.getWidth(), panelDatabaseConnection.getHeight(), java.awt.Image.SCALE_SMOOTH);
-        backgroundIcon = new ImageIcon(newimg);
-        JLabel backgroundLabel = new JLabel(backgroundIcon);
+        //background image
+        JLabel backgroundLabel = new JLabel(new ImageIcon(controller.getImageIconFromResources("resources/test.jpg").getImage().getScaledInstance(panelDatabaseConnection.getWidth(), panelDatabaseConnection.getHeight(), java.awt.Image.SCALE_SMOOTH)));
         backgroundLabel.setBounds(0, 0, panelDatabaseConnection.getWidth(), panelDatabaseConnection.getHeight());
-        //backgroundLabel.setOpaque(true);
-        InputStream imageStream_logo = getClass().getResourceAsStream("/resources/logo.png");
-        Image image_logo = ImageIO.read(imageStream_logo);
-        ImageIcon icon = new ImageIcon(image_logo);
-        JLabel imgLabel = new JLabel(icon);
+        //logo
+        JLabel imgLabel = new JLabel(new ImageIcon(controller.getImageIconFromResources("resources/logo.png").getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH)));
         imgLabel.setBounds(sizes.getScreenWidth() / 2 - 75, 0, 150, 150);
-        Image imagelabel = icon.getImage().getScaledInstance(imgLabel.getWidth(), imgLabel.getHeight(), Image.SCALE_SMOOTH);
-        imgLabel.setIcon(new ImageIcon(imagelabel));
         backgroundLabel.add(imgLabel);
         panelDatabaseConnection.add(backgroundLabel);
         return panelDatabaseConnection;
@@ -339,8 +263,19 @@ public class PanelDatabaseConnection {
                 buttonConnect.setFont(font);
             }
         });
+        buttonConnect.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                buttonConnectClicked();
+            }
+        });
         System.out.println("Created connect button");
     }
+
+    /**
+     * On connect button click action
+     * @autor Marius
+     */
     private void buttonConnectClicked() {
         saveCredentials();
         initDatabaseConnection();
@@ -396,6 +331,65 @@ public class PanelDatabaseConnection {
             popupMessages.showErrorMessage(ex);
         } catch (ClassNotFoundException ex) {
             popupMessages.showErrorMessage(ex);
+        }
+    }
+
+    /**
+     * Loading user credentials or create directory for user credentials.
+     * @author Lorenz
+     */
+    private void loadUserCredentials() {
+        if (!directory.exists()) {
+            directory.mkdir();
+        } else {
+            List<UserCredentials> credentialsList = loadCredentials(filePathtext);
+            String[] options = new String[credentialsList.size() + 1];
+            options[0] = "Nein";
+            for (int i = 0; i < credentialsList.size(); i++) {
+                options[i + 1] = credentialsList.get(i).getspeichern();
+            }
+            int result = JOptionPane.showOptionDialog(null, "Möchten Sie gespeicherte Anmeldeinformationen laden?", "Bestätigen", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+            if (result >= 1) {
+                UserCredentials selectedCredentials = credentialsList.get(result - 1);
+                String hostnameload = selectedCredentials.getHostname();
+                String portnameload = selectedCredentials.getPortname();
+                String dbnameload = selectedCredentials.getDbname();
+                String usernameload = selectedCredentials.getUsername();
+                String passwordload = selectedCredentials.getPassword();
+                String selecteddbload = selectedCredentials.getSelectedDB();
+
+                textFieldHostname.setText(hostnameload);
+                textFieldPort.setText(portnameload);
+                textFieldDatabaseName.setText(dbnameload);
+                textFieldUsername.setText(usernameload);
+                textFieldPassword.setText(passwordload);
+
+                if (selecteddbload.toLowerCase().equals("mysql")) {
+                    selectedDB = selecteddbload;
+                    radioButtonMySql.setSelected(true);
+                    SetColor = colors.getSqlColor();
+                    buttonConnect.setBackground(SetColor);
+                } else if (selecteddbload.toLowerCase().equals("mariadb")) {
+                    selectedDB = selecteddbload;
+                    radioButtonMariaDB.setSelected(true);
+                    SetColor = colors.getMariaColor();
+                    buttonConnect.setBackground(SetColor);
+                } else if (selecteddbload.toLowerCase().equals("postgresql")) {
+                    selectedDB = selecteddbload;
+                    radioButtonPostgreSQL.setSelected(true);
+                    SetColor = colors.getPostColor();
+                    buttonConnect.setBackground(SetColor);
+                }
+               textFieldHostname.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, SetColor));
+                textFieldPort.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, SetColor));
+                textFieldDatabaseName.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, SetColor));
+                textFieldUsername.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, SetColor));
+                textFieldPassword.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, SetColor));
+                textFieldspeichern.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, SetColor));
+                System.out.println("User credentials loaded");
+            } else {
+                System.out.println("User credentials not loaded");
+            }
         }
     }
 }
