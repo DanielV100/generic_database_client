@@ -2,17 +2,35 @@ package view;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.List;
 
+/**
+ * Every UI-Component created in the program should use these helper-class. It provides every needed UI-Component.
+ * Through this, every component has the same default settings.
+ * @author Daniel, Marius
+ */
 public class UIHelpers {
     public UIHelpers() {
     }
-    //Frames can be created by calling this method
-    protected static JFrame createJFrame(JFrame frame, String frameTitle, int frameWidth, int frameHeight, LayoutManager frameLayout, boolean frameVisibility){
+
+    /**
+     * Method should be used for creating new JFrames
+     * @param frame
+     * @param frameTitle
+     * @param frameWidth
+     * @param frameHeight
+     * @param frameLayout
+     * @param frameVisibility
+     * @param defaultCloseOperation
+     * @param extendedState
+     * @return JFrame
+     */
+    protected static JFrame createJFrame(JFrame frame, String frameTitle, int frameWidth, int frameHeight, LayoutManager frameLayout, boolean frameVisibility, int defaultCloseOperation, int extendedState){
         frame = new JFrame(frameTitle);
         frame.setSize(frameWidth, frameHeight);
         frame.setLayout(frameLayout);
         frame.setVisible(frameVisibility);
+        frame.setDefaultCloseOperation(defaultCloseOperation);
+        frame.setExtendedState(extendedState);
         return frame;
     }
     // Checkboxes can be created by calling this method

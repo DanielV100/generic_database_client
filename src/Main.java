@@ -1,7 +1,6 @@
 import view.View;
 import java.io.IOException;
 
-
 /**
  * Here is just the start of the application (instantiation of view)  - no more or less!
  * @author Daniel
