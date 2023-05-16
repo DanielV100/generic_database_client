@@ -65,16 +65,11 @@ public class PanelDatabaseConnection {
         setupButton();
         loadUserCredentials();
         //initializing panel with the text fields and the button which later will be on the main frame
-        panelDatabaseConnection = UIHelpers.createJPanel(panelDatabaseConnection, sizes.getPanel_view_panelDatabaseConnection_panelX(), sizes.getPanel_view_panelDatabaseConnection_panelY(), sizes.getScreenWidth(), sizes.getScreenHeight(), null);
-        panelDatabaseConnection.setPreferredSize(sizes.getSize());
-        // Buttongroup: only one DB can be selected
-        panelDatabaseConnection_buttonGroupDB.add(radioButtonMySql);
-        panelDatabaseConnection_buttonGroupDB.add(radioButtonMariaDB);
-        panelDatabaseConnection_buttonGroupDB.add(radioButtonPostgreSQL);
+        panelDatabaseConnection = UIHelpers.createJPanel(panelDatabaseConnection, sizes.getPanel_view_panelDatabaseConnection_panelX(), sizes.getPanel_view_panelDatabaseConnection_panelY(), sizes.getScreenWidth(), sizes.getScreenHeight(), null, sizes.getSize());
+        //adding all components to panel
         panelDatabaseConnection.add(radioButtonMySql);
         panelDatabaseConnection.add(radioButtonMariaDB);
         panelDatabaseConnection.add(radioButtonPostgreSQL);
-        //panelDatabaseConnection.add(headingLabel);
         panelDatabaseConnection.add(textFieldHostname);
         panelDatabaseConnection.add(textFieldPort);
         panelDatabaseConnection.add(textFieldDatabaseName);
@@ -105,6 +100,10 @@ public class PanelDatabaseConnection {
         radioButtonMariaDB = uiHelpers.createJRadioButton(radioButtonMariaDB, ((sizes.getScreenWidth() / 2) - (sizes.getRadioButton_panelDatabaseConnection_radioButtonMariaDB_radioButtonX())), (sizes.getRadioButton_panelDatabaseConnection_radioButtonMariaDB_radioButtonY()), sizes.getRadioButton_panelDatabaseConnection_radioButtonMariaDB_radioButtonWidth(), sizes.getRadioButton_panelDatabaseConnection_radioButtonMariaDB_radioButtonHeight(), sizes.getRadioButton_panelDatabaseConnection_radioButtonMariaDB_radioButtonLabel());
         radioButtonPostgreSQL = uiHelpers.createJRadioButton(radioButtonPostgreSQL, ((sizes.getScreenWidth() / 2) - (sizes.getRadioButton_panelDatabaseConnection_radioButtonPostgreSQL_radioButtonX())), (sizes.getRadioButton_panelDatabaseConnection_radioButtonPostgreSQL_radioButtonY()), sizes.getRadioButton_panelDatabaseConnection_radioButtonPostgreSQL_radioButtonWidth(), sizes.getRadioButton_panelDatabaseConnection_radioButtonPostgreSQL_radioButtonHeight(), sizes.getRadioButton_panelDatabaseConnection_radioButtonPostgreSQL_radioButtonLabel());
         radioButtonSave = uiHelpers.createJRadioButton(radioButtonSave, ((sizes.getScreenWidth() / 2) - (sizes.getRadioButton_panelDatabaseConnection_radioButtonSave_radioButtonX())), (sizes.getRadioButton_panelDatabaseConnection_radioButtonSave_radioButtonY()), sizes.getRadioButton_panelDatabaseConnection_radioButtonSave_radioButtonWidth(), sizes.getRadioButton_panelDatabaseConnection_radioButtonSave_radioButtonHeight(), sizes.getRadioButton_panelDatabaseConnection_radioButtonSave_radioButtonLabel());
+        // Buttongroup: only one DB can be selected
+        panelDatabaseConnection_buttonGroupDB.add(radioButtonMySql);
+        panelDatabaseConnection_buttonGroupDB.add(radioButtonMariaDB);
+        panelDatabaseConnection_buttonGroupDB.add(radioButtonPostgreSQL);
         System.out.println("Created all radio buttons");
     }
 

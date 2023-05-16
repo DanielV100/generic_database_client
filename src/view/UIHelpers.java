@@ -76,10 +76,11 @@ public class UIHelpers {
         return label;
     }
     //JPanels can be created by calling this method - Panels should strictly be used as a container of components!
-    protected static JPanel createJPanel(JPanel panel, int panelX, int panelY, int panelWidth, int panelHeight, LayoutManager panelLayout){
+    protected static JPanel createJPanel(JPanel panel, int panelX, int panelY, int panelWidth, int panelHeight, LayoutManager panelLayout, Dimension prferredSize){
         panel = new JPanel();
         panel.setBounds(panelX, panelY, panelWidth, panelHeight);
         panel.setLayout(panelLayout);
+        panel.setPreferredSize(prferredSize);
         return panel;
     }
 
