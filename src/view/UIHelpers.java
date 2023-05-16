@@ -13,7 +13,7 @@ public class UIHelpers {
     }
 
     /**
-     * Method should be used for creating new JFrames
+     * Method should be used for creating new JFrames.
      * @param frame
      * @param frameTitle
      * @param frameWidth
@@ -22,7 +22,8 @@ public class UIHelpers {
      * @param frameVisibility
      * @param defaultCloseOperation
      * @param extendedState
-     * @return JFrame
+     * @return blank JFrame
+     * @author Daniel
      */
     protected static JFrame createJFrame(JFrame frame, String frameTitle, int frameWidth, int frameHeight, LayoutManager frameLayout, boolean frameVisibility, int defaultCloseOperation, int extendedState){
         frame = new JFrame(frameTitle);
