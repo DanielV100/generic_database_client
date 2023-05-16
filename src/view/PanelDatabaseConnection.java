@@ -440,7 +440,9 @@ public class PanelDatabaseConnection {
         JLabel backgroundLabel = new JLabel(backgroundIcon);
         backgroundLabel.setBounds(0, 0, panelDatabaseConnection.getWidth(), panelDatabaseConnection.getHeight());
         //backgroundLabel.setOpaque(true);
-        ImageIcon icon = new ImageIcon(ImageIO.read(new File("src/resources/logo.png")));
+        InputStream imageStream_logo = getClass().getResourceAsStream("/resources/logo.png");
+        Image image_logo = ImageIO.read(imageStream_logo);
+        ImageIcon icon = new ImageIcon(image_logo);
         JLabel imgLabel = new JLabel(icon);
         imgLabel.setBounds(sizes.getScreenWidth()/2-75, 0, 150, 150);
         Image imagelabel = icon.getImage().getScaledInstance(imgLabel.getWidth(), imgLabel.getHeight(), Image.SCALE_SMOOTH);
