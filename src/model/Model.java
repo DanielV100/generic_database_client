@@ -3,7 +3,7 @@ package model;
 import controller.DBConnection;
 import controller.PopupMessageController;
 import resources.Sizes;
-import view.PopupMessages;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
@@ -12,13 +12,14 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import static view.PanelDatabaseConnection.selectedDB;
 
+import static view.PanelDatabaseConnection.selectedDB;
 
 /**
  * This model class got methods in it for processing database-related things. It interacts via DBConnection controller class with the view.
+ *
+ * @author Daniel, Valentin
  * @see DBConnection
- * @author Daniel
  */
 public class Model {
     PopupMessageController popupMessageController = new PopupMessageController();
@@ -26,63 +27,88 @@ public class Model {
     Sizes sizes = new Sizes();
     String foreignKeys = "";
     String primaryKeys = "";
-    // In use for different SQL-Queries in PostgreSQL
-//    String selectedDBValue = PanelDatabaseConnection.selectedDB;
-    String databaseNameValue = DBConnection.databaseName;
-    //create connection to db
+
+    /**
+     * Method for connecting to database.
+     *
+     * @param connectionString (JDBC string)
+     * @param username         (as String)
+     * @param password         (as String)
+     * @return Database connection as type Connection
+     * @return Daniel
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
     public Connection connectToDB(String connectionString, String username, String password) throws SQLException, ClassNotFoundException {
-        if(connectionString.contains("postgresql")) {
+        if (connectionString.contains("postgresql")) {
+            //necessary for getting driver when running .jar
             Class.forName("org.postgresql.Driver");
         }
         return DriverManager.getConnection(connectionString, username, password);
     }
-    //getting all tables in db and return it as a list
+
+    /**
+     * Method for getting all tables in database.
+     * @param connection
+     * @return all table names from database in a string list
+     * @throws SQLException
+     * @author Daniel
+     */
     public List<String> getAllTablesFromDB(Connection connection) throws SQLException {
         List<String> allTables = new ArrayList<>();
         Statement databaseStatement = connection.createStatement();
         ResultSet resultSet;
-        if (selectedDB == "postgresql") {
+        if (connection.getMetaData().getURL().contains("postgresql")) {
+            //@author Valentin
             resultSet = databaseStatement.executeQuery("SELECT tablename FROM pg_catalog.pg_tables WHERE schemaname='public';");
-
         } else {
-            resultSet = databaseStatement.executeQuery("Show tables");
+            resultSet = databaseStatement.executeQuery("SHOW tables");
         }
         while (resultSet.next()) {
             allTables.add(resultSet.getString(1));
         }
         return allTables;
     }
+
+    /**
+     * Method for getting all columns from a particular table.
+     * @param connection (as type Connection)
+     * @param table (table name as String)
+     * @return all columns from a table as a list
+     * @throws SQLException
+     */
     public List<String> getColumnsFromTable(Connection connection, String table) throws SQLException {
         List<String> allColumns = new ArrayList<>();
         Statement databaseStatement = connection.createStatement();
         ResultSet resultSet = databaseStatement.executeQuery(
-                "Select * from " + table
+                "SELECT * FROM " + table
         );
         ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
-        for(int i = 1; i <= resultSetMetaData.getColumnCount(); i++) {
+        for (int i = 1; i <= resultSetMetaData.getColumnCount(); i++) {
             allColumns.add(resultSetMetaData.getColumnName(i));
         }
         return allColumns;
     }
-    public String[][] getRowsFromTable(Connection connection, String[] columns, String table) throws SQLException {
+
+    public String[][] getRowsFromTable(Connection connection, String table) throws SQLException {
         //counts how many rows are in the table
         int countRows = 0;
+        List<String> columns = getColumnsFromTable(connection, table);
         List<String> allRows = new ArrayList<>();
         Statement databaseStatement = connection.createStatement();
         ResultSet resultSet = databaseStatement.executeQuery(
                 "SELECT * from " + table
         );
         while (resultSet.next()) {
-            for(int i = 1; i <= columns.length; i++) {
+            for (int i = 1; i <= columns.size(); i++) {
                 allRows.add(resultSet.getString(i));
             }
             countRows++;
         }
-        System.out.println(countRows);
-        String[][] test = new String[countRows + 1][columns.length + 1];
-        for(int y = 0; y < countRows; y++) {
-            for(int x = 0; x < columns.length; x++){
-                test[y][x] = allRows.get(x + (y*columns.length));
+        String[][] test = new String[countRows + 1][columns.size() + 1];
+        for (int y = 0; y < countRows; y++) {
+            for (int x = 0; x < columns.size(); x++) {
+                test[y][x] = allRows.get(x + (y * columns.size()));
             }
         }
         return test;
@@ -91,11 +117,11 @@ public class Model {
     public void deleteRows(Connection connection, String table, List<String> columns, List<String> rows) throws SQLException {
         String deleteQuery = "DELETE FROM " + table + " WHERE ";
         System.out.println("Test");
-        for(int i = 0; i < columns.size(); i++){
+        for (int i = 0; i < columns.size(); i++) {
 
-            if(i == columns.size() - 1 ){
+            if (i == columns.size() - 1) {
                 deleteQuery += columns.get(i) + " = ? ;";
-                System.out.println("Delete Quary: "+ deleteQuery);
+                System.out.println("Delete Quary: " + deleteQuery);
             } else {
                 deleteQuery += columns.get(i) + " = ?" + " AND ";
             }
@@ -105,17 +131,18 @@ public class Model {
         Statement databaseStatement = connection.createStatement();
         ResultSet resultSet = databaseStatement.executeQuery("SELECT * FROM " + table);
         ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
-        for (int x = 1; x <= rows.size(); x++){
-            if(resultSetMetaData.getColumnTypeName(x).contains("int") || resultSetMetaData.getColumnTypeName(x).contains("serial")) {
-                st.setInt(x, Integer.parseInt(rows.get(x-1)));
+        for (int x = 1; x <= rows.size(); x++) {
+            if (resultSetMetaData.getColumnTypeName(x).contains("int") || resultSetMetaData.getColumnTypeName(x).contains("serial")) {
+                st.setInt(x, Integer.parseInt(rows.get(x - 1)));
             } else {
-                st.setString(x, rows.get(x-1));
+                st.setString(x, rows.get(x - 1));
             }
         }
         System.out.println("Fertiger String: " + st);
         st.execute();
         popupMessageController.showSuccessMessage("Successfully deleted row");
     }
+
     public void addRow(Connection connection, String table) throws SQLException {
         String addQuery = "INSERT INTO " + table + "(";
         List<String> columns = getAllWriteableColumns(connection, table);
@@ -123,26 +150,26 @@ public class Model {
         Statement databaseStatement = connection.createStatement();
         ResultSet resultSet = databaseStatement.executeQuery("SELECT * FROM " + table);
         ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
-        if(input != null) {
-            for(int i = 0; i < columns.size(); i++) {
-                if(i == columns.size() - 1) {
+        if (input != null) {
+            for (int i = 0; i < columns.size(); i++) {
+                if (i == columns.size() - 1) {
                     addQuery += columns.get(i) + ") VALUES(";
                 } else {
                     addQuery += columns.get(i) + ", ";
                 }
             }
-            for(int x = 0; x < columns.size(); x++) {
-                if(x == columns.size() - 1) {
-                    if(selectedDB.equals("postgresql")) {
-                        addQuery += "?::" + resultSetMetaData.getColumnTypeName(x+1) + ");";
+            for (int x = 0; x < columns.size(); x++) {
+                if (x == columns.size() - 1) {
+                    if (selectedDB.equals("postgresql")) {
+                        addQuery += "?::" + resultSetMetaData.getColumnTypeName(x + 1) + ");";
 
                     } else {
                         addQuery += "?" + ");";
                     }
 
                 } else {
-                    if(selectedDB.equals("postgresql")) {
-                        addQuery += "?::" + resultSetMetaData.getColumnTypeName(x+1) + ", ";
+                    if (selectedDB.equals("postgresql")) {
+                        addQuery += "?::" + resultSetMetaData.getColumnTypeName(x + 1) + ", ";
 
                     } else {
                         addQuery += "?" + ", ";
@@ -152,11 +179,11 @@ public class Model {
             }
             PreparedStatement preparedStatement = connection.prepareStatement(addQuery);
 
-            for(int y = 1; y <= input.length; y++) {
-                if(input[y-1].equals("") && selectedDB.equals("postgresql")) {
+            for (int y = 1; y <= input.length; y++) {
+                if (input[y - 1].equals("") && selectedDB.equals("postgresql")) {
                     preparedStatement.setNull(y, java.sql.Types.NULL);
                 } else {
-                    preparedStatement.setObject(y, input[y-1]);
+                    preparedStatement.setObject(y, input[y - 1]);
                 }
 
             }
@@ -166,13 +193,14 @@ public class Model {
         }
 
     }
+
     public void editRow(Connection connection, String table, List<String> columns, List<String> rows) throws SQLException {
         //if a column isn't writable it will shown anyways - but its not editable - this list is needed to compare columns with the writable columns to find out which is readonly
         List<String> writableColumns = getAllWriteableColumns(connection, table);
         String editQuery = "UPDATE " + table + " SET ";
         String[] input = getInputDialogForEditingRow(connection, table, columns, rows, writableColumns);
         for (int i = 0; i < columns.size(); i++) {
-            if(i == columns.size() - 1) {
+            if (i == columns.size() - 1) {
                 editQuery += columns.get(i) + "=" + "?" + " WHERE ";
             } else {
                 editQuery += columns.get(i) + "=" + "?" + ",";
@@ -180,15 +208,15 @@ public class Model {
         }
         for (int x = 0; x < columns.size(); x++) {
             //check if there is a row wich is empty, if so don't add it t the query
-            if(!(rows.get(x).isEmpty())) {
-                if(x == columns.size() - 1) {
+            if (!(rows.get(x).isEmpty())) {
+                if (x == columns.size() - 1) {
                     editQuery += columns.get(x) + "=" + "?" + ";";
                 } else {
                     editQuery += columns.get(x) + "=" + "?" + " AND ";
                 }
             }
         }
-        if(editQuery.endsWith(" AND ")) {
+        if (editQuery.endsWith(" AND ")) {
             editQuery = editQuery.replaceAll("AND $", " ");
             System.out.println("Edit query: " + editQuery);
         }
@@ -200,10 +228,10 @@ public class Model {
         ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
 
         for (int y = 1; y <= input.length; y++) {
-            if(resultSetMetaData.getColumnTypeName(y).contains("int") || resultSetMetaData.getColumnTypeName(y).contains("serial")) {
-                preparedStatement.setInt(y, Integer.parseInt(input[y-1]));
+            if (resultSetMetaData.getColumnTypeName(y).contains("int") || resultSetMetaData.getColumnTypeName(y).contains("serial")) {
+                preparedStatement.setInt(y, Integer.parseInt(input[y - 1]));
             } else {
-                preparedStatement.setString(y, input[y-1]);
+                preparedStatement.setString(y, input[y - 1]);
             }
         }
         //remove empty rows from row
@@ -213,8 +241,8 @@ public class Model {
             }
         }
         int test = 0;
-        for (int xy = input.length+1; xy <= input.length + rows.size(); xy++) {
-            if(resultSetMetaData.getColumnTypeName(test+1).contains("int") || resultSetMetaData.getColumnTypeName(test+1).contains("serial")) {
+        for (int xy = input.length + 1; xy <= input.length + rows.size(); xy++) {
+            if (resultSetMetaData.getColumnTypeName(test + 1).contains("int") || resultSetMetaData.getColumnTypeName(test + 1).contains("serial")) {
                 preparedStatement.setInt(xy, Integer.parseInt(rows.get(test)));
             } else {
                 preparedStatement.setString(xy, rows.get(test));
@@ -229,8 +257,10 @@ public class Model {
         popupMessageController.showSuccessMessage("Successfully edited row");
 
     }
+
     private List<String> columnsType = new ArrayList<>();
     private List<Integer> columnsTypeLength = new ArrayList<>();
+
     //needed for adding row
     private List<String> getAllWriteableColumns(Connection connection, String table) throws SQLException {
         List<String> columnsWriteable = new ArrayList<>();
@@ -240,7 +270,7 @@ public class Model {
         ResultSet resultSet = databaseStatement.executeQuery("SELECT * FROM " + table);
         ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
         for (int i = 1; i <= resultSetMetaData.getColumnCount(); i++) {
-            if(!(resultSetMetaData.isReadOnly(i))) {
+            if (!(resultSetMetaData.isReadOnly(i))) {
                 columnsWriteable.add(resultSetMetaData.getColumnName(i));
                 columnsType.add(resultSetMetaData.getColumnTypeName(i));
                 columnsTypeLength.add(resultSetMetaData.getColumnDisplaySize(i));
@@ -250,6 +280,7 @@ public class Model {
         this.columnsTypeLength = columnsTypeLength;
         return columnsWriteable;
     }
+
     //needed for adding row
     private String[] getInputDialogForCreatingNewRow(Connection connection, String table, List<String> columns) throws SQLException {
         JTextField[] inputFields = new JTextField[columns.size()];
@@ -259,10 +290,10 @@ public class Model {
         List<String> rows = new ArrayList<>();
         List<String> writableColumns = new ArrayList<>();
         JOptionPane pane = new JOptionPane();
-        pane.setBounds(sizes.getScreenWidth()/2, sizes.getScreenHeight()/2, sizes.getScreenWidth()/2,sizes.getScreenHeight()/2);
+        pane.setBounds(sizes.getScreenWidth() / 2, sizes.getScreenHeight() / 2, sizes.getScreenWidth() / 2, sizes.getScreenHeight() / 2);
         int option = pane.showConfirmDialog(null, createContainerForJOptionPane(connection, table, columns, labels, inputFields, columnsType, columnsTypeLength, false, rows, writableColumns), "Add rows", JOptionPane.OK_CANCEL_OPTION);
-        if(option == JOptionPane.OK_OPTION) {
-            for(int x = 0; x < columns.size(); x++) {
+        if (option == JOptionPane.OK_OPTION) {
+            for (int x = 0; x < columns.size(); x++) {
                 input[x] = inputFields[x].getText();
             }
         } else {
@@ -270,16 +301,17 @@ public class Model {
         }
         return input;
     }
+
     private String[] getInputDialogForEditingRow(Connection connection, String table, List<String> columns, List<String> rows, List<String> writableColumns) throws SQLException {
         String input[] = new String[columns.size()];
         JPanel container = new JPanel(new GridLayout(columns.size(), 2));
         JLabel[] labelForColumns = new JLabel[columns.size()];
         JTextField[] inputFields = new JTextField[columns.size()];
         JOptionPane pane = new JOptionPane();
-        pane.setBounds(sizes.getScreenWidth()/2, sizes.getScreenHeight()/2, sizes.getScreenWidth()/2,sizes.getScreenHeight()/2);
+        pane.setBounds(sizes.getScreenWidth() / 2, sizes.getScreenHeight() / 2, sizes.getScreenWidth() / 2, sizes.getScreenHeight() / 2);
         int option = pane.showConfirmDialog(null, createContainerForJOptionPane(connection, table, columns, labelForColumns, inputFields, columnsType, columnsTypeLength, true, rows, writableColumns), "Edit rows", JOptionPane.OK_CANCEL_OPTION);
-        if(option == JOptionPane.OK_OPTION) {
-            for(int x = 0; x < columns.size(); x++) {
+        if (option == JOptionPane.OK_OPTION) {
+            for (int x = 0; x < columns.size(); x++) {
                 input[x] = inputFields[x].getText();
             }
         } else {
@@ -287,6 +319,7 @@ public class Model {
         }
         return input;
     }
+
     public void addImportedRows(Connection connection, String table) throws SQLException, IOException {
         System.out.println(table);
         //Insert into table(n, x, y...) Values(
@@ -296,17 +329,17 @@ public class Model {
         String columns = "";
         List<List<String>> data = importFilesGetter.getColumnsAndRowsFromCSV();
         for (int i = 0; i < data.get(0).size(); i++) {
-            if(i == data.get(0).size() - 1) {
-                addQueryMeta += data.get(0).get(i) +") VALUES(";
+            if (i == data.get(0).size() - 1) {
+                addQueryMeta += data.get(0).get(i) + ") VALUES(";
             } else {
-                addQueryMeta +=data.get(0).get(i) + ", ";
+                addQueryMeta += data.get(0).get(i) + ", ";
             }
             columns += data.get(0).get(i) + ";";
         }
         //x --> rows; y --> columns in rows
-        for(int x = 1; x < data.size(); x++) {
-            for(int y = 0; y < data.get(x).size(); y++) {
-                if(y == data.get(x).size() - 1) {
+        for (int x = 1; x < data.size(); x++) {
+            for (int y = 0; y < data.get(x).size(); y++) {
+                if (y == data.get(x).size() - 1) {
                     addQueryValues += "?" + ");";
                 } else {
                     addQueryValues += "?" + ", ";
@@ -317,8 +350,8 @@ public class Model {
             addQueryValues = addQueryValues.replace("\uFEFF", "");
             System.out.println("Pre Prepared statement: " + addQueryMeta + addQueryValues);
             PreparedStatement preparedStatement = connection.prepareStatement(addQueryMeta + addQueryValues);
-            for(int n = 1; n <= data.get(x).size(); n++) {
-                preparedStatement.setString(n, data.get(x).get(n-1));
+            for (int n = 1; n <= data.get(x).size(); n++) {
+                preparedStatement.setString(n, data.get(x).get(n - 1));
             }
             System.out.println("Prepared statement: " + preparedStatement);
             preparedStatement.executeUpdate();
@@ -326,6 +359,7 @@ public class Model {
         }
 
     }
+
     private JPanel createContainerForJOptionPane(Connection connection, String table, List<String> columns, JLabel[] labelForColumns, JTextField[] inputFields, List<String> columnsType, List<Integer> columnsTypeLength, Boolean isEdit, List<String> rows, List<String> writableColumns) throws SQLException {
         getAllKeys(connection);
         String numbers = "123456789";
@@ -337,9 +371,9 @@ public class Model {
             labelForColumns[i] = new JLabel(columns.get(i) + " (" + columnsType.get(i) + ", " + columnsTypeLength.get(i) + ")");
             container.add(labelForColumns[i]);
             //on the right-handed side: textfields
-            if(isEdit) {
+            if (isEdit) {
                 inputFields[i] = new JTextField(rows.get(i));
-                if((!(writableColumns.contains(columns.get(i))))  || primaryKeys.contains(table.toLowerCase() + "." + columns.get(i))) {
+                if ((!(writableColumns.contains(columns.get(i)))) || primaryKeys.contains(table.toLowerCase() + "." + columns.get(i))) {
                     inputFields[i].setBackground(Color.YELLOW);
                     inputFields[i].setToolTipText("This field is a primary key and can't be changed because it's used in other tables.");
                 } else if (foreignKeys.contains(table.toLowerCase() + "." + columns.get(i))) {
@@ -355,37 +389,38 @@ public class Model {
             inputFields[i].addKeyListener(new KeyAdapter() {
                 @Override
                 public void keyPressed(KeyEvent e) {
-                        if (columnsType.get(index) == "DATE" &&(alphabet.contains(String.valueOf(e.getKeyChar())) || alphabet.toLowerCase().contains(String.valueOf(e.getKeyChar())) || specialChars.contains(String.valueOf(e.getKeyChar())))) {
-                            JOptionPane.showMessageDialog(null, "This value has to be a " + columnsType.get(index) + " and you typed " + e.getKeyChar());
-                            inputFields[index].setText("");
-                        }
-                        if(columnsTypeLength.get(index) < inputFields[index].getText().length()) {
-                            JOptionPane.showMessageDialog(null, "Input to long. Maximum size: " + columnsTypeLength.get(index));
-                            inputFields[index].setText("");
-                        }
-                        if(columnsType.get(index) == "INT" && (alphabet.contains(String.valueOf(e.getKeyChar())) || specialChars.contains(String.valueOf(e.getKeyChar())) ||alphabet.toLowerCase().contains(String.valueOf(e.getKeyChar())))) {
-                            JOptionPane.showMessageDialog(null, "This value has to be a " + columnsType.get(index) + " and you typed " + e.getKeyChar());
-                            inputFields[index].setText("");
-                        }
-                        if(columnsType.get(index) == "TEXT" && (numbers.contains(String.valueOf(e.getKeyChar())) || specialChars.contains(String.valueOf(e.getKeyChar())))) {
-                            JOptionPane.showMessageDialog(null, "This value has to be a " + columnsType.get(index) + " and you typed " + e.getKeyChar());
-                            inputFields[index].setText("");
-                        }
+                    if (columnsType.get(index) == "DATE" && (alphabet.contains(String.valueOf(e.getKeyChar())) || alphabet.toLowerCase().contains(String.valueOf(e.getKeyChar())) || specialChars.contains(String.valueOf(e.getKeyChar())))) {
+                        JOptionPane.showMessageDialog(null, "This value has to be a " + columnsType.get(index) + " and you typed " + e.getKeyChar());
+                        inputFields[index].setText("");
                     }
+                    if (columnsTypeLength.get(index) < inputFields[index].getText().length()) {
+                        JOptionPane.showMessageDialog(null, "Input to long. Maximum size: " + columnsTypeLength.get(index));
+                        inputFields[index].setText("");
+                    }
+                    if (columnsType.get(index) == "INT" && (alphabet.contains(String.valueOf(e.getKeyChar())) || specialChars.contains(String.valueOf(e.getKeyChar())) || alphabet.toLowerCase().contains(String.valueOf(e.getKeyChar())))) {
+                        JOptionPane.showMessageDialog(null, "This value has to be a " + columnsType.get(index) + " and you typed " + e.getKeyChar());
+                        inputFields[index].setText("");
+                    }
+                    if (columnsType.get(index) == "TEXT" && (numbers.contains(String.valueOf(e.getKeyChar())) || specialChars.contains(String.valueOf(e.getKeyChar())))) {
+                        JOptionPane.showMessageDialog(null, "This value has to be a " + columnsType.get(index) + " and you typed " + e.getKeyChar());
+                        inputFields[index].setText("");
+                    }
+                }
             });
             container.add(inputFields[i]);
         }
         return container;
     }
+
     public void getAllKeys(Connection connection) throws SQLException {
         String foreignKey = "";
         String primaryKeys = "";
         DatabaseMetaData databaseMetaData = connection.getMetaData();
         ResultSet tableResultSet = databaseMetaData.getTables(null, null, "%", new String[]{"TABLE"});
-        while(tableResultSet.next()) {
+        while (tableResultSet.next()) {
             String tableName = tableResultSet.getString("TABLE_NAME");
             ResultSet keyResultSet = databaseMetaData.getImportedKeys(null, null, tableName);
-            while(keyResultSet.next()) {
+            while (keyResultSet.next()) {
                 foreignKey += keyResultSet.getString("FKTABLE_NAME") + "." + keyResultSet.getString("FKCOLUMN_NAME") + " ";
                 primaryKeys += keyResultSet.getString("PKTABLE_NAME") + "." + keyResultSet.getString("PKCOLUMN_NAME") + " ";
             }
@@ -395,19 +430,21 @@ public class Model {
         System.out.println(primaryKeys);
         System.out.println(foreignKey);
     }
+
     public void clearTable(Connection connection, String table) throws SQLException {
         String deleteQuery = "DELETE FROM " + table;
         PreparedStatement st = connection.prepareStatement(deleteQuery);
         st.executeUpdate();
         popupMessageController.showSuccessMessage("Successfully cleared table");
     }
+
     public String getDatatypesFromDB(Connection connection, String table) throws SQLException {
         String datatypesFromDB = "";
         Statement databaseStatement = connection.createStatement();
         ResultSet resultSet = databaseStatement.executeQuery("SELECT * FROM " + table);
         ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
         for (int i = 1; i <= resultSetMetaData.getColumnCount(); i++) {
-            if(!(resultSetMetaData.isReadOnly(i))) {
+            if (!(resultSetMetaData.isReadOnly(i))) {
                 datatypesFromDB += resultSetMetaData.getColumnName(i) + ": " + resultSetMetaData.getColumnTypeName(i) + "(" + resultSetMetaData.getColumnDisplaySize(i) + ")" + "\n";
             }
         }

@@ -9,9 +9,21 @@ import view.PopupMessages;
  */
 public class PopupMessageController {
     PopupMessages popupMessages = new PopupMessages();
+
+    /**
+     * @see PopupMessages
+     * @param ex
+     * @author Daniel
+     */
     public void showErrorMessage(Exception ex) {
         popupMessages.showErrorMessage(ex);
     }
+
+    /**
+     * @see PopupMessages
+     * @param message
+     * @author Daniel
+     */
     public void showSuccessMessage(String message) {
         popupMessages.showSuccessMessage(message);
     }

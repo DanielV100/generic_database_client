@@ -1,5 +1,6 @@
 package view;
 import controller.DBConnection;
+import controller.PopupMessageController;
 import resources.Sizes;
 
 import javax.swing.*;
@@ -10,7 +11,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public class PanelTableSelection {
-    PopupMessages popupMessages = new PopupMessages();
+    PopupMessageController popupMessageController = new PopupMessageController();
     UIHelpers uiHelpers = new UIHelpers();
     DBConnection dbConnection = new DBConnection();
     PanelTableView panelTableView = new PanelTableView();
@@ -39,7 +40,7 @@ public class PanelTableSelection {
                     JScrollPane scrollPaneWithTable = panelTableView.PanelTableView(connection, jlistTableSelection.getSelectedIndex(), selectedDB);
                     panelTableSelection.add(scrollPaneWithTable);
                 } catch (SQLException ex) {
-                    popupMessages.showErrorMessage(ex);
+                    popupMessageController.showErrorMessage(ex);
                 }
             }
         });

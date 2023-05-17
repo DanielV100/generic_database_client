@@ -48,8 +48,8 @@ public class DBConnection {
     public String[] getColumnsFromTable (Connection connection, int tableIndex) throws SQLException {
         return model.getColumnsFromTable(connection, model.getAllTablesFromDB(connection).get(tableIndex)).toArray(new String[0]);
     }
-    public String[][] getRowsFromTable(Connection connection, String[] columns, int tableIndex) throws SQLException {
-        return model.getRowsFromTable(connection, columns, model.getAllTablesFromDB(connection).get(tableIndex));
+    public String[][] getRowsFromTable(Connection connection, int tableIndex) throws SQLException {
+        return model.getRowsFromTable(connection, model.getAllTablesFromDB(connection).get(tableIndex));
     }
     public void deleteRow(Connection connection, String table, List<String> columns, List<String> rows) throws SQLException {
         model.deleteRows(connection, table, columns, rows);

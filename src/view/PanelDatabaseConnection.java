@@ -2,6 +2,7 @@ package view;
 
 import controller.Controller;
 import controller.DBConnection;
+import controller.PopupMessageController;
 import resources.Colors;
 import resources.Sizes;
 import javax.swing.*;
@@ -13,14 +14,14 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
-import static view.CredentialManager.loadCredentials;
+
 
 /**
  * Creating components for the start-screen and initializing the frame for the table view.
  * @author Daniel, Lorenz, Luca, Valentin, Marius
  */
 public class PanelDatabaseConnection {
-    PopupMessages popupMessages = new PopupMessages();
+    PopupMessageController popupMessageController = new PopupMessageController();
     DBConnection dbConnection = new DBConnection();
     Controller controller = new Controller();
     Sizes sizes = new Sizes();
@@ -49,6 +50,7 @@ public class PanelDatabaseConnection {
     int result = 0;
     Colors colors = new Colors();
     Color SetColor = colors.getStandardColor();
+    CredentialManager credentialManager = new CredentialManager();
 
     PanelTableSelection panelTableSelection = new PanelTableSelection();
 
@@ -297,7 +299,7 @@ public class PanelDatabaseConnection {
                 password = textFieldPassword.getText();
             }
             UserCredentials credentials = new UserCredentials(hostname, portname, dbname, username, password, selecteddb, save);
-            CredentialManager.saveCredentials(credentials, filePathtext);
+            credentialManager.saveCredentials(credentials, filePathtext);
         }
         System.out.println("Credentials saved");
     }
@@ -309,7 +311,7 @@ public class PanelDatabaseConnection {
     private void initDatabaseConnection() {
         try {
             Connection connection = dbConnection.initDBConnection(textFieldHostname.getText(), textFieldPort.getText(), textFieldDatabaseName.getText(), textFieldUsername.getText(), textFieldPassword.getText());
-            popupMessages.showSuccessMessage("Successfully connected to database server");
+            popupMessageController.showSuccessMessage("Successfully connected to database server");
             System.out.println("Connected to database");
             frameTableView.add(panelTableSelection.PanelTableSelection(connection, selectedDB));
             frameTableView.setVisible(true);
@@ -321,14 +323,14 @@ public class PanelDatabaseConnection {
                         System.out.println("DB connection closed");
                         connection.close();
                     } catch (SQLException ex) {
-                        popupMessages.showErrorMessage(ex);
+                        popupMessageController.showErrorMessage(ex);
                     }
                 }
             });
         } catch (SQLException ex) {
-            popupMessages.showErrorMessage(ex);
+            popupMessageController.showErrorMessage(ex);
         } catch (ClassNotFoundException ex) {
-            popupMessages.showErrorMessage(ex);
+            popupMessageController.showErrorMessage(ex);
         }
     }
 
@@ -340,7 +342,7 @@ public class PanelDatabaseConnection {
         if (!directory.exists()) {
             directory.mkdir();
         } else {
-            List<UserCredentials> credentialsList = loadCredentials(filePathtext);
+            List<UserCredentials> credentialsList = credentialManager.loadCredentials(filePathtext);
             String[] options = new String[credentialsList.size() + 1];
             options[0] = "Nein";
             for (int i = 0; i < credentialsList.size(); i++) {

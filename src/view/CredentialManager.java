@@ -1,4 +1,6 @@
 package view;
+import controller.PopupMessageController;
+
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -8,18 +10,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CredentialManager {
-    static PopupMessages popupMessages = new PopupMessages();
+    PopupMessageController popupMessageController = new PopupMessageController();
 
-        public static void saveCredentials(UserCredentials credentials, String filePath) {
+        public void saveCredentials(UserCredentials credentials, String filePath) {
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true))) {
                 String line = credentials.getHostname() + "," + credentials.getPortname() + "," + credentials.getDbname() + "," + credentials.getUsername() + "," + credentials.getPassword() + "," + credentials.getSelectedDB()+ ","+ credentials.getspeichern()+"\n";
                 writer.write(line);
                 writer.newLine(); // Eine neue Zeile hinzufügen, um den nächsten Eintrag von dem vorherigen zu trennen
             } catch (IOException e) {
-                popupMessages.showErrorMessage(e);
+                popupMessageController.showErrorMessage(e);
             }
         }
-    public static List<UserCredentials> loadCredentials(String filePath) {
+    public List<UserCredentials> loadCredentials(String filePath) {
         List<UserCredentials> credentialsList = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line = reader.readLine();
@@ -42,7 +44,7 @@ public class CredentialManager {
                 line = reader.readLine();
             }
         } catch (IOException e) {
-            popupMessages.showErrorMessage(e);
+            popupMessageController.showErrorMessage(e);
         }
         return credentialsList;
     }

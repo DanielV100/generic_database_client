@@ -1,6 +1,7 @@
 package view;
 
 import controller.DBConnection;
+import controller.PopupMessageController;
 import model.CSVExporter;
 import resources.Sizes;
 
@@ -29,18 +30,17 @@ public class PanelTableView {
     JMenuItem menuItemClearTable;
     JMenuItem menuItemExportToCSV;
     JMenuItem menuItemShowDBTypes;
-    PopupMessages popupMessages = new PopupMessages();
+    PopupMessageController popupMessageController = new PopupMessageController();
     CSVExporter csvExporter = new CSVExporter();
 
     public JScrollPane PanelTableView(Connection connection, int index, String selectedDB) throws SQLException {
         sizes.init();
 
 
-        String[] columns = dbConnection.getColumnsFromTable(connection, index);
         //Table height is extremly high --> show all data
         //tableFromDB = uiHelpers.createJTable(tableFromDB, columns, dbConnection.getRowsFromTable(connection, columns, index), sizes.getTable_panelTableView_tableFromDB_tableX(), sizes.getTable_panelTableView_tableFromDB_tableY(), sizes.getScreenWidth()-sizes.getJlist_panelTableSelection_jlistTableSelection_jlistWidth(), sizes.getScreenHeight() + 1000);
        //makes cells non editable
-        DefaultTableModel model = new DefaultTableModel(dbConnection.getRowsFromTable(connection, columns, index), columns) {
+        DefaultTableModel model = new DefaultTableModel(dbConnection.getRowsFromTable(connection, index), dbConnection.getColumnsFromTable(connection, index)) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false; //make the first column non-editable
@@ -121,7 +121,7 @@ public class PanelTableView {
                             try {
                                 dbConnection.editRow(connection,dbConnection.getAllTablesFromDB(connection)[index], columns, rows);
                             } catch (SQLException ex) {
-                                popupMessages.showErrorMessage(ex);
+                                popupMessageController.showErrorMessage(ex);
                             } catch (NullPointerException nullPointerException) {
                                 System.out.println(nullPointerException);
                             }
@@ -153,7 +153,7 @@ public class PanelTableView {
                             try {
                                 dbConnection.deleteRow(connection, dbConnection.getAllTablesFromDB(connection)[index], columns, rows);
                             } catch (SQLException ex) {
-                                popupMessages.showErrorMessage(ex);
+                                popupMessageController.showErrorMessage(ex);
                             }
                         }
                     });
@@ -166,7 +166,7 @@ public class PanelTableView {
                             try {
                                 dbConnection.addRow(connection, dbConnection.getAllTablesFromDB(connection)[index]);
                             } catch (SQLException ex) {
-                                popupMessages.showErrorMessage(ex);
+                                popupMessageController.showErrorMessage(ex);
                             }
                         }
                     });
@@ -185,12 +185,12 @@ public class PanelTableView {
                                 int option = JOptionPane.showConfirmDialog(null, "Has your CSV the correct syntax? In first line:\n" + csvColumnTemplate + "\nIn lines below the data for every cell with ';' separated?");
                                 if (option == JOptionPane.OK_OPTION) {
                                     dbConnection.addImportedRows(connection, dbConnection.getAllTablesFromDB(connection)[index]);
-                                    popupMessages.showSuccessMessage("Successfully imported CSV");
+                                    popupMessageController.showSuccessMessage("Successfully imported CSV");
                                 }
                             } catch (SQLException ex) {
-                                popupMessages.showErrorMessage(ex);
+                                popupMessageController.showErrorMessage(ex);
                             } catch (IOException ex) {
-                                popupMessages.showErrorMessage(ex);
+                                popupMessageController.showErrorMessage(ex);
                             }
                         }
                     });
@@ -205,7 +205,7 @@ public class PanelTableView {
                                 try {
                                     dbConnection.clearTable(connection,  dbConnection.getAllTablesFromDB(connection)[index]);
                                 } catch (SQLException ex) {
-                                    popupMessages.showErrorMessage(ex);
+                                    popupMessageController.showErrorMessage(ex);
                                 }
                             }
                         }
@@ -217,9 +217,9 @@ public class PanelTableView {
                             try {
                                 JTable test = (JTable) e.getSource();
                                 CSVExporter.exportToCSV(test);
-                                popupMessages.showSuccessMessage("Successfully exported table");
+                                popupMessageController.showSuccessMessage("Successfully exported table");
                             } catch (IOException ex) {
-                                popupMessages.showErrorMessage(ex);
+                                popupMessageController.showErrorMessage(ex);
                             }
                         }
                     });
@@ -232,7 +232,7 @@ public class PanelTableView {
                             try {
                                 JOptionPane.showMessageDialog(null, dbConnection.getDatatypesFromDB(connection,  dbConnection.getAllTablesFromDB(connection)[index]));
                             } catch (SQLException ex) {
-                                popupMessages.showErrorMessage(ex);
+                                popupMessageController.showErrorMessage(ex);
                             }
                         }
                     });
