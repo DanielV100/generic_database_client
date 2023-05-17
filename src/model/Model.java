@@ -1,26 +1,27 @@
 package model;
 
 import controller.DBConnection;
+import controller.PopupMessageController;
 import resources.Sizes;
 import view.PopupMessages;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-
-import view.PanelDatabaseConnection;
-import controller.DBConnection;
 import static view.PanelDatabaseConnection.selectedDB;
 
+
+/**
+ * This model class got methods in it for processing database-related things. It interacts via DBConnection controller class with the view.
+ * @see DBConnection
+ * @author Daniel
+ */
 public class Model {
-    PopupMessages popupMessages = new PopupMessages();
+    PopupMessageController popupMessageController = new PopupMessageController();
     ImportFilesGetter importFilesGetter = new ImportFilesGetter();
     Sizes sizes = new Sizes();
     String foreignKeys = "";
@@ -113,7 +114,7 @@ public class Model {
         }
         System.out.println("Fertiger String: " + st);
         st.execute();
-        popupMessages.showSuccessMessage("Successfully deleted row");
+        popupMessageController.showSuccessMessage("Successfully deleted row");
     }
     public void addRow(Connection connection, String table) throws SQLException {
         String addQuery = "INSERT INTO " + table + "(";
@@ -161,7 +162,7 @@ public class Model {
             }
             System.out.println(preparedStatement);
             preparedStatement.executeUpdate();
-            popupMessages.showSuccessMessage("Successfully added row");
+            popupMessageController.showSuccessMessage("Successfully added row");
         }
 
     }
@@ -225,7 +226,7 @@ public class Model {
         //preparedStatement.setString(input.length+1, rows.get(0));
         System.out.println(preparedStatement);
         preparedStatement.executeUpdate();
-        popupMessages.showSuccessMessage("Successfully edited row");
+        popupMessageController.showSuccessMessage("Successfully edited row");
 
     }
     private List<String> columnsType = new ArrayList<>();
@@ -398,7 +399,7 @@ public class Model {
         String deleteQuery = "DELETE FROM " + table;
         PreparedStatement st = connection.prepareStatement(deleteQuery);
         st.executeUpdate();
-        popupMessages.showSuccessMessage("Successfully cleared table");
+        popupMessageController.showSuccessMessage("Successfully cleared table");
     }
     public String getDatatypesFromDB(Connection connection, String table) throws SQLException {
         String datatypesFromDB = "";

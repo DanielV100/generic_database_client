@@ -15,8 +15,6 @@ import java.util.StringTokenizer;
 public class ImportFilesGetter {
     String csvFile = "";
 
-
-//Importer Einfügen --> Ein Fenster mit großem Textfeld, was ; separierte Zeilen importiert
     public List<List<String>> getColumnsAndRowsFromCSV() throws IOException {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Choose CSV file");

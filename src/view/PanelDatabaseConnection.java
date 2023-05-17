@@ -2,6 +2,7 @@ package view;
 
 import controller.Controller;
 import controller.DBConnection;
+import resources.Colors;
 import resources.Sizes;
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicButtonUI;
@@ -46,7 +47,7 @@ public class PanelDatabaseConnection {
     String filePathtext = "Credentials/credentials.txt";
     File directory = new File("Credentials");
     int result = 0;
-    Colorscheme colors = new Colorscheme();
+    Colors colors = new Colors();
     Color SetColor = colors.getStandardColor();
 
     PanelTableSelection panelTableSelection = new PanelTableSelection();

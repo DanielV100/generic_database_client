@@ -1,8 +1,8 @@
-package view;
+package resources;
 
 import java.awt.Color;
 
-public class Colorscheme {
+public class Colors {
         //RGB SQL
         int sqlR = 255;
         int sqlG = 128;
@@ -24,7 +24,10 @@ public class Colorscheme {
         Color mariaColor = new Color(mariaR, mariaG, mariaB);
         Color PostColor = new Color(PostR, PostG, PostB);
         Color StandardColor = new Color(StandardR, StandardG, StandardB);
-
+        //colors of popups
+        Color popupMessageError = Color.RED;
+        Color popupMessageSuccess = Color.GREEN;
+        Color uiStandard = Color.WHITE;
 
     public Color getSqlColor() {
         return sqlColor;
@@ -45,4 +48,15 @@ public class Colorscheme {
         return new Color(StandardR, StandardG, StandardB);
     }
 
+    public Color getPopupMessageError() {
+        return popupMessageError;
     }
+
+    public Color getUiStandard() {
+        return uiStandard;
+    }
+
+    public Color getPopupMessageSuccess() {
+        return popupMessageSuccess;
+    }
+}
