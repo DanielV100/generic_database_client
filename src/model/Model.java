@@ -67,6 +67,7 @@ public class Model {
         while (resultSet.next()) {
             allTables.add(resultSet.getString(1));
         }
+        System.out.println("Got all tables from database");
         return allTables;
     }
 
@@ -87,17 +88,25 @@ public class Model {
         for (int i = 1; i <= resultSetMetaData.getColumnCount(); i++) {
             allColumns.add(resultSetMetaData.getColumnName(i));
         }
+        System.out.println("Got all columns from " + table);
         return allColumns;
     }
 
+    /**
+     * Method for getting all rows from a particular table.
+     * @param connection (as type Connection)
+     * @param table (table name as String)
+     * @return two-dimensional string array (first dimension is column, second rows)
+     * @throws SQLException
+     * @author Daniel
+     */
     public String[][] getRowsFromTable(Connection connection, String table) throws SQLException {
-        //counts how many rows are in the table
         int countRows = 0;
         List<String> columns = getColumnsFromTable(connection, table);
         List<String> allRows = new ArrayList<>();
         Statement databaseStatement = connection.createStatement();
         ResultSet resultSet = databaseStatement.executeQuery(
-                "SELECT * from " + table
+                "SELECT * FROM " + table
         );
         while (resultSet.next()) {
             for (int i = 1; i <= columns.size(); i++) {
@@ -105,29 +114,35 @@ public class Model {
             }
             countRows++;
         }
-        String[][] test = new String[countRows + 1][columns.size() + 1];
+        String[][] rowsFromTable = new String[countRows + 1][columns.size() + 1];
         for (int y = 0; y < countRows; y++) {
             for (int x = 0; x < columns.size(); x++) {
-                test[y][x] = allRows.get(x + (y * columns.size()));
+                rowsFromTable[y][x] = allRows.get(x + (y * columns.size()));
             }
         }
-        return test;
+        return rowsFromTable;
     }
 
+    /**
+     * Method for deleting particular rows.
+     * @param connection (as type Connection)
+     * @param table (table name as String)
+     * @param columns (columns where rows aren't empty as String List)
+     * @param rows (rows which aren't empty as String List)
+     * @throws SQLException
+     * @author Daniel
+     * @important this method isn't working with postgresql. See comments for more information.
+     */
     public void deleteRows(Connection connection, String table, List<String> columns, List<String> rows) throws SQLException {
         String deleteQuery = "DELETE FROM " + table + " WHERE ";
-        System.out.println("Test");
         for (int i = 0; i < columns.size(); i++) {
-
             if (i == columns.size() - 1) {
                 deleteQuery += columns.get(i) + " = ? ;";
-                System.out.println("Delete Quary: " + deleteQuery);
             } else {
                 deleteQuery += columns.get(i) + " = ?" + " AND ";
             }
         }
         PreparedStatement st = connection.prepareStatement(deleteQuery);
-        //Test getting type
         Statement databaseStatement = connection.createStatement();
         ResultSet resultSet = databaseStatement.executeQuery("SELECT * FROM " + table);
         ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
@@ -438,16 +453,18 @@ public class Model {
         popupMessageController.showSuccessMessage("Successfully cleared table");
     }
 
-    public String getDatatypesFromDB(Connection connection, String table) throws SQLException {
-        String datatypesFromDB = "";
+    public List<String> getColumnMetadata(Connection connection, String table, int metadataType) throws SQLException {
+        List<String> columnMetadata = new ArrayList<>();
         Statement databaseStatement = connection.createStatement();
         ResultSet resultSet = databaseStatement.executeQuery("SELECT * FROM " + table);
         ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
         for (int i = 1; i <= resultSetMetaData.getColumnCount(); i++) {
-            if (!(resultSetMetaData.isReadOnly(i))) {
-                datatypesFromDB += resultSetMetaData.getColumnName(i) + ": " + resultSetMetaData.getColumnTypeName(i) + "(" + resultSetMetaData.getColumnDisplaySize(i) + ")" + "\n";
+            if(metadataType == 0) {
+                columnMetadata.add(resultSetMetaData.getColumnTypeName(i));
+            } else if(metadataType == 1) {
+                columnMetadata.add(String.valueOf(resultSetMetaData.getColumnDisplaySize(i)));
             }
         }
-        return datatypesFromDB;
+        return columnMetadata;
     }
 }

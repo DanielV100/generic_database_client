@@ -69,7 +69,7 @@ public class DBConnection {
     public void clearTable(Connection connection, String table) throws SQLException {
        model.clearTable(connection, table);
     }
-    public String getDatatypesFromDB(Connection connection, String table) throws SQLException {
-        return model.getDatatypesFromDB(connection, table);
+    public List<String> getColumnMetadata(Connection connection, String table, int metadataType) throws SQLException {
+        return model.getColumnMetadata(connection, table, metadataType);
     }
 }

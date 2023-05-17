@@ -230,7 +230,14 @@ public class PanelTableView {
                         @Override
                         public void mousePressed(MouseEvent e) {
                             try {
-                                JOptionPane.showMessageDialog(null, dbConnection.getDatatypesFromDB(connection,  dbConnection.getAllTablesFromDB(connection)[index]));
+                                String message = "";
+                                String[] columns = dbConnection.getColumnsFromTable(connection, index);
+                                List<String> columnsDatatype = dbConnection.getColumnMetadata(connection, dbConnection.getAllTablesFromDB(connection)[index], 0);
+                                List<String> columnsDisplaySize = dbConnection.getColumnMetadata(connection, dbConnection.getAllTablesFromDB(connection)[index], 1);
+                                for (int i = 0; i < columns.length; i++) {
+                                    message += columns[i] + ":" + columnsDatatype.get(i) + "(" + columnsDisplaySize.get(i) + ")\n";
+                                }
+                                JOptionPane.showMessageDialog(null, message);
                             } catch (SQLException ex) {
                                 popupMessageController.showErrorMessage(ex);
                             }
