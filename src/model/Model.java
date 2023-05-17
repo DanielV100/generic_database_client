@@ -49,6 +49,7 @@ public class Model {
 
     /**
      * Method for getting all tables in database.
+     *
      * @param connection
      * @return all table names from database in a string list
      * @throws SQLException
@@ -73,8 +74,9 @@ public class Model {
 
     /**
      * Method for getting all columns from a particular table.
+     *
      * @param connection (as type Connection)
-     * @param table (table name as String)
+     * @param table      (table name as String)
      * @return all columns from a table as a list
      * @throws SQLException
      */
@@ -94,8 +96,9 @@ public class Model {
 
     /**
      * Method for getting all rows from a particular table.
+     *
      * @param connection (as type Connection)
-     * @param table (table name as String)
+     * @param table      (table name as String)
      * @return two-dimensional string array (first dimension is column, second rows)
      * @throws SQLException
      * @author Daniel
@@ -125,16 +128,19 @@ public class Model {
 
     /**
      * Method for deleting particular rows.
+     *
      * @param connection (as type Connection)
-     * @param table (table name as String)
-     * @param columns (columns where rows aren't empty as String List)
-     * @param rows (rows which aren't empty as String List)
+     * @param table      (table name as String)
+     * @param columns    (columns where rows aren't empty as String List)
+     * @param rows       (rows which aren't empty as String List)
      * @throws SQLException
      * @author Daniel
      * @important this method isn't working with postgresql. See comments for more information.
      */
     public void deleteRows(Connection connection, String table, List<String> columns, List<String> rows) throws SQLException {
         String deleteQuery = "DELETE FROM " + table + " WHERE ";
+        List<String> columnDatatype = getColumnMetadata(connection, table, 0);
+        //building whole delete query with properties
         for (int i = 0; i < columns.size(); i++) {
             if (i == columns.size() - 1) {
                 deleteQuery += columns.get(i) + " = ? ;";
@@ -142,19 +148,17 @@ public class Model {
                 deleteQuery += columns.get(i) + " = ?" + " AND ";
             }
         }
-        PreparedStatement st = connection.prepareStatement(deleteQuery);
-        Statement databaseStatement = connection.createStatement();
-        ResultSet resultSet = databaseStatement.executeQuery("SELECT * FROM " + table);
-        ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
+        PreparedStatement preparedStatement = connection.prepareStatement(deleteQuery);
+        //adding properties to the query
         for (int x = 1; x <= rows.size(); x++) {
-            if (resultSetMetaData.getColumnTypeName(x).contains("int") || resultSetMetaData.getColumnTypeName(x).contains("serial")) {
-                st.setInt(x, Integer.parseInt(rows.get(x - 1)));
+            //if statement needed for postgresql because strict types are required (so you have to set int by "setInt" and so on) --> all datatypes are needed for getting this to work.
+            if (columnDatatype.get(x - 1).contains("int") || columnDatatype.get(x - 1).contains("serial")) {
+                preparedStatement.setInt(x, Integer.parseInt(rows.get(x - 1)));
             } else {
-                st.setString(x, rows.get(x - 1));
+                preparedStatement.setString(x, rows.get(x - 1));
             }
         }
-        System.out.println("Fertiger String: " + st);
-        st.execute();
+        preparedStatement.executeUpdate();
         popupMessageController.showSuccessMessage("Successfully deleted row");
     }
 
@@ -193,14 +197,12 @@ public class Model {
                 }
             }
             PreparedStatement preparedStatement = connection.prepareStatement(addQuery);
-
             for (int y = 1; y <= input.length; y++) {
                 if (input[y - 1].equals("") && selectedDB.equals("postgresql")) {
                     preparedStatement.setNull(y, java.sql.Types.NULL);
                 } else {
                     preparedStatement.setObject(y, input[y - 1]);
                 }
-
             }
             System.out.println(preparedStatement);
             preparedStatement.executeUpdate();
@@ -453,15 +455,22 @@ public class Model {
         popupMessageController.showSuccessMessage("Successfully cleared table");
     }
 
+    /**
+     * @param connection   (connection as type Connection)
+     * @param table        (as table name)
+     * @param metadataType (as int (0 = datatype, 1 = column display size))
+     * @return specific metadata as String List
+     * @throws SQLException
+     */
     public List<String> getColumnMetadata(Connection connection, String table, int metadataType) throws SQLException {
         List<String> columnMetadata = new ArrayList<>();
         Statement databaseStatement = connection.createStatement();
         ResultSet resultSet = databaseStatement.executeQuery("SELECT * FROM " + table);
         ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
         for (int i = 1; i <= resultSetMetaData.getColumnCount(); i++) {
-            if(metadataType == 0) {
+            if (metadataType == 0) {
                 columnMetadata.add(resultSetMetaData.getColumnTypeName(i));
-            } else if(metadataType == 1) {
+            } else if (metadataType == 1) {
                 columnMetadata.add(String.valueOf(resultSetMetaData.getColumnDisplaySize(i)));
             }
         }
