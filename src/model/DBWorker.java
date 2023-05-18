@@ -166,11 +166,9 @@ public class DBWorker {
 
     public void addRow(Connection connection, String table) throws SQLException {
         String addQuery = "INSERT INTO " + table + "(";
-        List<String> columns = getAllWriteableColumns(connection, table);
-        String[] input = getInputDialogForCreatingNewRow(connection, table, columns);
-        Statement databaseStatement = connection.createStatement();
-        ResultSet resultSet = databaseStatement.executeQuery("SELECT * FROM " + table);
-        ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
+        List<String> columnDatatype = dbHelpers.getColumnMetadata(connection, table, 0);
+        List<String> columns = getColumnsFromTable(connection, table);
+        String[] input = dbHelpers.getInputFromInputOptionPane(connection, table, columns, null, "Add row", false);
         if (input != null) {
             for (int i = 0; i < columns.size(); i++) {
                 if (i == columns.size() - 1) {
@@ -180,22 +178,20 @@ public class DBWorker {
                 }
             }
             for (int x = 0; x < columns.size(); x++) {
+                //last property
                 if (x == columns.size() - 1) {
                     if (connection.getMetaData().getURL().contains("postgresql")) {
-                        addQuery += "?::" + resultSetMetaData.getColumnTypeName(x + 1) + ");";
-
+                        addQuery += "?::" + columnDatatype.get(x) + ");";
                     } else {
                         addQuery += "?" + ");";
                     }
 
                 } else {
                     if (connection.getMetaData().getURL().contains("postgresql")) {
-                        addQuery += "?::" + resultSetMetaData.getColumnTypeName(x + 1) + ", ";
-
+                        addQuery += "?::" + columnDatatype.get(x) + ", ";
                     } else {
                         addQuery += "?" + ", ";
                     }
-
                 }
             }
             PreparedStatement preparedStatement = connection.prepareStatement(addQuery);
@@ -206,18 +202,16 @@ public class DBWorker {
                     preparedStatement.setObject(y, input[y - 1]);
                 }
             }
-            System.out.println(preparedStatement);
             preparedStatement.executeUpdate();
             popupMessageController.showSuccessMessage("Successfully added row");
         }
-
     }
 
     public void editRow(Connection connection, String table, List<String> columns, List<String> rows) throws SQLException {
         //if a column isn't writable it will shown anyways - but its not editable - this list is needed to compare columns with the writable columns to find out which is readonly
-        List<String> writableColumns = getAllWriteableColumns(connection, table);
+        List<String> writableColumns = getColumnsFromTable(connection, table);
         String editQuery = "UPDATE " + table + " SET ";
-        String[] input = getInputDialogForEditingRow(connection, table, columns, rows, writableColumns);
+        String[] input = dbHelpers.getInputFromInputOptionPane(connection, table, columns, rows,"Edit row", true);
         for (int i = 0; i < columns.size(); i++) {
             if (i == columns.size() - 1) {
                 editQuery += columns.get(i) + "=" + "?" + " WHERE ";
@@ -276,68 +270,9 @@ public class DBWorker {
         popupMessageController.showSuccessMessage("Successfully edited row");
 
     }
-
-    private List<String> columnsType = new ArrayList<>();
-    private List<Integer> columnsTypeLength = new ArrayList<>();
-
     //needed for adding row
-    private List<String> getAllWriteableColumns(Connection connection, String table) throws SQLException {
-        List<String> columnsWriteable = new ArrayList<>();
-        List<String> columnsType = new ArrayList<>();
-        List<Integer> columnsTypeLength = new ArrayList<>();
-        Statement databaseStatement = connection.createStatement();
-        ResultSet resultSet = databaseStatement.executeQuery("SELECT * FROM " + table);
-        ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
-        for (int i = 1; i <= resultSetMetaData.getColumnCount(); i++) {
-            if (!(resultSetMetaData.isReadOnly(i))) {
-                columnsWriteable.add(resultSetMetaData.getColumnName(i));
-                columnsType.add(resultSetMetaData.getColumnTypeName(i));
-                columnsTypeLength.add(resultSetMetaData.getColumnDisplaySize(i));
-            }
-        }
-        this.columnsType = columnsType;
-        this.columnsTypeLength = columnsTypeLength;
-        return columnsWriteable;
-    }
 
-    //needed for adding row
-    private String[] getInputDialogForCreatingNewRow(Connection connection, String table, List<String> columns) throws SQLException {
-        JTextField[] inputFields = new JTextField[columns.size()];
-        JLabel[] labels = new JLabel[columns.size()];
-        String input[] = new String[columns.size()];
-        //pseudo elements (optional parameter)
-        List<String> rows = new ArrayList<>();
-        List<String> writableColumns = new ArrayList<>();
-        JOptionPane pane = new JOptionPane();
-        pane.setBounds(sizes.getScreenWidth() / 2, sizes.getScreenHeight() / 2, sizes.getScreenWidth() / 2, sizes.getScreenHeight() / 2);
-        int option = pane.showConfirmDialog(null, createContainerForJOptionPane(connection, table, columns, labels, inputFields, columnsType, columnsTypeLength, false, rows, writableColumns), "Add rows", JOptionPane.OK_CANCEL_OPTION);
-        if (option == JOptionPane.OK_OPTION) {
-            for (int x = 0; x < columns.size(); x++) {
-                input[x] = inputFields[x].getText();
-            }
-        } else {
-            input = null;
-        }
-        return input;
-    }
 
-    private String[] getInputDialogForEditingRow(Connection connection, String table, List<String> columns, List<String> rows, List<String> writableColumns) throws SQLException {
-        String input[] = new String[columns.size()];
-        JPanel container = new JPanel(new GridLayout(columns.size(), 2));
-        JLabel[] labelForColumns = new JLabel[columns.size()];
-        JTextField[] inputFields = new JTextField[columns.size()];
-        JOptionPane pane = new JOptionPane();
-        pane.setBounds(sizes.getScreenWidth() / 2, sizes.getScreenHeight() / 2, sizes.getScreenWidth() / 2, sizes.getScreenHeight() / 2);
-        int option = pane.showConfirmDialog(null, createContainerForJOptionPane(connection, table, columns, labelForColumns, inputFields, columnsType, columnsTypeLength, true, rows, writableColumns), "Edit rows", JOptionPane.OK_CANCEL_OPTION);
-        if (option == JOptionPane.OK_OPTION) {
-            for (int x = 0; x < columns.size(); x++) {
-                input[x] = inputFields[x].getText();
-            }
-        } else {
-            input = null;
-        }
-        return input;
-    }
 
     public void addImportedRows(Connection connection, String table) throws SQLException, IOException {
         System.out.println(table);
@@ -378,57 +313,6 @@ public class DBWorker {
         }
 
     }
-
-    private JPanel createContainerForJOptionPane(Connection connection, String table, List<String> columns, JLabel[] labelForColumns, JTextField[] inputFields, List<String> columnsType, List<Integer> columnsTypeLength, Boolean isEdit, List<String> rows, List<String> writableColumns) throws SQLException {
-        List<String> allKeys = dbHelpers.getAllKeys(connection);
-        String numbers = "123456789";
-        String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        String specialChars = ";,+*#'_^^´`;";
-        JPanel container = new JPanel(new GridLayout(columns.size(), 2));
-        for (int i = 0; i < labelForColumns.length; i++) {
-            //on the left: lables
-            labelForColumns[i] = new JLabel(columns.get(i) + " (" + columnsType.get(i) + ", " + columnsTypeLength.get(i) + ")");
-            container.add(labelForColumns[i]);
-            //on the right-handed side: textfields
-            if (isEdit) {
-                inputFields[i] = new JTextField(rows.get(i));
-                if ((!(writableColumns.contains(columns.get(i)))) || allKeys.get(0).contains(table.toLowerCase() + "." + columns.get(i))) {
-                    inputFields[i].setBackground(Color.YELLOW);
-                    inputFields[i].setToolTipText("This field is a primary key and can't be changed because it's used in other tables.");
-                } else if (allKeys.get(1).contains(table.toLowerCase() + "." + columns.get(i))) {
-                    inputFields[i].setBackground(Color.YELLOW);
-                    inputFields[i].setToolTipText("Mind that the data from this row comes from another table (foreign key).");
-                }
-            } else {
-                inputFields[i] = new JTextField();
-            }
-            int index = i;
-            inputFields[i].addKeyListener(new KeyAdapter() {
-                @Override
-                public void keyPressed(KeyEvent e) {
-                    if (columnsType.get(index) == "DATE" && (alphabet.contains(String.valueOf(e.getKeyChar())) || alphabet.toLowerCase().contains(String.valueOf(e.getKeyChar())) || specialChars.contains(String.valueOf(e.getKeyChar())))) {
-                        JOptionPane.showMessageDialog(null, "This value has to be a " + columnsType.get(index) + " and you typed " + e.getKeyChar());
-                        inputFields[index].setText("");
-                    }
-                    if (columnsTypeLength.get(index) < inputFields[index].getText().length()) {
-                        JOptionPane.showMessageDialog(null, "Input to long. Maximum size: " + columnsTypeLength.get(index));
-                        inputFields[index].setText("");
-                    }
-                    if (columnsType.get(index) == "INT" && (alphabet.contains(String.valueOf(e.getKeyChar())) || specialChars.contains(String.valueOf(e.getKeyChar())) || alphabet.toLowerCase().contains(String.valueOf(e.getKeyChar())))) {
-                        JOptionPane.showMessageDialog(null, "This value has to be a " + columnsType.get(index) + " and you typed " + e.getKeyChar());
-                        inputFields[index].setText("");
-                    }
-                    if (columnsType.get(index) == "TEXT" && (numbers.contains(String.valueOf(e.getKeyChar())) || specialChars.contains(String.valueOf(e.getKeyChar())))) {
-                        JOptionPane.showMessageDialog(null, "This value has to be a " + columnsType.get(index) + " and you typed " + e.getKeyChar());
-                        inputFields[index].setText("");
-                    }
-                }
-            });
-            container.add(inputFields[i]);
-        }
-        return container;
-    }
-
 
 
     /**
