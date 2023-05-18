@@ -1,24 +1,23 @@
 package controller;
 
-import model.ImageFileGetter;
+import model.CSVExporter;
 import model.ResourcesGetter;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.awt.*;
 import java.io.IOException;
-import java.io.InputStream;
 
 /**
- * This controller class  is the communicator between view and model. So the view never interacts with the model directly.
+ * This controller class  is the communicator between view and DBWorker. So the view never interacts with the DBWorker directly.
+ *
  * @author Luca, Daniel
  */
 public class Controller {
-    ImageFileGetter imageFileGetter = new ImageFileGetter();
+    CSVExporter csvExporter = new CSVExporter();
     ResourcesGetter resourcesGetter = new ResourcesGetter();
 
     /**
      * Getting text from properties file (key of property is needed!)
+     *
      * @param key (from key value pair in properties file)
      * @return String from properties file
      * @throws IOException
@@ -30,12 +29,25 @@ public class Controller {
 
     /**
      * Getting image icon from path.
+     *
      * @param path
      * @return ImageIcon
      * @throws IOException
      * @author Daniel
      */
     public ImageIcon getImageIconFromResources(String path) throws IOException {
-        return imageFileGetter.getImageIconFromResources(path);
+        return resourcesGetter.getImageIconFromResources(path);
+    }
+
+    /**
+     * Method for exporting table - communication between model and view.
+     *
+     * @param table
+     * @throws IOException
+     * @author Daniel
+     * @see CSVExporter
+     */
+    public void exportToCSV(JTable table) throws IOException {
+        csvExporter.exportToCSV(table);
     }
 }

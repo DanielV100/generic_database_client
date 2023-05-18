@@ -1,75 +1,96 @@
 package controller;
 
-import model.Model;
+import model.DBHelpers;
+import model.DBWorker;
+
 import java.io.IOException;
 import java.sql.*;
 import java.util.List;
-import static view.PanelDatabaseConnection.selectedDB;
 
+/**
+ * This is the controller class which is used for all database related things. It's the communicator between view and DBWorker.
+ *
+ * @author Daniel
+ * @see DBWorker
+ */
 public class DBConnection {
-    Model model = new Model();
-    String hostname;
-    public static String databaseName;
-    String port;
-    String username;
-    String password;
-    Connection dbConnection;
+    DBHelpers dbHelpers = new DBHelpers();
+    DBWorker DBWorker = new DBWorker();
 
-    //gets parameters and writes it into local variables + start building connection
-    public Connection initDBConnection(String hostname, String port, String databaseName, String username, String password) throws SQLException, ClassNotFoundException {
-        this.hostname = hostname;
-        this.port = validatePort(port);
-        this.databaseName = databaseName;
-        this.username = username;
-        this.password = password;
-        return connect();
-    }
-    //should be validated --> numbers no chars
-    private String validatePort(String port) {
-        return port;
-    }
-    public String createConnectionString(String hostname, String port, String databaseName) {
-
-        return "jdbc:"+ selectedDB +"://" + hostname + ":" + port + "/" + databaseName;
+    /**
+     * @see DBWorker
+     */
+    public Connection initDBConnection(String hostname, String port, String databaseName, String username, String password, String selectedDB) throws SQLException, ClassNotFoundException {
+        return DBWorker.connectToDB(createConnectionString(hostname, port, databaseName, selectedDB), username, password);
     }
 
-    //trying to connect to db via jdbc - driver is needed!
-    public Connection connect() throws SQLException, ClassNotFoundException {
-        return model.connectToDB(createConnectionString(hostname, port, databaseName), username, password);
+    /**
+     * @see DBWorker
+     */
+    public String createConnectionString(String hostname, String port, String databaseName, String selectedDB) {
+        return "jdbc:" + selectedDB + "://" + hostname + ":" + port + "/" + databaseName;
     }
 
-
-
-
-    //getting all tables in the db and parsing the list to a string array, which is than be shown in a JList
+    /**
+     * @see DBWorker
+     */
     public String[] getAllTablesFromDB(Connection connection) throws SQLException {
-        return model.getAllTablesFromDB(connection).toArray(new String[0]);
+        return DBWorker.getAllTablesFromDB(connection).toArray(new String[0]);
     }
-    public String[] getColumnsFromTable (Connection connection, int tableIndex) throws SQLException {
-        return model.getColumnsFromTable(connection, model.getAllTablesFromDB(connection).get(tableIndex)).toArray(new String[0]);
+
+    /**
+     * @see DBWorker
+     */
+    public String[] getColumnsFromTable(Connection connection, int tableIndex) throws SQLException {
+        return DBWorker.getColumnsFromTable(connection, DBWorker.getAllTablesFromDB(connection).get(tableIndex)).toArray(new String[0]);
     }
+
+    /**
+     * @see DBWorker
+     */
     public String[][] getRowsFromTable(Connection connection, int tableIndex) throws SQLException {
-        return model.getRowsFromTable(connection, model.getAllTablesFromDB(connection).get(tableIndex));
+        return DBWorker.getRowsFromTable(connection, DBWorker.getAllTablesFromDB(connection).get(tableIndex));
     }
+
+    /**
+     * @see DBWorker
+     */
     public void deleteRow(Connection connection, String table, List<String> columns, List<String> rows) throws SQLException {
-        model.deleteRows(connection, table, columns, rows);
+        DBWorker.deleteRows(connection, table, columns, rows);
     }
+
+    /**
+     * @see DBWorker
+     */
     public void addRow(Connection connection, String table) throws SQLException {
-        model.addRow(connection, table);
+        DBWorker.addRow(connection, table);
     }
+
+    /**
+     * @see DBWorker
+     */
     public void editRow(Connection connection, String table, List<String> columns, List<String> rows) throws SQLException {
-        model.editRow(connection, table, columns, rows);
+        DBWorker.editRow(connection, table, columns, rows);
     }
+
+    /**
+     * @see DBWorker
+     */
     public void addImportedRows(Connection connection, String table) throws SQLException, IOException {
-        model.addImportedRows(connection, table);
+        DBWorker.addImportedRows(connection, table);
     }
-    public void getAllKeys(Connection connection) throws SQLException {
-        model.getAllKeys(connection);
-    }
+
+    /**
+     * @see DBWorker
+     */
     public void clearTable(Connection connection, String table) throws SQLException {
-       model.clearTable(connection, table);
+        DBWorker.clearTable(connection, table);
     }
-    public String getDatatypesFromDB(Connection connection, String table) throws SQLException {
-        return model.getDatatypesFromDB(connection, table);
+
+    /**
+     * @see DBHelpers
+     */
+    public List<String> getColumnMetadata(Connection connection, String table, int metadataType) throws SQLException {
+        return dbHelpers.getColumnMetadata(connection, table, metadataType);
     }
 }

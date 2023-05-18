@@ -5,6 +5,7 @@ import controller.DBConnection;
 import controller.PopupMessageController;
 import resources.Colors;
 import resources.Sizes;
+
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicButtonUI;
 import java.awt.*;
@@ -18,6 +19,7 @@ import java.util.List;
 
 /**
  * Creating components for the start-screen and initializing the frame for the table view.
+ *
  * @author Daniel, Lorenz, Luca, Valentin, Marius
  */
 public class PanelDatabaseConnection {
@@ -274,6 +276,7 @@ public class PanelDatabaseConnection {
 
     /**
      * On connect button click action
+     *
      * @autor Marius
      */
     private void buttonConnectClicked() {
@@ -283,6 +286,7 @@ public class PanelDatabaseConnection {
 
     /**
      * Method for saving credentials.
+     *
      * @author Lorenz
      */
     private void saveCredentials() {
@@ -306,11 +310,12 @@ public class PanelDatabaseConnection {
 
     /**
      * Inits database connection and shows frame with table selection on it.
+     *
      * @author Luca
      */
     private void initDatabaseConnection() {
         try {
-            Connection connection = dbConnection.initDBConnection(textFieldHostname.getText(), textFieldPort.getText(), textFieldDatabaseName.getText(), textFieldUsername.getText(), textFieldPassword.getText());
+            Connection connection = dbConnection.initDBConnection(textFieldHostname.getText(), textFieldPort.getText(), textFieldDatabaseName.getText(), textFieldUsername.getText(), textFieldPassword.getText(), selectedDB);
             popupMessageController.showSuccessMessage("Successfully connected to database server");
             System.out.println("Connected to database");
             frameTableView.add(panelTableSelection.PanelTableSelection(connection, selectedDB));
@@ -336,6 +341,7 @@ public class PanelDatabaseConnection {
 
     /**
      * Loading user credentials or create directory for user credentials.
+     *
      * @author Lorenz
      */
     private void loadUserCredentials() {
@@ -380,7 +386,7 @@ public class PanelDatabaseConnection {
                     SetColor = colors.getPostColor();
                     buttonConnect.setBackground(SetColor);
                 }
-               textFieldHostname.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, SetColor));
+                textFieldHostname.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, SetColor));
                 textFieldPort.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, SetColor));
                 textFieldDatabaseName.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, SetColor));
                 textFieldUsername.setBorder(BorderFactory.createMatteBorder(0, 0, 2, 0, SetColor));
