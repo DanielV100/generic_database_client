@@ -164,6 +164,13 @@ public class DBWorker {
         popupMessageController.showSuccessMessage("Successfully deleted row");
     }
 
+    /**
+     * Method for creating a single row.
+     * @param connection (as type Connection)
+     * @param table (table name as String)
+     * @throws SQLException
+     * @author Daniel
+     */
     public void addRow(Connection connection, String table) throws SQLException {
         String addQuery = "INSERT INTO " + table + "(";
         List<String> columnDatatype = dbHelpers.getColumnMetadata(connection, table, 0);
@@ -180,6 +187,7 @@ public class DBWorker {
             for (int x = 0; x < columns.size(); x++) {
                 //last property
                 if (x == columns.size() - 1) {
+                    //type casting is required for postgresql
                     if (connection.getMetaData().getURL().contains("postgresql")) {
                         addQuery += "?::" + columnDatatype.get(x) + ");";
                     } else {
@@ -187,6 +195,7 @@ public class DBWorker {
                     }
 
                 } else {
+                    //type casting is required for postgresql
                     if (connection.getMetaData().getURL().contains("postgresql")) {
                         addQuery += "?::" + columnDatatype.get(x) + ", ";
                     } else {
@@ -207,9 +216,16 @@ public class DBWorker {
         }
     }
 
+    /**
+     *
+     * @param connection (as type Connection)
+     * @param table (table name as String)
+     * @param columns (columns as string list)
+     * @param rows (rows as string list)
+     * @throws SQLException
+     * @author Daniel
+     */
     public void editRow(Connection connection, String table, List<String> columns, List<String> rows) throws SQLException {
-        //if a column isn't writable it will shown anyways - but its not editable - this list is needed to compare columns with the writable columns to find out which is readonly
-        List<String> writableColumns = getColumnsFromTable(connection, table);
         String editQuery = "UPDATE " + table + " SET ";
         String[] input = dbHelpers.getInputFromInputOptionPane(connection, table, columns, rows,"Edit row", true);
         for (int i = 0; i < columns.size(); i++) {
@@ -220,7 +236,7 @@ public class DBWorker {
             }
         }
         for (int x = 0; x < columns.size(); x++) {
-            //check if there is a row wich is empty, if so don't add it t the query
+            //check if there is a row wich is empty, if so don't add it to the query
             if (!(rows.get(x).isEmpty())) {
                 if (x == columns.size() - 1) {
                     editQuery += columns.get(x) + "=" + "?" + ";";
@@ -231,21 +247,10 @@ public class DBWorker {
         }
         if (editQuery.endsWith(" AND ")) {
             editQuery = editQuery.replaceAll("AND $", " ");
-            System.out.println("Edit query: " + editQuery);
         }
-
         PreparedStatement preparedStatement = connection.prepareStatement(editQuery);
-        //Test getting type
-        Statement databaseStatement = connection.createStatement();
-        ResultSet resultSet = databaseStatement.executeQuery("SELECT * FROM " + table);
-        ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
-
         for (int y = 1; y <= input.length; y++) {
-            if (resultSetMetaData.getColumnTypeName(y).contains("int") || resultSetMetaData.getColumnTypeName(y).contains("serial")) {
-                preparedStatement.setInt(y, Integer.parseInt(input[y - 1]));
-            } else {
-                preparedStatement.setString(y, input[y - 1]);
-            }
+            preparedStatement.setString(y, input[y - 1]);
         }
         //remove empty rows from row
         for (int z = rows.size() - 1; z >= 0; z--) {
@@ -253,34 +258,22 @@ public class DBWorker {
                 rows.remove(z);
             }
         }
-        int test = 0;
+        int counter = 0;
         for (int xy = input.length + 1; xy <= input.length + rows.size(); xy++) {
-            if (resultSetMetaData.getColumnTypeName(test + 1).contains("int") || resultSetMetaData.getColumnTypeName(test + 1).contains("serial")) {
-                preparedStatement.setInt(xy, Integer.parseInt(rows.get(test)));
-            } else {
-                preparedStatement.setString(xy, rows.get(test));
-            }
-            test++;
-            System.out.println("Ich bin hier");
+            preparedStatement.setString(xy, rows.get(counter));
+            counter++;
         }
-        //what is this needed for?
-        //preparedStatement.setString(input.length+1, rows.get(0));
-        System.out.println(preparedStatement);
         preparedStatement.executeUpdate();
-        popupMessageController.showSuccessMessage("Successfully edited row");
-
+        popupMessageController.showSuccessMessage("Edited row");
     }
-    //needed for adding row
-
 
 
     public void addImportedRows(Connection connection, String table) throws SQLException, IOException {
-        System.out.println(table);
         //Insert into table(n, x, y...) Values(
         String addQueryMeta = "INSERT INTO " + table + "(";
         //String addQueryMeta = "INSERT INTO `" + table + " VALUES(";
         String addQueryValues = "";
-        String columns = "";
+        //String columns = "";
         List<List<String>> data = resourcesGetter.getColumnsAndRowsFromCSV();
         for (int i = 0; i < data.get(0).size(); i++) {
             if (i == data.get(0).size() - 1) {
@@ -288,7 +281,7 @@ public class DBWorker {
             } else {
                 addQueryMeta += data.get(0).get(i) + ", ";
             }
-            columns += data.get(0).get(i) + ";";
+            //columns += data.get(0).get(i) + ";";
         }
         //x --> rows; y --> columns in rows
         for (int x = 1; x < data.size(); x++) {
