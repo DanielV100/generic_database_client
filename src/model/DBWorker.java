@@ -4,10 +4,6 @@ import controller.DBConnection;
 import controller.PopupMessageController;
 import resources.Sizes;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
@@ -166,8 +162,9 @@ public class DBWorker {
 
     /**
      * Method for creating a single row.
+     *
      * @param connection (as type Connection)
-     * @param table (table name as String)
+     * @param table      (table name as String)
      * @throws SQLException
      * @author Daniel
      */
@@ -217,17 +214,16 @@ public class DBWorker {
     }
 
     /**
-     *
      * @param connection (as type Connection)
-     * @param table (table name as String)
-     * @param columns (columns as string list)
-     * @param rows (rows as string list)
+     * @param table      (table name as String)
+     * @param columns    (columns as string list)
+     * @param rows       (rows as string list)
      * @throws SQLException
      * @author Daniel
      */
     public void editRow(Connection connection, String table, List<String> columns, List<String> rows) throws SQLException {
         String editQuery = "UPDATE " + table + " SET ";
-        String[] input = dbHelpers.getInputFromInputOptionPane(connection, table, columns, rows,"Edit row", true);
+        String[] input = dbHelpers.getInputFromInputOptionPane(connection, table, columns, rows, "Edit row", true);
         for (int i = 0; i < columns.size(); i++) {
             if (i == columns.size() - 1) {
                 editQuery += columns.get(i) + "=" + "?" + " WHERE ";
@@ -267,51 +263,61 @@ public class DBWorker {
         popupMessageController.showSuccessMessage("Edited row");
     }
 
-
+    /**
+     * Method for importing csv. (Note: Not working for postgresql yet)
+     *
+     * @param connection (as type Connection)
+     * @param table      (table name as String)
+     * @throws SQLException
+     * @throws IOException
+     * @author Daniel
+     */
     public void addImportedRows(Connection connection, String table) throws SQLException, IOException {
-        //Insert into table(n, x, y...) Values(
         String addQueryMeta = "INSERT INTO " + table + "(";
-        //String addQueryMeta = "INSERT INTO `" + table + " VALUES(";
         String addQueryValues = "";
-        //String columns = "";
         List<List<String>> data = resourcesGetter.getColumnsAndRowsFromCSV();
+        List<String> columnDatatype = dbHelpers.getColumnMetadata(connection, table, 0);
+        //data.get(0) --> columns
         for (int i = 0; i < data.get(0).size(); i++) {
             if (i == data.get(0).size() - 1) {
                 addQueryMeta += data.get(0).get(i) + ") VALUES(";
             } else {
                 addQueryMeta += data.get(0).get(i) + ", ";
             }
-            //columns += data.get(0).get(i) + ";";
         }
         //x --> rows; y --> columns in rows
         for (int x = 1; x < data.size(); x++) {
             for (int y = 0; y < data.get(x).size(); y++) {
                 if (y == data.get(x).size() - 1) {
-                    addQueryValues += "?" + ");";
+                    if (connection.getMetaData().getURL().contains("postgresql")) {
+                        addQueryValues += "?::" + columnDatatype.get(y) + ");";
+                    } else {
+                        addQueryValues += "?" + ");";
+                    }
                 } else {
-                    addQueryValues += "?" + ", ";
+                    if (connection.getMetaData().getURL().contains("postgresql")) {
+                        addQueryValues += "?::" + columnDatatype.get(x) + ", ";
+                    } else {
+                        addQueryValues += "?" + ", ";
+                    }
                 }
-
             }
             addQueryMeta = addQueryMeta.replace("\uFEFF", "");
             addQueryValues = addQueryValues.replace("\uFEFF", "");
-            System.out.println("Pre Prepared statement: " + addQueryMeta + addQueryValues);
             PreparedStatement preparedStatement = connection.prepareStatement(addQueryMeta + addQueryValues);
             for (int n = 1; n <= data.get(x).size(); n++) {
                 preparedStatement.setString(n, data.get(x).get(n - 1));
             }
-            System.out.println("Prepared statement: " + preparedStatement);
             preparedStatement.executeUpdate();
             addQueryValues = "";
         }
-
     }
-
 
     /**
      * Method is used for clearing table.
+     *
      * @param connection (connection as type Connection)
-     * @param table (as table name)
+     * @param table      (as table name)
      * @throws SQLException
      * @author Marius
      */

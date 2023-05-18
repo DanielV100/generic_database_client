@@ -14,6 +14,7 @@ import java.util.Properties;
 
 /**
  * Getting all types of (external) resources here. Properties of resources/generic_database_client_text.properties will be parsed here too.
+ *
  * @author Daniel
  */
 public class ResourcesGetter {
@@ -21,6 +22,7 @@ public class ResourcesGetter {
 
     /**
      * Loading all properties from resources/generic_database_client_text.properties and return it
+     *
      * @return Properties (from resources/generic_database_client_text.properties)
      * @throws IOException
      * @author Daniel
@@ -33,6 +35,7 @@ public class ResourcesGetter {
 
     /**
      * Getting properties calling method getAppProperties() and get particular property (key is needed)
+     *
      * @param key (of the property)
      * @return Property value as String
      * @throws IOException
@@ -41,8 +44,10 @@ public class ResourcesGetter {
     public String getAppPropertiesWithKey(String key) throws IOException {
         return getAppProperties().getProperty(key);
     }
+
     /**
      * Method for getting image icon. Therefore, a imageStream is opened.
+     *
      * @param path (to image)
      * @return ImageIcon
      * @throws IOException
@@ -54,6 +59,13 @@ public class ResourcesGetter {
         return imageIcon;
     }
 
+    /**
+     * Method for importing csv (first line are columns).
+     *
+     * @return list of string lists
+     * @throws IOException
+     * @author Daniel
+     */
     public List<List<String>> getColumnsAndRowsFromCSV() throws IOException {
         String csvFile = "";
         JFileChooser fileChooser = new JFileChooser();

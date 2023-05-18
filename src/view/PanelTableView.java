@@ -1,5 +1,6 @@
 package view;
 
+import controller.Controller;
 import controller.DBConnection;
 import controller.PopupMessageController;
 import model.CSVExporter;
@@ -16,10 +17,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PanelTableView {
-    UIHelpers uiHelpers = new UIHelpers();
+    Controller controller = new Controller();
     DBConnection dbConnection = new DBConnection();
     Sizes sizes = new Sizes();
-    JPanel panelTableView = new JPanel();
     JTable tableFromDB = new JTable();
     JScrollPane scrollPane = new JScrollPane();
     JPopupMenu popupMenu;
@@ -215,8 +215,8 @@ public class PanelTableView {
                         @Override
                         public void mousePressed(MouseEvent mouseEvent) {
                             try {
-                                JTable test = (JTable) e.getSource();
-                                CSVExporter.exportToCSV(test);
+                                JTable table = (JTable) e.getSource();
+                                controller.exportToCSV(table);
                                 popupMessageController.showSuccessMessage("Successfully exported table");
                             } catch (IOException ex) {
                                 popupMessageController.showErrorMessage(ex);

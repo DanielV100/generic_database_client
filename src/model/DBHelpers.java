@@ -63,6 +63,18 @@ public class DBHelpers {
         return allKeys;
     }
 
+    /**
+     *
+     * @param connection (connection as type Connection)
+     * @param table (table name as string)
+     * @param columns (as string list)
+     * @param rows (only needed for editing)
+     * @param inputPaneName
+     * @param isEdit (false when adding a row, true, when editing row)
+     * @return String[] with user input for adding and editing
+     * @throws SQLException
+     * @author Daniel
+     */
     protected String[] getInputFromInputOptionPane(Connection connection, String table, List<String> columns, List<String> rows, String inputPaneName, boolean isEdit) throws SQLException {
         String input[] = new String[columns.size()];
         JLabel[] labelsForInput = new JLabel[columns.size()];
@@ -82,7 +94,7 @@ public class DBHelpers {
     /**
      * Method is creating a JPanel which is later used in a JOptionPane to get user input for adding/editing a row.
      * @param connection (connection as type Connection)
-     * @param table (table name)
+     * @param table (table name as string)
      * @param columns (as string list)
      * @param labelForColumns (as JLabel[])
      * @param inputFields (as JTextField[])
