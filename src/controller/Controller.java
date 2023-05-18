@@ -1,8 +1,10 @@
 package controller;
 
 import model.ResourcesGetter;
+import view.UIHelpers;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.IOException;
 
 /**
@@ -33,4 +35,5 @@ public class Controller {
     public ImageIcon getImageIconFromResources(String path) throws IOException {
         return resourcesGetter.getImageIconFromResources(path);
     }
+
 }

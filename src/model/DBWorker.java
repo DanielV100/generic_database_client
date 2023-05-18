@@ -380,7 +380,7 @@ public class DBWorker {
     }
 
     private JPanel createContainerForJOptionPane(Connection connection, String table, List<String> columns, JLabel[] labelForColumns, JTextField[] inputFields, List<String> columnsType, List<Integer> columnsTypeLength, Boolean isEdit, List<String> rows, List<String> writableColumns) throws SQLException {
-        List<String> allKeys = dbHelpers.getAllKeys(connection, table);
+        List<String> allKeys = dbHelpers.getAllKeys(connection);
         String numbers = "123456789";
         String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         String specialChars = ";,+*#'_^^´`;";
@@ -403,8 +403,6 @@ public class DBWorker {
                 inputFields[i] = new JTextField();
             }
             int index = i;
-
-            //validate input
             inputFields[i].addKeyListener(new KeyAdapter() {
                 @Override
                 public void keyPressed(KeyEvent e) {

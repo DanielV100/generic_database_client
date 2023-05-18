@@ -54,7 +54,6 @@ public class ResourcesGetter {
         return imageIcon;
     }
 
-
     public List<List<String>> getColumnsAndRowsFromCSV() throws IOException {
         String csvFile = "";
         JFileChooser fileChooser = new JFileChooser();
@@ -72,14 +71,13 @@ public class ResourcesGetter {
                 while ((line = br.readLine()) != null) {
                     line.replace('"', ' ');
                     String[] values = line.split(";");
-                    System.out.println(line);
                     rowsFromCSV.add(Arrays.asList(values));
                 }
             }
+            System.out.println("Got data from CSV");
             return rowsFromCSV;
-            // do something with the file
         } else {
-            System.out.println("No file selected.");
+            System.out.println("No file selected");
         }
         return null;
     }

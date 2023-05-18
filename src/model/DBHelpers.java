@@ -33,13 +33,13 @@ public class DBHelpers {
     }
 
     /**
-     * Method for getting all keys from table (primary and foreign keys).
+     * Method for getting all keys from database (primary and foreign keys).
      * @param connection (connection as type Connection)
      * @return all keys as list (index 0: primary keys, index 1: foreign keys)
      * @throws SQLException
      * @author Daniel
      */
-    public List<String> getAllKeys(Connection connection, String table) throws SQLException {
+    public List<String> getAllKeys(Connection connection) throws SQLException {
         List<String> allKeys = new ArrayList<>();
         String foreignKey = "";
         String primaryKeys = "";
@@ -55,6 +55,7 @@ public class DBHelpers {
         }
         allKeys.add(primaryKeys);
         allKeys.add(foreignKey);
+        System.out.println("Got all keys from database");
         return allKeys;
     }
 }
