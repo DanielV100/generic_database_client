@@ -310,7 +310,7 @@ public class PanelDatabaseConnection {
      */
     private void initDatabaseConnection() {
         try {
-            Connection connection = dbConnection.initDBConnection(textFieldHostname.getText(), textFieldPort.getText(), textFieldDatabaseName.getText(), textFieldUsername.getText(), textFieldPassword.getText());
+            Connection connection = dbConnection.initDBConnection(textFieldHostname.getText(), textFieldPort.getText(), textFieldDatabaseName.getText(), textFieldUsername.getText(), textFieldPassword.getText(), selectedDB);
             popupMessageController.showSuccessMessage("Successfully connected to database server");
             System.out.println("Connected to database");
             frameTableView.add(panelTableSelection.PanelTableSelection(connection, selectedDB));

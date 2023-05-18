@@ -1,20 +1,15 @@
 package controller;
 
-import model.ImageFileGetter;
 import model.ResourcesGetter;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.awt.*;
 import java.io.IOException;
-import java.io.InputStream;
 
 /**
- * This controller class  is the communicator between view and model. So the view never interacts with the model directly.
+ * This controller class  is the communicator between view and DBWorker. So the view never interacts with the DBWorker directly.
  * @author Luca, Daniel
  */
 public class Controller {
-    ImageFileGetter imageFileGetter = new ImageFileGetter();
     ResourcesGetter resourcesGetter = new ResourcesGetter();
 
     /**
@@ -36,6 +31,6 @@ public class Controller {
      * @author Daniel
      */
     public ImageIcon getImageIconFromResources(String path) throws IOException {
-        return imageFileGetter.getImageIconFromResources(path);
+        return resourcesGetter.getImageIconFromResources(path);
     }
 }
