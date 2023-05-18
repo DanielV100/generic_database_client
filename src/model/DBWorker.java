@@ -22,9 +22,6 @@ public class DBWorker {
     DBHelpers dbHelpers = new DBHelpers();
     PopupMessageController popupMessageController = new PopupMessageController();
     ResourcesGetter resourcesGetter = new ResourcesGetter();
-    Sizes sizes = new Sizes();
-    String foreignKeys = "";
-    String primaryKeys = "";
 
     /**
      * Method for connecting to database.
