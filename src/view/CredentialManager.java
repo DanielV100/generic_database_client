@@ -9,9 +9,18 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Saving and loading User Credentials.
+ *
+ * @author Daniel, Lorenz, Luca, Valentin, Marius
+ */
 public class CredentialManager {
     PopupMessageController popupMessageController = new PopupMessageController();
-
+        /**
+        * Saving User Credentials in /Credentials/credentials.txt
+        *
+        * @author Lorenz
+        */
         public void saveCredentials(UserCredentials credentials, String filePath) {
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true))) {
                 String line = credentials.getHostname() + "," + credentials.getPortname() + "," + credentials.getDbname() + "," + credentials.getUsername() + "," + credentials.getPassword() + "," + credentials.getSelectedDB()+ ","+ credentials.getspeichern()+"\n";
@@ -21,6 +30,11 @@ public class CredentialManager {
                 popupMessageController.showErrorMessage(e);
             }
         }
+    /**
+     * Loading User Credentials as List from /Credentials/credentials.txt
+     * @return credentialsList
+     * @author Lorenz
+     */
     public List<UserCredentials> loadCredentials(String filePath) {
         List<UserCredentials> credentialsList = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {

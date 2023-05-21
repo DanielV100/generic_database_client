@@ -1,4 +1,9 @@
 package view;
+/**
+ * Saving and loading User Credentials.
+ *
+ * @author Daniel, Lorenz, Luca, Valentin, Marius
+ */
 public class UserCredentials {
     private String hostname;
     private String portname;
@@ -8,6 +13,10 @@ public class UserCredentials {
     private String selectedDB;
     private String speichern;
 
+    /**
+     * Getting and setting User Credentials
+     * @author Lorenz
+     */
     public UserCredentials(String hostname, String portname, String dbname, String username, String password, String selcetedDB,String speichern) {
         this.hostname = hostname;
         this.portname = portname;
