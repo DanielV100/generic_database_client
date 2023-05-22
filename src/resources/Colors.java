@@ -2,6 +2,11 @@ package resources;
 
 import java.awt.Color;
 
+/**
+ * All colors are defined here.
+ * @author Lorenz
+ */
+
 public class Colors {
         //RGB SQL
         int sqlR = 255;
@@ -20,6 +25,10 @@ public class Colors {
         int StandardG = 13;
         int StandardB = 139;
 
+        /**
+        * Setting different Colors for selected DBs
+        * @author Lorenz
+        */
         Color sqlColor = new Color(sqlR, sqlG, sqlB);
         Color mariaColor = new Color(mariaR, mariaG, mariaB);
         Color PostColor = new Color(PostR, PostG, PostB);
