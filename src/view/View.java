@@ -6,8 +6,8 @@ import java.io.IOException;
 
 
 /**
- *This class builds the UI of the application's start-screen.
- *Therefore, Swing and AWT are used. Components such as frames, buttons and labels are created by calling methods from view.UIHelpers class.
+ * This class builds the UI of the application's start-screen.
+ * Therefore, Swing and AWT are used. Components such as frames, buttons and labels are created by calling methods from view.UIHelpers class.
  * @see UIHelpers
  * @author Luca
  */

@@ -2,7 +2,6 @@ package model;
 
 import controller.DBConnection;
 import controller.PopupMessageController;
-import resources.Sizes;
 
 import java.io.IOException;
 import java.sql.*;
