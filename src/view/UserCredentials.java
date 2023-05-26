@@ -2,7 +2,7 @@ package view;
 /**
  * Saving and loading User Credentials.
  *
- * @author Daniel, Lorenz, Luca, Valentin, Marius
+ * @author Lorenz, Luca, Marius
  */
 public class UserCredentials {
     private String hostname;
@@ -15,7 +15,7 @@ public class UserCredentials {
 
     /**
      * Getting and setting User Credentials
-     * @author Lorenz
+     * @author Lorenz, Marius, Luca
      */
     public UserCredentials(String hostname, String portname, String dbname, String username, String password, String selcetedDB,String speichern) {
         this.hostname = hostname;

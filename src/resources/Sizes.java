@@ -14,7 +14,7 @@ public class Sizes {
 
     /**
      * Getting and setting screenHeight and screenWidth
-     * @author Lorenz
+     * @author Lorenz, Daniel
      */
     public void init() {
         size = tool.getDefaultToolkit().getScreenSize();
@@ -42,29 +42,6 @@ public class Sizes {
     int panel_panelTableView_panelHeight = 800;
     int panel_panelTableView_panelX = 400;
     int panel_panelTableView_panelY = 0;
-
-    // Checkboxes
-
-        // MySQL Checkbox
-        /*int checkBox_panelDatabaseConnection_checkBoxMySql_checkBoxX = (screenWidth/2) + 150;
-        int checkBox_panelDatabaseConnection_checkBoxMySql_checkBoxY = 150;
-        int checkBox_panelDatabaseConnection_checkBoxMySql_checkBoxWidth = 74;
-        int checkBox_panelDatabaseConnection_checkBoxMySql_checkBoxHeight = 20;
-        String checkBox_panelDatabaseConnection_checkBoxMySql_checkBoxLabel = "MySQL";*/
-
-        // MariaDB Checkbox
-        /*int checkBox_panelDatabaseConnection_checkBoxMariaDB_checkBoxX = (screenWidth/2) + 50;
-        int checkBox_panelDatabaseConnection_checkBoxMariaDB_checkBoxY = 150;
-        int checkBox_panelDatabaseConnection_checkBoxMariaDB_checkBoxWidth = 83;
-        int checkBox_panelDatabaseConnection_checkBoxMariaDB_checkBoxHeight = 20;
-        String checkBox_panelDatabaseConnection_checkBoxMariaDB_checkBoxLabel = "MariaDB";*/
-
-        // PostgreSQL Checkbox
-        /*int checkBox_panelDatabaseConnection_checkBoxPostgreSQL_checkBoxX = (screenWidth/2) - 100;
-        int checkBox_panelDatabaseConnection_checkBoxPostgreSQL_checkBoxY = 150;
-        int checkBox_panelDatabaseConnection_checkBoxPostgreSQL_checkBoxWidth = 90;
-        int checkBox_panelDatabaseConnection_checkBoxPostgreSQL_checkBoxHeight = 20;
-        String checkBox_panelDatabaseConnection_checkBoxPostgreSQL_checkBoxLabel = "PostgreSQL";*/
 
     // RadioButtons
         // MySQL RadioButton
@@ -263,57 +240,6 @@ public class Sizes {
     public int getTextField_panelDatabaseConnection_textFieldDatabaseName_textFieldY() {
         return textField_panelDatabaseConnection_textFieldDatabaseName_textFieldY;
     }
-    // Checkboxes
-        // MySQL Checkbox
-        /*public int getCheckBox_panelDatabaseConnection_checkBoxMySql_checkBoxX() {
-            return checkBox_panelDatabaseConnection_checkBoxMySql_checkBoxX;
-        }
-        public int getCheckBox_panelDatabaseConnection_checkBoxMySql_checkBoxY() {
-            return checkBox_panelDatabaseConnection_checkBoxMySql_checkBoxY;
-        }
-        public int getCheckBox_panelDatabaseConnection_checkBoxMySql_checkBoxWidth() {
-            return checkBox_panelDatabaseConnection_checkBoxMySql_checkBoxWidth;
-        }
-        public int getCheckBox_panelDatabaseConnection_checkBoxMySql_checkBoxHeight() {
-            return checkBox_panelDatabaseConnection_checkBoxMySql_checkBoxHeight;
-        }
-        public String getCheckBox_panelDatabaseConnection_checkBoxMySql_checkBoxLabel() {
-            return checkBox_panelDatabaseConnection_checkBoxMySql_checkBoxLabel;
-        }*/
-
-        // MariaDB Checkbox
-        /*public int getCheckBox_panelDatabaseConnection_checkBoxMariaDB_checkBoxX() {
-            return checkBox_panelDatabaseConnection_checkBoxMariaDB_checkBoxX;
-        }
-        public int getCheckBox_panelDatabaseConnection_checkBoxMariaDB_checkBoxY() {
-            return checkBox_panelDatabaseConnection_checkBoxMariaDB_checkBoxY;
-        }
-        public int getCheckBox_panelDatabaseConnection_checkBoxMariaDB_checkBoxWidth() {
-            return checkBox_panelDatabaseConnection_checkBoxMariaDB_checkBoxWidth;
-        }
-        public int getCheckBox_panelDatabaseConnection_checkBoxMariaDB_checkBoxHeight() {
-            return checkBox_panelDatabaseConnection_checkBoxMariaDB_checkBoxHeight;
-        }
-        public String getCheckBox_panelDatabaseConnection_checkBoxMariaDB_checkBoxLabel() {
-            return checkBox_panelDatabaseConnection_checkBoxMariaDB_checkBoxLabel;
-        }*/
-
-        // PostgreSQL
-        /*public int getCheckBox_panelDatabaseConnection_checkBoxPostgreSQL_checkBoxX() {
-            return checkBox_panelDatabaseConnection_checkBoxPostgreSQL_checkBoxX;
-        }
-        public int getCheckBox_panelDatabaseConnection_checkBoxPostgreSQL_checkBoxY() {
-            return checkBox_panelDatabaseConnection_checkBoxPostgreSQL_checkBoxY;
-        }
-        public int getCheckBox_panelDatabaseConnection_checkBoxPostgreSQL_checkBoxWidth() {
-            return checkBox_panelDatabaseConnection_checkBoxPostgreSQL_checkBoxWidth;
-        }
-        public int getCheckBox_panelDatabaseConnection_checkBoxPostgreSQL_checkBoxHeight() {
-            return checkBox_panelDatabaseConnection_checkBoxPostgreSQL_checkBoxHeight;
-        }
-        public String getCheckBox_panelDatabaseConnection_checkBoxPostgreSQL_checkBoxLabel() {
-            return checkBox_panelDatabaseConnection_checkBoxPostgreSQL_checkBoxLabel;
-        }*/
 
     // RadioButtons
         // MySQL

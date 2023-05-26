@@ -4,7 +4,7 @@ import java.awt.Color;
 
 /**
  * All colors are defined here.
- * @author Lorenz
+ * @author Valentin
  */
 
 public class Colors {

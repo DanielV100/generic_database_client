@@ -12,14 +12,14 @@ import java.util.List;
 /**
  * Saving and loading User Credentials.
  *
- * @author Daniel, Lorenz, Luca, Valentin, Marius
+ * @author Lorenz, Luca, Marius
  */
 public class CredentialManager {
     PopupMessageController popupMessageController = new PopupMessageController();
         /**
         * Saving User Credentials in /Credentials/credentials.txt
         *
-        * @author Lorenz
+        * @author Luca, Marius
         */
         public void saveCredentials(UserCredentials credentials, String filePath) {
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true))) {

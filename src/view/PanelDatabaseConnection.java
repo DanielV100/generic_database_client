@@ -342,7 +342,7 @@ public class PanelDatabaseConnection {
     /**
      * Loading user credentials or create directory for user credentials.
      *
-     * @author Lorenz
+     * @author Lorenz, Valentin, Daniel
      */
     private void loadUserCredentials() {
         if (!directory.exists()) {
