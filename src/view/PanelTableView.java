@@ -3,7 +3,7 @@ package view;
 import controller.Controller;
 import controller.DBConnection;
 import controller.PopupMessageController;
-import model.CSVExporter;
+import resources.Colors;
 import resources.Sizes;
 
 import javax.swing.*;
@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PanelTableView {
+    UIHelpers uiHelpers = new UIHelpers();
+    Colors colors = new Colors();
     Controller controller = new Controller();
     DBConnection dbConnection = new DBConnection();
     Sizes sizes = new Sizes();
@@ -31,46 +33,32 @@ public class PanelTableView {
     JMenuItem menuItemExportToCSV;
     JMenuItem menuItemShowDBTypes;
     PopupMessageController popupMessageController = new PopupMessageController();
-    CSVExporter csvExporter = new CSVExporter();
 
+    /**
+     * This is the class which contains and builds the table view (seeing rows and columns).
+     *
+     * @param connection (as type Connection)
+     * @param index      (table index as int)
+     * @param selectedDB (selected data-base as string)
+     * @return JScrollPane with table view on it
+     * @throws SQLException
+     * @author Marius, Valentin, Luca
+     */
     public JScrollPane PanelTableView(Connection connection, int index, String selectedDB) throws SQLException {
         sizes.init();
-
-
-        //Table height is extremly high --> show all data
-        //tableFromDB = uiHelpers.createJTable(tableFromDB, columns, dbConnection.getRowsFromTable(connection, columns, index), sizes.getTable_panelTableView_tableFromDB_tableX(), sizes.getTable_panelTableView_tableFromDB_tableY(), sizes.getScreenWidth()-sizes.getJlist_panelTableSelection_jlistTableSelection_jlistWidth(), sizes.getScreenHeight() + 1000);
-       //makes cells non editable
         DefaultTableModel model = new DefaultTableModel(dbConnection.getRowsFromTable(connection, index), dbConnection.getColumnsFromTable(connection, index)) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false; //make the first column non-editable
             }
         };
-        tableFromDB = new JTable(model);
-        tableFromDB.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        tableFromDB.getTableHeader().setBackground(new Color(238, 220, 130));
-        tableFromDB.getTableHeader().setFont(new Font("Arial",Font.BOLD, 14));
-        tableFromDB.setRowHeight(50);
-        tableFromDB.setGridColor(new Color(211, 211, 211));
+        tableFromDB = uiHelpers.createJTable(tableFromDB, model, ListSelectionModel.SINGLE_SELECTION, colors.getTableHeaderBackground(), new Font("Arial", Font.BOLD, 14), 50, colors.getTableGridColor(), colors.getSelectionTableColor());
         tableFromDB.setDefaultRenderer(Object.class, new AlternateRowColorRenderer());
-        tableFromDB.setSelectionBackground(Color.BLUE);
-        if (tableFromDB.getColumnCount() > 5) {
-            tableFromDB.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        } else  {
-            tableFromDB.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-        }
-
-        TableColumnModel columnModel = tableFromDB.getColumnModel();
-        for (int i = 0; i < tableFromDB.getColumnCount(); i++) {
-            TableColumn column = tableFromDB.getColumnModel().getColumn(i);
-            column.setMinWidth(200);
-        }
-
         tableFromDB.addMouseListener(new MouseAdapter() {
 
             @Override
             public void mousePressed(MouseEvent e) {
-                if (SwingUtilities.isRightMouseButton(e) || (System.getProperty("os.name").contains("Mac OS X") && e.isControlDown())){
+                if (SwingUtilities.isRightMouseButton(e) || (System.getProperty("os.name").contains("Mac OS X") && e.isControlDown())) {
                     popupMenu = new JPopupMenu();
                     menuItemShowDBTypes = new JMenuItem("Show column datatypes");
                     menuItemAdd = new JMenuItem("Add row");
@@ -80,7 +68,6 @@ public class PanelTableView {
                     menuItemDelete = new JMenuItem("Delete row");
                     menuItemClearTable = new JMenuItem("Clear table");
                     menuItemClearTable.setForeground(Color.RED);
-                    //creating popupmenu with (1) edit (2) delete (3) add (4) import from .csv
                     popupMenu.add(menuItemShowDBTypes);
                     popupMenu.add(menuItemEdit);
                     popupMenu.addSeparator();
@@ -90,7 +77,7 @@ public class PanelTableView {
                     popupMenu.addSeparator();
                     popupMenu.add(menuItemDelete);
                     popupMenu.add(menuItemClearTable);
-                    if(selectedDB.equals("postgresql")) {
+                    if (selectedDB.equals("postgresql")) {
                         menuItemDelete.setEnabled(false);
                         menuItemImport.setEnabled(false);
                         menuItemEdit.setEnabled(false);
@@ -107,9 +94,9 @@ public class PanelTableView {
                             JTable target = (JTable) e.getSource();
                             //getting selected row
                             int rowNumber = target.getSelectedRow();
-                            for(int i = 0; i < target.getColumnCount(); i++) {
+                            for (int i = 0; i < target.getColumnCount(); i++) {
                                 try {
-                                    if(target.getValueAt(rowNumber, i).toString() != null) {
+                                    if (target.getValueAt(rowNumber, i).toString() != null) {
                                         columns.add(target.getColumnName(i));
                                         rows.add(target.getValueAt(rowNumber, i).toString());
                                     }
@@ -119,7 +106,7 @@ public class PanelTableView {
                                 }
                             }
                             try {
-                                dbConnection.editRow(connection,dbConnection.getAllTablesFromDB(connection)[index], columns, rows);
+                                dbConnection.editRow(connection, dbConnection.getAllTablesFromDB(connection)[index], columns, rows);
                             } catch (SQLException ex) {
                                 popupMessageController.showErrorMessage(ex);
                             } catch (NullPointerException nullPointerException) {
@@ -140,9 +127,9 @@ public class PanelTableView {
                             JTable target = (JTable) e.getSource();
                             //getting selected row
                             int rowNumber = target.getSelectedRow();
-                            for(int i = 0; i < target.getColumnCount(); i++) {
+                            for (int i = 0; i < target.getColumnCount(); i++) {
                                 try {
-                                    if(target.getValueAt(rowNumber, i).toString() != null) {
+                                    if (target.getValueAt(rowNumber, i).toString() != null) {
                                         columns.add(target.getColumnName(i));
                                         rows.add(target.getValueAt(rowNumber, i).toString());
                                     }
@@ -179,7 +166,7 @@ public class PanelTableView {
                             try {
                                 String[] columns = dbConnection.getColumnsFromTable(connection, index);
                                 String csvColumnTemplate = "";
-                                for(int i = 0; i < columns.length; i++) {
+                                for (int i = 0; i < columns.length; i++) {
                                     csvColumnTemplate += columns[i] + "; ";
                                 }
                                 int option = JOptionPane.showConfirmDialog(null, "Has your CSV the correct syntax? In first line:\n" + csvColumnTemplate + "\nIn lines below the data for every cell with ';' separated?");
@@ -201,9 +188,9 @@ public class PanelTableView {
                         @Override
                         public void mousePressed(MouseEvent e) {
                             int option = JOptionPane.showConfirmDialog(null, "Are you sure about deleting this all data from this table? Data can't be restored after deleting!");
-                            if(option == JOptionPane.OK_OPTION) {
+                            if (option == JOptionPane.OK_OPTION) {
                                 try {
-                                    dbConnection.clearTable(connection,  dbConnection.getAllTablesFromDB(connection)[index]);
+                                    dbConnection.clearTable(connection, dbConnection.getAllTablesFromDB(connection)[index]);
                                 } catch (SQLException ex) {
                                     popupMessageController.showErrorMessage(ex);
                                 }
@@ -246,8 +233,8 @@ public class PanelTableView {
                 }
             }
         });
-        scrollPane = new JScrollPane(tableFromDB,  JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-        scrollPane.setBounds(sizes.getPanel_panelTableView_panelX(),sizes.getPanel_panelTableView_panelY() , sizes.getScreenWidth()-sizes.getJlist_panelTableSelection_jlistTableSelection_jlistWidth(), sizes.getScreenHeight()-50);
+        scrollPane = new JScrollPane(tableFromDB, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+        scrollPane.setBounds(sizes.getPanel_panelTableView_panelX(), sizes.getPanel_panelTableView_panelY(), sizes.getScreenWidth() - sizes.getJlist_panelTableSelection_jlistTableSelection_jlistWidth(), sizes.getScreenHeight() - 50);
         scrollPane.setViewportView(tableFromDB);
         return scrollPane;
     }

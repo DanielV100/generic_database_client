@@ -117,17 +117,19 @@ public class DBHelpers {
             labelForColumns[i] = new JLabel(columns.get(i) + " (" + columnsType.get(i) + ", " + columnsTypeLength.get(i) + ")");
             container.add(labelForColumns[i]);
             //on the right-handed side: textfields
+
             if (isEdit) {
                 inputFields[i] = new JTextField(rows.get(i));
-                if (allKeys.get(0).contains(table.toLowerCase() + "." + columns.get(i))) {
-                    inputFields[i].setBackground(Color.YELLOW);
-                    inputFields[i].setToolTipText("This field is a primary key and can't be changed because it's used in other tables.");
-                } else if (allKeys.get(1).contains(table.toLowerCase() + "." + columns.get(i))) {
-                    inputFields[i].setBackground(Color.YELLOW);
-                    inputFields[i].setToolTipText("Mind that the data from this row comes from another table (foreign key).");
-                }
+
             } else {
                 inputFields[i] = new JTextField();
+            }
+            if (allKeys.get(0).contains(table.toLowerCase() + "." + columns.get(i))) {
+                inputFields[i].setBackground(Color.YELLOW);
+                inputFields[i].setToolTipText("This field is a primary key - so it's possible to reference it from another table.");
+            } else if (allKeys.get(1).contains(table.toLowerCase() + "." + columns.get(i))) {
+                inputFields[i].setBackground(Color.YELLOW);
+                inputFields[i].setToolTipText("Mind that the data from this row comes from another table (foreign key).");
             }
             int index = i;
             inputFields[i].addKeyListener(new KeyAdapter() {

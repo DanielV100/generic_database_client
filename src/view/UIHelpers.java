@@ -3,6 +3,8 @@ package view;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 import java.awt.*;
 
 /**
@@ -131,9 +133,23 @@ public class UIHelpers {
         jlist.setBounds(listX, listY, listWidth, listHeight);
         return jlist;
     }
-    protected static JTable createJTable(JTable table, String[] columns, String[][] data, int tableX, int tableY, int tableWidth, int tableHeight) {
-        table = new JTable(data, columns);
-        table.setBounds(tableX, tableY, tableWidth, tableHeight);
+    protected static JTable createJTable(JTable table, DefaultTableModel defaultTableModel, int selectionMode, Color headerBackground, Font headerFont, int rowHeight, Color gridColor, Color selectionColor) {
+        table = new JTable(defaultTableModel);
+        table.setSelectionMode(selectionMode);
+        table.getTableHeader().setBackground(headerBackground);
+        table.getTableHeader().setFont(headerFont);
+        table.setRowHeight(rowHeight);
+        table.setGridColor(gridColor);
+        table.setSelectionBackground(selectionColor);
+        if (table.getColumnCount() > 5) {
+            table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        } else {
+            table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+        }
+        for (int i = 0; i < table.getColumnCount(); i++) {
+            TableColumn column = table.getColumnModel().getColumn(i);
+            column.setMinWidth(200);
+        }
         return table;
     }
 }

@@ -147,3 +147,4 @@ docker/.DS_Store
 src/.DS_Store
 .vscode/settings.json
 .DS_Store
+/Credentials/credentials.txt

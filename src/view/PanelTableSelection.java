@@ -10,6 +10,10 @@ import java.awt.event.MouseEvent;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+/**
+ * Creating panel for table selection
+ * @author Luca, Marius
+ */
 public class PanelTableSelection {
     PopupMessageController popupMessageController = new PopupMessageController();
     UIHelpers uiHelpers = new UIHelpers();
@@ -19,6 +23,14 @@ public class PanelTableSelection {
     JPanel panelTableSelection = new JPanel();
     JList jlistTableSelection = new JList();
 
+    /**
+     * Constructor for creating panel for table selection
+     * @param connection
+     * @param selectedDB
+     * @return JPanel with tables on it
+     * @throws SQLException
+     * @author Luca, Marius
+     */
     public JPanel PanelTableSelection(Connection connection, String selectedDB) throws SQLException {
         sizes.init();
         //creating list which shows the tables
@@ -44,7 +56,6 @@ public class PanelTableSelection {
                 }
             }
         });
-        //creating the panel
         panelTableSelection = uiHelpers.createJPanel(panelTableSelection, sizes.getPanel_panelTableSelection_panelX(), sizes.getPanel_panelTableSelection_panelY(), sizes.getScreenWidth(), sizes.getScreenHeight(), null, sizes.getSize());
         panelTableSelection.add(jlistTableSelection);
         panelTableSelection.setPreferredSize(sizes.getSize());

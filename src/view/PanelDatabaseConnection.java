@@ -291,7 +291,7 @@ public class PanelDatabaseConnection {
      */
     private void saveCredentials() {
         if (radioButtonSave.isSelected()) {
-            int savePassword = JOptionPane.showConfirmDialog(null, "Möchten Sie die das Password speichern?", "Bestätigen", JOptionPane.YES_NO_OPTION);
+            int savePassword = JOptionPane.showConfirmDialog(null, "Do you want to save your password?", "Confirmation", JOptionPane.YES_NO_OPTION);
             String hostname = textFieldHostname.getText();
             String portname = textFieldPort.getText();
             String dbname = textFieldDatabaseName.getText();
@@ -354,7 +354,7 @@ public class PanelDatabaseConnection {
             for (int i = 0; i < credentialsList.size(); i++) {
                 options[i + 1] = credentialsList.get(i).getspeichern();
             }
-            int result = JOptionPane.showOptionDialog(null, "Möchten Sie gespeicherte Anmeldeinformationen laden?", "Bestätigen", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+            int result = JOptionPane.showOptionDialog(null, "Do you want to connect to a saved database?", "Confirmation", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
             if (result >= 1) {
                 UserCredentials selectedCredentials = credentialsList.get(result - 1);
                 String hostnameload = selectedCredentials.getHostname();

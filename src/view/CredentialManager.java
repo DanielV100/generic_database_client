@@ -52,8 +52,6 @@ public class CredentialManager {
 
                     UserCredentials credentials = new UserCredentials(hostname, portname, dbname, username, password, selecteddb, speichern);
                     credentialsList.add(credentials);
-                } else {
-                    // Handle invalid line
                 }
                 line = reader.readLine();
             }

@@ -93,7 +93,7 @@ public class Sizes {
         int radioButton_panelDatabaseConnection_radioButtonSave_radioButtonY = 550;
         int radioButton_panelDatabaseConnection_radioButtonSave_radioButtonWidth = 250;
         int radioButton_panelDatabaseConnection_radioButtonSave_radioButtonHeight = 20;
-        String radioButton_panelDatabaseConnection_radioButtonSave_radioButtonLabel = "Anmeldeinformationen speichern";
+        String radioButton_panelDatabaseConnection_radioButtonSave_radioButtonLabel = "Save credentials?";
 
 
 
